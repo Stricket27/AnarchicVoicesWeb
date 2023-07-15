@@ -1,0 +1,57 @@
+<mat-toolbar class="nav" >
+  <button mat-icon-button [routerLink]="['/']" class="example-icon" aria-label="Example icon-button with menu icon">
+      <img class="icon" src="./assets/images/Logo_Sin_Fondo.png"/>
+  </button>
+    <span class="example-spacer"></span>
+    
+    <!-- DROPDOWN DE MANTENIMIENTO -->
+    <section>
+      <div class="example-button-row">
+        <button class="button-navbar" mat-button [routerLink]="['/']" routerLinkActive="mat-raised-buttom">Inicio</button>
+        <button class="button-navbar" mat-button [routerLink]="['/acerca-de']">Acerca de</button>
+        <button class="button-navbar" mat-button [routerLinkActive]="'mat-raised-button'" [routerLink]="['/producto']">Nuestros productos</button>
+        
+        <button class="button-navbar" mat-button [matMenuTriggerFor]="menu">Mantenimientos</button>
+        <button class="button-navbar" mat-button [matMenuTriggerFor]="menu2">Listados</button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/tipo-usuario/all']">Tipo de usuario</button>
+          <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/user/all']">Usuario</button>
+          <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/calificacion-usuario/all']">Calificación del usuario</button>
+          <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/direccion/all']">Direcciones</button>
+          
+
+          </mat-menu>
+          <mat-menu #menu2="matMenu">
+            <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/orden-compra/all']">Pedidos para cliente</button>
+            <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/orden-comprav/all']">Pedidos para vendedor</button>
+            <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/producto/all']">Producto por vendedor</button>
+            </mat-menu>
+        
+      </div>
+    </section>
+    <!--  -->
+
+    <!-- DROPDOWN DE INICIAR SESION -->
+    <!-- <section>
+      <div>
+     <button mat-icon-button [matMenuTriggerFor]="menuUsuario">
+      <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">person</mat-icon>
+    </button>
+    <mat-menu #menuUsuario="matMenu">
+      <a mat-menu-item *ngIf="!(isAutenticated)">
+        <mat-icon>person_add</mat-icon>
+        <span>Iniciar sesión</span>
+      </a>
+      <a mat-menu-item *ngIf="isAutenticated">
+        <mat-icon>person_remove</mat-icon>
+        <span>Cerrar Sesión</span>
+      </a>
+    </mat-menu>
+  </div>
+  </section> -->
+  <!--  -->
+
+
+
+  </mat-toolbar>

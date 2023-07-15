@@ -1,0 +1,39 @@
+    h2{
+      text-align: center;
+    }
+    .parrafo1{
+      margin-top: pc;
+      text-align: center;
+      padding-left: 10pc;
+      padding-right: 10pc;
+    }
+    mat-card {
+      max-width: 73%;
+      margin: 2em auto;
+      text-align: center;
+      background-color: #000000;
+      box-shadow: none;
+      }
+      mat-card-title{
+        color: white;
+      }
+      mat-card-content{
+          text-align: justify;
+      }
+      .example-card {
+          max-width: 400px;
+          margin-bottom: 8px;
+        }
+        button{
+          background-color: #ADB5BD;
+        }
+        .imagen-fondo{
+          background-color: #F4F4F9;
+          box-shadow: none;
+        }
+        .example-card-2{
+          background-color: #F4F4F9;
+        }
+.mat-card-title-2{
+  color: black;
+}

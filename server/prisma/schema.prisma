@@ -1,0 +1,183 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//TABLAS DE LA BASE DE DATOS
+//PARTE DEL USUARIO - INICIO
+model Usuario{
+  id_usuario Int @id @default(autoincrement())
+  nombre String
+  apellidos String
+  numero_telefono Int
+  correo_electronico String
+  contrasenna String
+  estado_actual String
+
+  detalle_usuarioTipo Detalle_UsuarioTipo[]
+  calificacionUsuario CalificacionUsuario[]
+  direccion Direccion[]
+  metodoPago MetodoPago[]
+  ordenCompra OrdenCompra[]
+  producto Producto[]
+  mensajeria Mensajeria[]
+}
+
+model Detalle_UsuarioTipo{
+  id_usuario Int
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario])
+
+  id_tipoUsuario Int
+  tipoUsuario TipoUsuario @relation(fields: [id_tipoUsuario], references: [id_tipoUsuario])
+
+  @@id([id_usuario,id_tipoUsuario])
+}
+
+model TipoUsuario{
+  id_tipoUsuario Int @id @default(autoincrement())
+  descripcion String
+  estado_actual String
+
+   detalle_usuarioTipo Detalle_UsuarioTipo[]
+}
+
+model CalificacionUsuario{
+  id_calificacionUsuario Int @id @default(autoincrement())
+  vendedor_cliente String
+  calificacion Int
+  calificacion_promedio Int
+
+  id_usuario Int
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario])
+}
+
+model Direccion{
+  id_direccion Int @id @default(autoincrement())
+  provincia String
+  canton String
+  distrito String
+  direccion_exacta String?
+  codigo_postal String
+  telefono String
+  estado_actual String
+
+  id_usuario Int
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario])
+}
+// FINAL
+
+//PARTE DE COMPRA - INICIO
+model MetodoPago{
+  id_metodoPago Int @id @default(autoincrement())
+  numeroCuenta String
+  fechaExpiracion DateTime
+  estado_actual String
+  
+  id_usuario Int
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario])
+  
+  id_tipoPago Int //VISA O MASTERCARD
+  tipoPago TipoPago @relation(fields: [id_tipoPago], references: [id_tipoPago])
+
+  ordenCompra OrdenCompra[]
+}
+
+model TipoPago{
+  id_tipoPago Int @id @default(autoincrement())
+  descripcion String
+
+  metodoPago MetodoPago[]
+}
+
+model OrdenCompra{
+  id_ordenCompra Int @id @default(autoincrement())
+  fecha DateTime @default(now())
+  monto_total Decimal @db.Decimal(10,2)
+  estado_actual String
+  direccion String
+  
+  id_usuario Int
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario])
+
+  id_metodoPago Int
+  metodoPago MetodoPago @relation(fields: [id_metodoPago], references: [id_metodoPago])
+
+  lineaDetalle LineaDetalle[]
+}
+
+model LineaDetalle{
+  id_lineaDetalle Int @id @default(autoincrement())
+  cantidad Int
+  sub_total Decimal @db.Decimal(10,2)
+  estado_actual String
+  
+  id_producto Int
+ producto Producto @relation(fields: [id_producto], references: [id_producto])
+
+  id_ordenCompra Int
+  ordenCompra OrdenCompra @relation(fields: [id_ordenCompra], references: [id_ordenCompra])
+}
+//FINAL
+
+//PARTE DE PRODUCTO - INICIO
+model Producto{
+  id_producto Int @id @default(autoincrement())
+  nombre String
+  descripcion String
+  precio Decimal @db.Decimal(10,2)
+  cantidad Int
+  estado_producto String
+  estado_actual String
+
+  id_usuario Int
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario])
+
+  id_categoria Int
+  categoria Categoria @relation(fields: [id_categoria], references: [id_categoria])
+
+  lineaDetalle LineaDetalle[]
+  fotografia Fotografia[]
+  mensajeria Mensajeria[]
+}
+
+model Fotografia{
+  id_fotografia Int @id @default(autoincrement())
+  fotografia String
+  estado_actual String
+  
+  id_producto Int
+  producto Producto @relation(fields: [id_producto], references: [id_producto])
+}
+
+model Categoria{
+  id_categoria Int @id @default(autoincrement())
+  descripcion String
+  estado_actual String
+
+  producto Producto[]
+}
+
+model Mensajeria{
+  id_mensajeria Int @id @default(autoincrement())
+  asunto String
+  mensaje String
+  respuesta String?
+  estado_actual String
+  
+  id_producto Int
+  producto Producto @relation(fields: [id_producto], references: [id_producto])
+
+  id_usuario Int
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario])
+
+
+
+}
+//FINAL
