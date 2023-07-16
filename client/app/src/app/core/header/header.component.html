@@ -11,22 +11,21 @@
         <button class="button-navbar" mat-button [routerLink]="['/acerca-de']">Acerca de</button>
         <button class="button-navbar" mat-button [routerLinkActive]="'mat-raised-button'" [routerLink]="['/producto']">Nuestros productos</button>
         
-        <button class="button-navbar" mat-button [matMenuTriggerFor]="menu">Mantenimientos</button>
+        <!-- <button class="button-navbar" mat-button [matMenuTriggerFor]="menu">Mantenimientos</button> -->
         <button class="button-navbar" mat-button [matMenuTriggerFor]="menu2">Listados</button>
 
-        <mat-menu #menu="matMenu">
+        <!-- <mat-menu #menu="matMenu">
           <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/tipo-usuario/all']">Tipo de usuario</button>
           <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/user/all']">Usuario</button>
           <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/calificacion-usuario/all']">Calificación del usuario</button>
           <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/direccion/all']">Direcciones</button>
-          
+          </mat-menu> -->
 
-          </mat-menu>
           <mat-menu #menu2="matMenu">
-            <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/orden-compra/all']">Pedidos para cliente</button>
-            <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/orden-comprav/all']">Pedidos para vendedor</button>
+            <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/orden-compra-cliente/all']">Pedidos para cliente</button>
+            <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/orden-compra-vendedor/all']">Pedidos para vendedor</button>
             <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/producto/all']">Producto por vendedor</button>
-            </mat-menu>
+          </mat-menu>
         
       </div>
     </section>
