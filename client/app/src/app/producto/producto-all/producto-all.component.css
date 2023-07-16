@@ -8,6 +8,10 @@
     text-align: center;
   }
 
+ th{
+    color: white;
+  }
+
   a{
   color: black;
   background-color: #495057;
