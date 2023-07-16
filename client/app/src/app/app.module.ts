@@ -13,6 +13,9 @@ import { MetodoPagoModule } from './metodo-pago/metodo-pago.module';
 import { OrdenCompraModule } from './orden-compra/orden-compra.module';
 import { ProductoModule } from './producto/producto.module';
 import { FotografiaModule } from './fotografia/fotografia.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
 declarations: [AppComponent],
 imports: [
@@ -25,8 +28,17 @@ CoreModule,
 ShareModule, 
 HomeModule, 
 UserModule, 
+CalificacionUsuarioModule,
+DireccionModule, 
+MetodoPagoModule, 
+OrdenCompraModule,
+ProductoModule, 
+FotografiaModule,
 // al final el gestor de las rutas principal 
-AppRoutingModule, CalificacionUsuarioModule, DireccionModule, MetodoPagoModule, OrdenCompraModule, ProductoModule, FotografiaModule,
+AppRoutingModule, 
+MatTableModule,
+MatPaginatorModule,
+MatSortModule,
 ],
 providers: [ ],
 bootstrap: [AppComponent],
