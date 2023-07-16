@@ -7,6 +7,12 @@ import { ShareModule } from './share/share.module';
 import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
 import { HttpClientModule } from '@angular/common/http';
+import { CalificacionUsuarioModule } from './calificacion-usuario/calificacion-usuario.module';
+import { DireccionModule } from './direccion/direccion.module';
+import { MetodoPagoModule } from './metodo-pago/metodo-pago.module';
+import { OrdenCompraModule } from './orden-compra/orden-compra.module';
+import { ProductoModule } from './producto/producto.module';
+import { FotografiaModule } from './fotografia/fotografia.module';
 @NgModule({
 declarations: [AppComponent],
 imports: [
@@ -20,7 +26,7 @@ ShareModule,
 HomeModule, 
 UserModule, 
 // al final el gestor de las rutas principal 
-AppRoutingModule,
+AppRoutingModule, CalificacionUsuarioModule, DireccionModule, MetodoPagoModule, OrdenCompraModule, ProductoModule, FotografiaModule,
 ],
 providers: [ ],
 bootstrap: [AppComponent],
