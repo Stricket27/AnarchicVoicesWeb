@@ -7,15 +7,16 @@ import { ProductoFormComponent } from './producto-form/producto-form.component';
 import { ProductoIndexComponent } from './producto-index/producto-index.component';
 
 const routes: Routes = [
-  {path: 'producto', component: ProductoIndexComponent},
-  {path: 'producto/all', component: ProductoAllComponent},
-  {path: 'producto/create', component: ProductoFormComponent},
-  {path: 'producto/:id', component: ProductoDetailComponent},
-  {path: 'producto/update/:id', component: ProductoFormComponent}
+{path: 'producto', component: ProductoIndexComponent},
+{path: 'producto/all', component: ProductoAllComponent},
+{path: 'producto/create', component: ProductoFormComponent},
+{path: 'producto/:id', component: ProductoDetailComponent},
+{path: 'producto/update/:id', component: ProductoFormComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+imports: [RouterModule.forChild(routes)],
+exports: [RouterModule]
 })
+
 export class ProductoRoutingModule { }
