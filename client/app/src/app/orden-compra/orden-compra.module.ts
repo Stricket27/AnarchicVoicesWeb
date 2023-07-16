@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { OrdenCompraRoutingModule } from './orden-compra-routing.module';
 import { OrdenCompraClienteAllComponent } from './orden-compra-cliente-all/orden-compra-cliente-all.component';
@@ -23,14 +23,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
 @NgModule({
   declarations: [
-  
     OrdenCompraClienteAllComponent,
-       OrdenCompraClienteDetailComponent,
-       OrdenCompraClienteDiagComponent,
-       OrdenCompraVendedorAllComponent,
-       OrdenCompraVendedorDetailComponent
+    OrdenCompraClienteDetailComponent,
+    OrdenCompraClienteDiagComponent,
+    OrdenCompraVendedorAllComponent,
+    OrdenCompraVendedorDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +50,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-  ]
+  ],
+  providers: [DatePipe],
 })
+
 export class OrdenCompraModule { }
