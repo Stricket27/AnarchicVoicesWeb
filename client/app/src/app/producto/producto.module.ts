@@ -23,16 +23,19 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [
     ProductoAllComponent,
     ProductoDetailComponent,
     ProductoDiagComponent,
     ProductoFormComponent,
-    ProductoIndexComponent,
+    ProductoIndexComponent
+  ],
+  imports: [
+    CommonModule,
+    ProductoRoutingModule,
 
-     MatGridListModule,
+    MatGridListModule,
     MatCardModule,
     MatMenuModule,
     MatIconModule,
@@ -46,10 +49,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-  ],
-  imports: [
-    CommonModule,
-    ProductoRoutingModule
   ]
 })
 export class ProductoModule { }
