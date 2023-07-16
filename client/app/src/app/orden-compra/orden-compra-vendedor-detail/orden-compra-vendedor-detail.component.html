@@ -1,1 +1,41 @@
-<p>orden-compra-vendedor-detail works!</p>
+<mat-card class="dashboard-card" *ngIf="datos" >
+  
+    <mat-card-title class="text-center">
+    <p ><b>Orden de compra # </b> {{datos.id_ordenCompra }}</p>
+    </mat-card-title>
+  
+
+<mat-card-content class="dashboard-card-content">
+
+  <p><b>Cliente: </b>{{ getNombreUsuario(datos.id_usuario) }}</p>
+
+  <div *ngFor="let lineaDetalle of datos.lineaDetalle">
+
+    <p><b>ID Línea de Detalle: </b>{{ lineaDetalle.id_lineaDetalle }}</p>
+
+    <p><b>ID Producto: </b>{{ lineaDetalle.producto.id_producto }}</p>
+
+    <p><b>Nombre: </b>{{ lineaDetalle.producto.nombre }}</p>
+
+    <p><b>Descripción: </b>{{ lineaDetalle.producto.descripcion }}</p>
+
+    <p><b>Precio unitario: </b>{{ lineaDetalle.producto.precio  | currency:"₡"}}</p>
+
+    <p><b>Cantidad: </b>{{ lineaDetalle.cantidad }}</p>
+
+    <p><b>Estado del Producto: </b>{{ lineaDetalle.producto.estado_producto }}</p>
+  
+  </div>
+
+  <p><b>Método de pago: </b>{{datos.id_metodoPago}}</p>
+
+  <p><b>Dirección: </b>{{datos.direccion}}</p>
+
+  <p><b>Fecha: </b>{{formatDate(datos.fecha)}}</p>
+
+  <p><b>Monto total más impuesto IVA: </b>{{datos.monto_total | currency:"₡"}}</p>
+ 
+</mat-card-content>
+
+</mat-card>
+
