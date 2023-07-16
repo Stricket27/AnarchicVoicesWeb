@@ -1,1 +1,50 @@
-<p>producto-index works!</p>
+<div class="grid-container">
+    
+    <h1 class="mat-h1"><b>Nuestros productos</b></h1>
+
+    <mat-grid-list [cols]="3" rowHeight="15em" gutterSize="20px">
+
+      <mat-grid-tile *ngFor="let item of datos">
+
+        <mat-card class="dashboard-card">
+
+            <mat-card-title style="text-align: center;"> <b>{{item.nombre}}</b> </mat-card-title>
+
+          <mat-card-content class="dashboard-card-content">
+            <div><b>Descripción:</b> {{item.descripcion }}</div>
+          </mat-card-content>
+
+          <mat-card-content class="dashboard-card-content">
+            <div><b>Cantidad:</b> {{item.cantidad }}</div>
+          </mat-card-content>
+
+          <mat-card-content class="dashboard-card-content">
+            <div><b>Estado del producto:</b> {{item.estado_producto }}</div>
+          </mat-card-content>
+
+          <mat-card-content class="dashboard-card-content">
+            <div><b>Precio:</b> {{item.precio | currency:"₡" }}</div>
+          </mat-card-content>
+          
+          <mat-card-actions>
+            <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Detalle producto"
+              aria-label="Detalle producto"
+              color="primary"
+              (click)="detalleProducto(item.id_producto)"
+            >
+              <mat-icon class="mat-18">info</mat-icon>
+            </button>
+
+          </mat-card-actions>
+
+        </mat-card>
+
+      </mat-grid-tile>
+      
+    </mat-grid-list>
+    
+  </div>
+  
