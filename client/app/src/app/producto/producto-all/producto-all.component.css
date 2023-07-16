@@ -3,7 +3,11 @@
     background-color: #212529;
     border-radius: 14px;
   }
-  
+
+   h1{
+    text-align: center;
+  }
+
   a{
   color: black;
   background-color: #495057;
