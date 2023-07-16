@@ -300,13 +300,23 @@ await prisma.producto.create({
     }
 });
      //lineaDetalle
-     //id:1
+     //id:1 - All That Remains
      await prisma.lineaDetalle.create({
         data:{
             cantidad: 2,
             sub_total: '20000.00',
             estado_actual: "Pagado",
             id_producto: 1,
+            id_ordenCompra: 1
+        }
+     })
+     //id:6 SpiritBox
+      await prisma.lineaDetalle.create({
+        data:{
+            cantidad: 1,
+            sub_total: '20000.00',
+            estado_actual: "Pagado",
+            id_producto: 6,
             id_ordenCompra: 1
         }
      })
