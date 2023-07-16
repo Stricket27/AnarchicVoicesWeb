@@ -1,0 +1,11 @@
+img{
+    max-width: 20pc;
+}
+
+.informacion{
+    background-color: #CED4DA;
+}
+
+.titulo, p, li{
+    color: black;
+}
