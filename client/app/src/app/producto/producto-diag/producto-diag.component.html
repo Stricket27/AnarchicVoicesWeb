@@ -1,1 +1,61 @@
-<p>producto-diag works!</p>
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+<mat-icon class="close-icon" color="primary">close</mat-icon>
+</button>
+
+<div class="informacion" *ngIf="datos">
+
+    <h2 class="titulo" mat-dialog-title>{{ datos.nombre }}</h2>
+
+    <mat-dialog-content>
+
+      <div *ngIf="datos.fotografia">
+        <div *ngFor="let foto of datos.fotografia">
+
+        <img src="{{foto.fotografia}}">
+
+        </div>
+      </div>
+
+      <p>Descripción: {{datos.descripcion }}</p>
+
+      <p>Cantidad: {{ datos.cantidad }}</p>
+
+      <p>Estado del producto: {{ datos.estado_producto }}</p>
+
+      <p>Precio: {{ datos.precio | currency : "₡" }}</p>
+
+      <p>Categoría: {{ datos.categoria.descripcion}}</p>
+
+      <p>Vendedor: {{ datos.usuario.nombre}} {{ datos.usuario.apellidos}}</p>
+
+      <mat-divider inset></mat-divider>
+
+      <ul *ngIf="datos.mensajeria">
+
+        <h2 class="titulo" mat-dialog-title>Todos los mensajes guardados</h2>
+
+        <div *ngFor="let mensaje of datos.mensajeria">
+
+        <h2 class="titulo" mat-dialog-title>Mensaje # {{mensaje.id_mensajeria}}</h2>
+
+        <li ><b>Asunto:</b> {{ mensaje.asunto }}</li>
+
+        <li ><b>Mensaje:</b> {{ mensaje.mensaje }}</li>
+
+        <li ><b>Respuesta:</b> {{ mensaje.respuesta }}</li>
+
+        <li ><b>Estado del mensaje:</b> {{ mensaje.estado_actual }}</li>
+
+        <mat-divider inset></mat-divider>
+
+        <br>
+
+        </div>
+
+      </ul>
+
+    </mat-dialog-content>
+  
+    <mat-dialog-actions> </mat-dialog-actions>
+</div>
+  
