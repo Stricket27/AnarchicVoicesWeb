@@ -1,20 +1,19 @@
 <mat-card class="full-width">
 
     <h1 class="mat-h1"><b>Mantenimiento de proudcto por vendedor</b></h1>
-    <mat-card-title>
-      Crear un nuevo producto
-      <a
-      mat-fab
-      matTooltip="Crear Producto"
-      aria-label="Crear Producto"
-      color="primary"
-      (click)="crearProducto()"
-    ><mat-icon>add</mat-icon>
-    </a>
-
-    </mat-card-title>
     <mat-card-content>
-
+<mat-card-title>
+        Crear un nuevo producto
+        <a
+        mat-fab
+        matTooltip="Crear Producto"
+        aria-label="Crear Producto"
+        color="primary"
+        (click)="crearProducto()"
+      ><mat-icon>add</mat-icon>
+      </a>
+      </mat-card-title>
+      <br>
       <div class="mat-elevation-z8" *ngIf="dataSource">
 
         <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
