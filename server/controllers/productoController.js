@@ -50,7 +50,7 @@ module.exports.create = async (request, response, next) => {
         estado_producto: producto.estado_producto,
         estado_actual: producto.estado_actual,
         id_usuario: producto.id_usuario,
-        id_categoria: id_categoria
+        id_categoria: producto.id_categoria
     },
   });
   response.json(newProducto);
