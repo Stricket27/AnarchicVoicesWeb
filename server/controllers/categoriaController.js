@@ -18,31 +18,3 @@ module.exports.getById = async (request, response, next) => {
     response.json(categoria);
 };
 
-//Crear 
-module.exports.create = async (request, response, next) => {
-  let categoria = request.body;
-  const newCategoria = await prisma.categoria.create({
-    data: {
-        descripcion: categoria.descripcion,
-        estado_actual: categoria.estado_actual
-    },
-  });
-  response.json(newCategoria);
-};
-
-//Actualizar 
-module.exports.update = async (request, response, next) => {
-  let categoria = request.body;
-  let idCategoria = parseInt(request.params.id);
-
-  const newCategoria = await prisma.categoria.update({
-    where: {
-      id_categoria: idCategoria,
-    },
-    data: {
-        descripcion: categoria.descripcion,
-        estado_actual: categoria.estado_actual
-    },
-  });
-  response.json(newCategoria);
-};
