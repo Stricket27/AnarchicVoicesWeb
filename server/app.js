@@ -41,7 +41,7 @@ app.use("/direccion/", direccionRoutes);
 app.use("/ordenCompra/", ordenCompraRoutes);
 app.use("/ordenCompraV/",  ordenCompraRoutes);
 app.use("/producto/", productoRoutes);
-app.use("/categoria", categoriaRoutes);
+app.use("/categoria/", categoriaRoutes);
 app.use("/metodoPago/", metodoPagoRoutes);
 
 // Servidor
