@@ -18,7 +18,7 @@ module.exports.get = async (request, response, next) => {
 module.exports.getById = async (request, response, next) => {
     let id=parseInt(request.params.id);
     const usuario=await prisma.usuario.findUnique({
-        where: { id: id }
+        where: { id_usuario: id }
         // include:{
         //     generos:true
         // }
