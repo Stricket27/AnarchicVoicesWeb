@@ -9,10 +9,6 @@ const categoriaController = require('../controllers/categoriaController');
 
 router.get('/', categoriaController.get);
 
-router.post('/', categoriaController.create);
-
 router.get('/:id',categoriaController.getById);
-
-router.put('/', categoriaController.update);
 
 module.exports=router
