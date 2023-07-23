@@ -3,7 +3,9 @@
     background-color: #212529;
     border-radius: 14px;
   }
-
+ mat-icon{
+    color: white;
+  }
    h1{
     text-align: center;
   }
