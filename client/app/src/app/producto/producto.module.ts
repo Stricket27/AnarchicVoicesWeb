@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
+  ],
+  providers:[
+    CurrencyPipe
   ]
 })
 export class ProductoModule { }
