@@ -19,13 +19,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FotografiaAllComponent } from './fotografia-all/fotografia-all.component';
-import { FotografiaDetailComponent } from './fotografia-detail/fotografia-detail.component';
 
 @NgModule({
   declarations: [
     FotografiaFormComponent,
     FotografiaAllComponent,
-    FotografiaDetailComponent,
   ],
   imports: [
     CommonModule,
