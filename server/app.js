@@ -14,6 +14,7 @@ const calificacionUsuarioRoutes = require("./routes/calificacionUsuarioRoutes");
 const direccionRoutes = require("./routes/direccionRoutes");
 const ordenCompraRoutes = require("./routes/ordenCompraRoutes");
 const productoRoutes = require("./routes/productoRoutes");
+const fotografiaRoutes = require("./routes/fotografiaRoutes")
 const categoriaRoutes = require("./routes/categoriaRoutes");
 const metodoPagoRoutes = require("./routes/metodoPagoRoutes");
 
@@ -41,6 +42,7 @@ app.use("/direccion/", direccionRoutes);
 app.use("/ordenCompra/", ordenCompraRoutes);
 app.use("/ordenCompraV/",  ordenCompraRoutes);
 app.use("/producto/", productoRoutes);
+app.use("/fotografia/", fotografiaRoutes);
 app.use("/categoria/", categoriaRoutes);
 app.use("/metodoPago/", metodoPagoRoutes);
 
