@@ -1,0 +1,85 @@
+<mat-card class="full-width">
+
+    <h1 class="mat-h1"><b>Mantenimiento de fotografía por vendedor</b></h1>
+    <mat-card-content>
+      <mat-card-title>
+        <a
+        mat-fab
+        extended
+        matTooltip="Crear Fotografia"
+        aria-label="Crear Fotografia"
+        color="primary"
+        (click)="crearFotografia()"
+      ><mat-icon>add</mat-icon>
+      Crear un nueva fotografía
+      </a>
+      </mat-card-title>
+      <br>
+      <div class="mat-elevation-z8" *ngIf="dataSource">
+
+        <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
+
+          <ng-container matColumnDef="fotografia">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Fotografia</th>
+            <td mat-cell *matCellDef="let row">  {{ row.fotografia }}</td>
+          </ng-container>
+
+           <ng-container matColumnDef="estado_actual">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado actual del producto</th>
+            <td mat-cell *matCellDef="let row">{{ row.estado_actual }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="id_producto">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
+            <td mat-cell *matCellDef="let row">{{ getNombreProducto(row.id_producto) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+
+            <td mat-cell *matCellDef="let row">
+              <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Actualizar fotografia"
+              aria-label="Actualizar fotografia"
+              color="primary"
+              (click)="actualizarFotografia(row.id_fotografia)"
+              ><mat-icon class="mat-18">edit</mat-icon>
+              </button>
+
+              <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Detalle Fotografia"
+              aria-label="Detalle Fotografia"
+              color="primary"
+              (click)="detalle(row.id_fotografia)"
+              ><mat-icon class="mat-18">info</mat-icon>
+              </button>
+
+            </td>
+
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        </table>
+  
+        <mat-paginator
+          #paginator
+          [length]="dataSource?.data?.length"
+          [pageIndex]="0"
+          [pageSize]="10"
+          [pageSizeOptions]="[10, 20, 50]"
+          aria-label="Selecccione una página"
+        ></mat-paginator>
+
+      </div>
+      
+    </mat-card-content>
+
+</mat-card>
+  
