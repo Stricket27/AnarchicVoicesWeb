@@ -1,17 +1,17 @@
 <mat-card class="full-width">
 
-    <h1 class="mat-h1"><b>Mantenimiento de proudcto por vendedor</b></h1>
+    <h1 class="mat-h1"><b>Mantenimiento de producto por vendedor</b></h1>
     <mat-card-content>
-<mat-card-title>
+      <mat-card-title>
         <a
         mat-fab
-            extended
+        extended
         matTooltip="Crear Producto"
         aria-label="Crear Producto"
         color="primary"
         (click)="crearProducto()"
       ><mat-icon>add</mat-icon>
-            Crear un nuevo producto
+      Crear un nuevo producto
       </a>
       </mat-card-title>
       <br>
@@ -49,15 +49,15 @@
               matTooltip="Actualizar producto"
               aria-label="Actualizar producto"
               color="primary"
-              (click)="actualizarProducto(row.id)"
+              (click)="actualizarProducto(row.id_producto)"
               ><mat-icon class="mat-18">edit</mat-icon>
               </button>
 
               <button
               mat-mini-fab
               color="accent"
-              matTooltip="Detalle Usuario"
-              aria-label="Detalle Usuario"
+              matTooltip="Detalle Producto"
+              aria-label="Detalle Producto"
               color="primary"
               (click)="detalle(row.id_producto)"
               ><mat-icon class="mat-18">info</mat-icon>
