@@ -33,6 +33,7 @@ export class ProductoAllComponent {
   this.listaProductos();
   this.listaUsuarios();
   }
+  
   listaProductos(){
   this.gService.list('producto/')
   .pipe(takeUntil(this.destroy$), map((data: any[]) => data.filter(producto => producto.id_usuario == 2)))
