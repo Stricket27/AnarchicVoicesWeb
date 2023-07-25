@@ -85,7 +85,7 @@ export class ProductoFormComponent implements OnInit{
   listaUsuario() {
   this.usuarioList = null;
   this.gService
-  .list('usuario')
+  .list('user')
   .pipe(takeUntil(this.destroy$))
   .subscribe((data: any) => {
   console.log(data);
