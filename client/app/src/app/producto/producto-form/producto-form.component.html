@@ -68,7 +68,7 @@
                     <mat-label>Vendedor del producto</mat-label>
                     <mat-select formControlName="usuario">
                       <mat-option *ngFor="let u of usuarioList" [value]="u.id_usuario">
-                        {{u.nombre}}
+                        {{u.nombre}} {{u.apellidos}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
