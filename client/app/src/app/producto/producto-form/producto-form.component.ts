@@ -12,22 +12,29 @@ import { GenericService } from 'src/app/share/generic.service';
 })
 export class ProductoFormComponent implements OnInit{
   destroy$: Subject<boolean> = new Subject<boolean>();
+
   titleForm: string = 'Crear';
+
   usuarioList: any;
   categoriaList: any;
+
   productoInfo: any;
+
   respProducto: any;
+
   submitted = false;
+
   productoForm: FormGroup;
+
   idProducto: number = 0;
+
   isCreate: boolean = true;
 
   constructor(
   private fb: FormBuilder,
   private gService: GenericService,
   private router: Router,
-  private activeRouter: ActivatedRoute,
-  private currencyPipe: CurrencyPipe
+  private activeRouter: ActivatedRoute
   )
   {
   this.formularioReactive();
@@ -66,20 +73,12 @@ export class ProductoFormComponent implements OnInit{
   nombre:[null, Validators.required],
   descripcion: [null, Validators.required],
   precio: [null, Validators.required],
-  cantidad: [null, Validators.required],
+  cantidad: [1],
   estado_producto: [null, Validators.required],
   estado_actual: [null, Validators.required],
   usuario: [null, Validators.required],
   categoria: [null, Validators.required],
   })
-  this.productoForm.valueChanges.subscribe ( form => {
-  if(form.precio){
-  this.productoForm.patchValue({
-  precio: this.currencyPipe.transform(form.precio.replace(/\D/g, '').replace(/^0+/, ''), '₡', 'symbol', '1.0-0')
-  },
-  {emitEvent: false});
-  }
-  });
   }
   
   listaUsuario() {
@@ -113,11 +112,6 @@ export class ProductoFormComponent implements OnInit{
   if(this.productoForm.invalid){
   return;
   }
-  let cFormat:any=this.productoForm.get('categoria').value.map(x=>({['id_categoria']: x}));
-  this.productoForm.patchValue({categoria: cFormat});
-
-  let uFormat:any=this.productoForm.get('usuario').value.map(x=>({['id_usuario']: x}))
-  this.productoForm.patchValue({usuario: uFormat});
   
   console.log(this.productoForm.value);
   this.gService.create('producto',this.productoForm.value)
@@ -134,6 +128,7 @@ export class ProductoFormComponent implements OnInit{
   if(this.productoForm.invalid){
   return;
   }
+  
   let cFormat:any=this.productoForm.get('categoria').value.map(x=>({['id_categoria']: x}));
   this.productoForm.patchValue({categoria: cFormat});
 
