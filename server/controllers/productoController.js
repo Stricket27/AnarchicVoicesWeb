@@ -49,16 +49,8 @@ module.exports.create = async (request, response, next) => {
         cantidad: producto.cantidad,
         estado_producto: producto.estado_producto,
         estado_actual: producto.estado_actual,
-
-        usuario:{
-          connect: producto.usuario
-        },
-        categoria:{
-          connect: producto.categoria
-        },
-        
-        // id_usuario: producto.id_usuario,
-        // id_categoria: producto.id_categoria
+        usuario: { connect: { id_usuario: producto.usuario}},
+        categoria: { connect: { id_categoria: producto.categoria}}
     },
   });
   response.json(newProducto);
@@ -96,14 +88,8 @@ module.exports.update = async (request, response, next) => {
         cantidad: producto.cantidad,
         estado_producto: producto.estado_producto,
         estado_actual: producto.estado_actual,
-        usuario:{
-          disconnect: productoViejo.usuario,
-          connect: producto.usuario
-        },
-        categoria:{
-          disconnect: productoViejo.categoria,
-          connect: producto.categoria
-        }
+        id_usuario: producto.id_usuario,
+        id_categoria: producto.id_categoria
     },
   });
   response.json(newProducto);
