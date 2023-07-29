@@ -13,6 +13,7 @@ import { MetodoPagoModule } from './metodo-pago/metodo-pago.module';
 import { OrdenCompraModule } from './orden-compra/orden-compra.module';
 import { ProductoModule } from './producto/producto.module';
 import { FotografiaModule } from './fotografia/fotografia.module';
+import { MensajeriaModule } from './mensajeria/mensajeria.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -34,6 +35,7 @@ MetodoPagoModule,
 OrdenCompraModule,
 ProductoModule, 
 FotografiaModule,
+MensajeriaModule,
 // al final el gestor de las rutas principal 
 AppRoutingModule, 
 MatTableModule,
