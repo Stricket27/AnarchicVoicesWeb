@@ -1,0 +1,65 @@
+<form [formGroup]="mensajeriaForm" (ngSubmit)="isCreate ? crearMensaje(): actualizarMensaje()"  novalidate >
+  <input type="hidden" formControlName="id_mensajeria" />
+  <mat-card class="shipping-card"> 
+    <mat-card-header>
+      <mat-card-title>{{titleForm}} Mensaje</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Asunto</mat-label>
+            <input matInput formControlName="asunto">
+            <mat-error *ngIf="errorHandling('asunto','required')">
+              Asunto es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Mensaje</mat-label>
+          <input matInput formControlName="mensaje">
+          <mat-error *ngIf="errorHandling('mensaje','required')">
+            Mensaje es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      
+       
+            <div class="row">
+              <div class="col" *ngIf="productosList">
+                <mat-form-field class="full-width">
+                    <mat-label>Producto</mat-label>
+                    <mat-select formControlName="producto">
+                      <mat-option *ngFor="let p of productosList" [value]="p.id_producto">
+                        {{p.nombre}} - {{p.descripcion}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            
+
+            <div class="col" *ngIf="usuariosList">
+              <mat-form-field class="full-width">
+                  <mat-label>Usuario</mat-label>
+                  <mat-select formControlName="usuario">
+                    <mat-option *ngFor="let u of usuariosList" [value]="u.id_usuario">
+                      {{u.nombre}} {{u.apellidos}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+          </div>
+        </div>
+       
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
