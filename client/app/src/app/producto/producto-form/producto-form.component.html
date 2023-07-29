@@ -1,124 +1,124 @@
 <form [formGroup]="productoForm" (ngSubmit)="isCreate ? crearProducto(): actualizarProducto()"  novalidate >
-    <input type="hidden" formControlName="id_producto" />
-    <mat-card class="shipping-card"> 
-      <mat-card-header>
-        <mat-card-title>{{titleForm}} Producto</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+  <input type="hidden" formControlName="id_producto" />
+  <mat-card class="shipping-card"> 
+    <mat-card-header>
+      <mat-card-title>{{titleForm}} Producto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
 
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <mat-label>Nombre del producto</mat-label>
-              <input matInput formControlName="nombre">
-              <mat-error *ngIf="errorHandling('nombre','required')">
-                Nombre es <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Nombre del producto</mat-label>
+            <input matInput formControlName="nombre">
+            <mat-error *ngIf="errorHandling('nombre','required')">
+              Nombre es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
-        
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <span matPrefix>Album: &nbsp;</span>
-              <mat-label>Descripción del producto</mat-label>
-              <input matInput formControlName="descripcion">
-              <mat-error *ngIf="errorHandling('descripcion','required')">
-                Descripción es <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="col">
-            <mat-form-field class="full-width">
-              <mat-label>Precio del producto</mat-label>
-              <input matInput formControlName="precio">
-              <mat-error *ngIf="errorHandling('precio','required')">
-                Precio es <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="col">
-            <mat-form-field class="full-width">
-              <mat-label>Cantidad del producto</mat-label>
-              <input matInput formControlName="cantidad">
-              <mat-error *ngIf="errorHandling('cantidad','required')">
-                Cantidad es <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <span matPrefix>Album: &nbsp;</span>
+            <mat-label>Descripción del producto</mat-label>
+            <input matInput formControlName="descripcion">
+            <mat-error *ngIf="errorHandling('descripcion','required')">
+              Descripción es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
 
-              <div class="row">
-                <div class="col" *ngIf="categoriaList">
-                  <mat-form-field class="full-width">
-                      <mat-label>Categoria del producto</mat-label>
-                      <mat-select formControlName="categoria">
-                        <mat-option *ngFor="let c of categoriaList" [value]="c.id_categoria">
-                          {{c.descripcion}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-              </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Precio del producto</mat-label>
+            <input matInput formControlName="precio">
+            <mat-error *ngIf="errorHandling('precio','required')">
+              Precio es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-              <div class="col" *ngIf="usuarioList">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Cantidad del producto</mat-label>
+            <input matInput formControlName="cantidad">
+            <mat-error *ngIf="errorHandling('cantidad','required')">
+              Cantidad es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+            <div class="row">
+              <div class="col" *ngIf="categoriaList">
                 <mat-form-field class="full-width">
-                    <mat-label>Usuario del producto</mat-label>
-                    <mat-select formControlName="usuario">
-                      <mat-option *ngFor="let u of usuarioList" [value]="u.id_usuario">
-                        {{u.nombre}} {{u.apellidos}}
+                    <mat-label>Categoria del producto</mat-label>
+                    <mat-select formControlName="categoria">
+                      <mat-option *ngFor="let c of categoriaList" [value]="c.id_categoria">
+                        {{c.descripcion}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
             </div>
-            </div>
-            
-            <mat-form-field>
-              <mat-label>Choose one</mat-label>
-              <mat-select formControlName="estado_producto">
-                <mat-option>Clear</mat-option>
-                <mat-option value="Nuevo">Nuevo</mat-option>
-                <mat-option value="Semi-nuevo">Semi-nuevo</mat-option>
-              </mat-select>
-            </mat-form-field>
+
+            <div class="col" *ngIf="usuarioList">
+              <mat-form-field class="full-width">
+                  <mat-label>Usuario del producto</mat-label>
+                  <mat-select formControlName="usuario">
+                    <mat-option *ngFor="let u of usuarioList" [value]="u.id_usuario">
+                      {{u.nombre}} {{u.apellidos}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+          </div>
+          </div>
           
-        <!-- <div class="row">
+          <mat-form-field>
+            <mat-label>Choose one</mat-label>
+            <mat-select formControlName="estado_producto">
+              <mat-option>Clear</mat-option>
+              <mat-option value="Nuevo">Nuevo</mat-option>
+              <mat-option value="Semi-nuevo">Semi-nuevo</mat-option>
+            </mat-select>
+          </mat-form-field>
+        
+      <!-- <div class="row">
+        <div class="col">
+          <mat-label>Estado del producto</mat-label>
+          <mat-radio-group formControlName="estado_producto">
+            <mat-radio-button [value]="false">Nuevo</mat-radio-button>
+            <mat-radio-button [value]="false">Semi-nuevo</mat-radio-button>
+            <mat-radio-button [value]="false">Usado</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div> -->
+
+      <!-- <div class="row">
           <div class="col">
-            <mat-label>Estado del producto</mat-label>
-            <mat-radio-group formControlName="estado_producto">
-              <mat-radio-button [value]="false">Nuevo</mat-radio-button>
-              <mat-radio-button [value]="false">Semi-nuevo</mat-radio-button>
-              <mat-radio-button [value]="false">Usado</mat-radio-button>
+            <mat-label>Estado actual del producto</mat-label>
+            <mat-radio-group formControlName="estado_actual">
+              <mat-radio-button [value]="true">Activo</mat-radio-button>
+              <mat-radio-button [value]="false">Inactivo</mat-radio-button>
             </mat-radio-group>
           </div>
         </div> -->
 
-        <!-- <div class="row">
-            <div class="col">
-              <mat-label>Estado actual del producto</mat-label>
-              <mat-radio-group formControlName="estado_actual">
-                <mat-radio-button [value]="true">Activo</mat-radio-button>
-                <mat-radio-button [value]="false">Inactivo</mat-radio-button>
-              </mat-radio-group>
-            </div>
-          </div> -->
+        <mat-form-field>
+          <mat-label>Choose one</mat-label>
+          <mat-select formControlName="estado_actual">
+            <mat-option>Clear</mat-option>
+            <mat-option value="Activo">Activo</mat-option>
+            <mat-option value="Inactivo">Inactivo</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>Choose one</mat-label>
-            <mat-select formControlName="estado_actual">
-              <mat-option>Clear</mat-option>
-              <mat-option value="Activo">Activo</mat-option>
-              <mat-option value="Inactivo">Inactivo</mat-option>
-            </mat-select>
-          </mat-form-field>
+    </mat-card-content>
 
-      </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
 
-      <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit">Guardar</button>
-      </mat-card-actions>
-    </mat-card>
-  </form>
-  
