@@ -17,7 +17,7 @@ model Usuario{
   nombre String
   apellidos String
   numero_telefono Int
-  correo_electronico String
+  correo_electronico String @unique
   contrasenna String
   estado_actual String
 
