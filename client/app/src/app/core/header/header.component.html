@@ -33,23 +33,25 @@
     </section>
 
     <!-- DROPDOWN DE INICIAR SESION -->
-    <!-- <section>
-      <div>
-     <button mat-icon-button [matMenuTriggerFor]="menuUsuario">
+    <button mat-icon-button [matMenuTriggerFor]="menu3">
       <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">person</mat-icon>
+      <span class="mat-caption" *ngIf="isAutenticated" style="color: white;"> {{currentUser.user.nombre}} {{currentUser.user.apellidos}}</span>
     </button>
-    <mat-menu #menuUsuario="matMenu">
-      <a mat-menu-item *ngIf="!(isAutenticated)">
-        <mat-icon>person_add</mat-icon>
+    <!--Menu usuario-->
+    <mat-menu #menu3="matMenu">
+      <a mat-menu-item *ngIf="!(isAutenticated)" (click)="login()">
+        <mat-icon>login</mat-icon>
         <span>Iniciar sesión</span>
       </a>
-      <a mat-menu-item *ngIf="isAutenticated">
-        <mat-icon>person_remove</mat-icon>
-        <span>Cerrar Sesión</span>
+      <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
+        <mat-icon>contact_mail</mat-icon>
+        <span class="mat-caption" *ngIf="isAutenticated"> {{currentUser.user.correo_electronico}}</span>
+      </a>
+      <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Cerrar sesión</span>
       </a>
     </mat-menu>
-  </div>
-  </section> -->
   <!--  -->
 
 
