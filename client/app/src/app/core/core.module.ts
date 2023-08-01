@@ -11,6 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
+import { MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
 declarations: [
@@ -27,7 +28,8 @@ MatIconModule,
 MatButtonModule,
 MatToolbarModule,
 MatGridListModule,
-MatMenuModule
+MatMenuModule,
+MatBadgeModule
 ],
 
 exports: [
