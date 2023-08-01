@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { CoreModule } from './core/core.module';
 import { ShareModule } from './share/share.module';
 import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
-import { HttpClientModule } from '@angular/common/http';
 import { CalificacionUsuarioModule } from './calificacion-usuario/calificacion-usuario.module';
 import { DireccionModule } from './direccion/direccion.module';
 import { MetodoPagoModule } from './metodo-pago/metodo-pago.module';
@@ -14,19 +17,26 @@ import { OrdenCompraModule } from './orden-compra/orden-compra.module';
 import { ProductoModule } from './producto/producto.module';
 import { FotografiaModule } from './fotografia/fotografia.module';
 import { MensajeriaModule } from './mensajeria/mensajeria.module';
+
+import { ToastrModule } from 'ngx-toastr';
+
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { ToastrModule } from 'ngx-toastr';
+
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
+
 @NgModule({
 declarations: [AppComponent],
 imports: [
 BrowserModule, // importar HttpClientModule después BrowserModule. 
+BrowserAnimationsModule,
 // comunicarse con un servidor a través del protocolo HTTP 
 HttpClientModule, // Debe agregar el import respectivo // importar otras 
 //dependencias que sean necesario cargar en el componente principal.
-// importar los módulos creados propios en orden 
 ToastrModule.forRoot(),
+// importar los módulos creados propios en orden 
 CoreModule, 
 ShareModule, 
 HomeModule, 
@@ -38,13 +48,18 @@ OrdenCompraModule,
 ProductoModule, 
 FotografiaModule,
 MensajeriaModule,
-// al final el gestor de las rutas principal 
-AppRoutingModule, 
+
 MatTableModule,
 MatPaginatorModule,
 MatSortModule,
+// al final el gestor de las rutas principal 
+AppRoutingModule, 
+
 ],
-providers: [ ],
+providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpErrorInterceptorService, multi: true
+  }],
 bootstrap: [AppComponent],
 })
 export class AppModule {}
