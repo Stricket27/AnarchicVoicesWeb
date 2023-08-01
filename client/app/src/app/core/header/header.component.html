@@ -33,6 +33,17 @@
     </section>
 
     <!-- DROPDOWN DE INICIAR SESION -->
+    <div class="example-spacer">
+    <!--enlaces de la app-->
+    <!--https://fonts.google.com/icons-->
+    <!--https://material.angular.io/guide/typography-->
+    <!-- Carrito de comprar presenta la cantidad -->
+    <button mat-icon-button matBadgeColor="accent" [matBadge]="qtyItems.toString()" 
+       [routerLink]="'/orden'" [routerLinkActive]="'mat-raised-button'"  aria-label="Cantidad">
+     <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">shopping_cart</mat-icon>
+   </button> |   
+    <!--Usuario-->
+    
     <button mat-icon-button [matMenuTriggerFor]="menu3">
       <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">person</mat-icon>
       <span class="mat-caption" *ngIf="isAutenticated" style="color: white;"> {{currentUser.user.nombre}} {{currentUser.user.apellidos}}</span>
@@ -52,6 +63,7 @@
         <span>Cerrar sesión</span>
       </a>
     </mat-menu>
+  </div>
   <!--  -->
 
 
