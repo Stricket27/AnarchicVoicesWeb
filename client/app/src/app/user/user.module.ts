@@ -1,9 +1,15 @@
 import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
 
-
+import { UserAllComponent } from './user-all/user-all.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserFormComponent } from './user-form/user-form.component';
+import { UserIndexComponent } from './user-index/user-index.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card'; 
@@ -19,19 +25,19 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserAllComponent } from './user-all/user-all.component';
-import { UserDetailComponent } from './user-detail/user-detail.component';
-import { UserFormComponent } from './user-form/user-form.component';
-import { UserIndexComponent } from './user-index/user-index.component';
 
+import { MatTabsModule} from '@angular/material/tabs';
+
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
-  
     UserAllComponent,
-       UserDetailComponent,
-       UserFormComponent,
-       UserIndexComponent
+    UserDetailComponent,
+    UserFormComponent,
+    UserIndexComponent,
+    UserCreateComponent,
+    UserLoginComponent
   ],
   imports: [
     CommonModule,
@@ -50,6 +56,10 @@ import { UserIndexComponent } from './user-index/user-index.component';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    MatTabsModule,
+
+    LayoutModule,
+
     ReactiveFormsModule, //Gestionar Formularios
   ]
 })
