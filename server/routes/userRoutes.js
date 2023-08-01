@@ -9,10 +9,12 @@ const userController = require('../controllers/userController');
 
 router.get('/', userController.get);
 
-router.post('/', userController.create);
-
 router.get('/:id',userController.getById);
 
 router.put('/', userController.update);
+
+router.post('/login', userController.login);
+
+router.post('/registrar', userController.register);
 
 module.exports=router
