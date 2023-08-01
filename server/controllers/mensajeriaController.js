@@ -80,6 +80,7 @@ module.exports.update = async (request, response, next) => {
         respuesta: mensajeria.respuesta,
         estado_actual: mensajeria.estado_actual,
         usuario: { connect: { id_usuario: mensajeria.usuario } },
+        disconnect:mensajeViejo,
         producto: { connect: { id_producto: mensajeria.producto } }
     },
   });

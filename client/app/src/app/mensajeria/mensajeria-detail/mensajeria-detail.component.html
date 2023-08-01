@@ -1,1 +1,11 @@
-<p>mensajeria-detail works!</p>
+<mat-card class="dashboard-card" *ngIf="datos"  >
+   
+    <mat-card-content class="dashboard-card-content">
+    <p><b>Producto: </b>{{datos.producto.nombre}}-{{datos.producto.descripcion}}</p>
+    <p><b>Cliente: </b>{{datos.usuario.nombre}} {{datos.usuario.apellidos}}</p>
+      <p><b>Asunto: </b>{{datos.asunto}}</p>
+      <p><b>Mensaje: </b>{{datos.mensaje}}</p>
+      <p><b>Respuesta: </b>{{datos.respuesta}}</p>
+      <p><b>Estado actual: </b>{{datos.estado_actual}}</p>
+    </mat-card-content>
+  </mat-card>

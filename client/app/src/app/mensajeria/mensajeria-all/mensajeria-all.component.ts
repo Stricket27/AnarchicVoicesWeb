@@ -97,11 +97,13 @@ export class MensajeriaAllComponent implements AfterViewInit {
   })
   }
 
-  actualizarMensaje(id: number) {
-  this.router.navigate(['/mensajeria-cliente/update', id], {
-  relativeTo: this.route,
-  });
-  }
+  actualizarMensaje(id: number,idProducto:number) {
+    this.router.navigate(['/mensajeria-cliente/update', id], {
+    relativeTo: this.route,
+    queryParams: { id_producto: idProducto }
+    });
+    }
+
 
   crearMensaje() {
   this.router.navigate(['/mensajeria-cliente/create'], {

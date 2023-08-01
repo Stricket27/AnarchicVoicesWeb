@@ -12,7 +12,7 @@ router.post('/', mensajeriaController.create);
 
 router.get('/:id',mensajeriaController.getById);
 
-router.put('/', mensajeriaController.update);
+router.put('/:id', mensajeriaController.update);
 
 
 

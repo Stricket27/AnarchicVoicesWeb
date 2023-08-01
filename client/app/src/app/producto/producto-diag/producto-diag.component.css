@@ -9,3 +9,7 @@ img{
 .titulo, p, li{
     color: black;
 }
+a{
+    color: white;
+    background-color: #495057;
+    }

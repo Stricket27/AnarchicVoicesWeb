@@ -1,4 +1,4 @@
-<form [formGroup]="mensajeriaForm" (ngSubmit)="isCreate ? crearMensaje(): actualizarMensaje()"  novalidate >
+<form [formGroup]="mensajeriaForm" (ngSubmit)="crearMensaje()"  novalidate >
   <input type="hidden" formControlName="id_mensajeria" />
   <mat-card class="shipping-card"> 
     <mat-card-header>
@@ -14,6 +14,12 @@
             <mat-error *ngIf="errorHandling('asunto','required')">
               Asunto es <strong>requerido</strong>
             </mat-error>
+            <mat-error *ngIf="errorHandling('asunto','minlength')">
+              Asunto debe tener <strong>10 caracteres</strong>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('asunto','maxlength')">
+              Asunto no debe tener más de <strong>100 caracteres</strong>
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -25,23 +31,39 @@
           <mat-error *ngIf="errorHandling('mensaje','required')">
             Mensaje es <strong>requerido</strong>
           </mat-error>
+          <mat-error *ngIf="errorHandling('mensaje','minlength')">
+            Mensaje debe tener <strong>20 caracteres</strong>
+          </mat-error>
+          <mat-error *ngIf="errorHandling('mensaje','maxlength')">
+            Mensaje no debe tener más de <strong>100 caracteres</strong>
+          </mat-error>
         </mat-form-field>
       </div>
       
-      
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Respuesta</mat-label>
+          <input matInput formControlName="respuesta">
+         
+          <mat-error *ngIf="errorHandling('respuesta','minlength')">
+            Respuesta debe tener <strong>20 caracteres</strong>
+          </mat-error>
+          <mat-error *ngIf="errorHandling('respuesta','maxlength')">
+            Respuesta no debe tener más de <strong>100 caracteres</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
        
-            <div class="row">
-              <div class="col" *ngIf="productosList">
-                <mat-form-field class="full-width">
-                    <mat-label>Producto</mat-label>
-                    <mat-select formControlName="producto">
-                      <mat-option *ngFor="let p of productosList" [value]="p.id_producto">
-                        {{p.nombre}} - {{p.descripcion}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-            </div>
-            
+      <div class="col" *ngIf="productosList && productId">
+        <mat-form-field class="full-width">
+          <mat-label>Producto</mat-label>
+          <mat-select formControlName="producto">
+            <mat-option [value]="productId">
+              {{ getProductDescription(productId) }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
             <div class="col" *ngIf="usuariosList">
               <mat-form-field class="full-width">
@@ -53,12 +75,14 @@
                   </mat-select>
                 </mat-form-field>
           </div>
-        </div>
+      
        
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Guardar</button>
+      <button mat-raised-button color="primary" type="submit">
+        Guardar
+      </button>
     </mat-card-actions>
   </mat-card>
 </form>

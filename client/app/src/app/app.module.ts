@@ -17,6 +17,7 @@ import { MensajeriaModule } from './mensajeria/mensajeria.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
 declarations: [AppComponent],
 imports: [
@@ -25,6 +26,7 @@ BrowserModule, // importar HttpClientModule después BrowserModule.
 HttpClientModule, // Debe agregar el import respectivo // importar otras 
 //dependencias que sean necesario cargar en el componente principal.
 // importar los módulos creados propios en orden 
+ToastrModule.forRoot(),
 CoreModule, 
 ShareModule, 
 HomeModule, 
