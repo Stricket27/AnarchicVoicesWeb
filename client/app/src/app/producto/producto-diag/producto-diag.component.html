@@ -4,11 +4,18 @@
 
 <div class="informacion" *ngIf="datos">
   <mat-dialog-content>
-    <div *ngIf="datos.fotografia">
+    <carousel [isAnimated]="true" *ngIf="datos.fotografia">
+      <!-- <li > -->
+        <slide *ngFor="let item of datos.fotografia">
+          <img src="{{item.fotografia}}" style="display: block; width: 100%; margin-left:30%;">
+        </slide>
+      <!-- </li> -->
+    </carousel>
+    <!-- <div *ngIf="datos.fotografia">
       <div *ngFor="let foto of datos.fotografia">
         <img src="{{ foto.fotografia }}" />
       </div>
-    </div>
+    </div> -->
 
     <p>Descripción: {{ datos.descripcion }}</p>
 
