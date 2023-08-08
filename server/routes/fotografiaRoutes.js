@@ -11,4 +11,6 @@ router.get('/:id',fotografiaController.getById);
 
 router.put('/:id', fotografiaController.update);
 
+router.put('/eliminarFoto/:id', fotografiaController.EliminarFotografias);
+
 module.exports=router
