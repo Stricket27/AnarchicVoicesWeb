@@ -1,12 +1,20 @@
-  <div class="form">
-      <nav mat-tab-nav-bar backgroundColor="primary" [tabPanel]="tabPanel">
-        
-        <a mat-tab-link [routerLink]="['/user/login']" routerLinkActive="active-link">Entrar con un usurio registrado</a>
-    <a mat-tab-link [routerLink]="['/user/registrar']" routerLinkActive="active-link">Crearse una cuenta nueva</a>
-      </nav>
-      <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-      <div>	
-        <router-outlet></router-outlet>	
-      </div> 
-  
+<div class="form">
+  <nav mat-tab-nav-bar backgroundColor="primary" [tabPanel]="tabPanel">
+    <a
+      mat-tab-link
+      [routerLink]="['/user/login']"
+      routerLinkActive="active-link"
+      >Entrar con un usurio registrado</a
+    >
+    <a
+      mat-tab-link
+      [routerLink]="['/user/registrar']"
+      routerLinkActive="active-link"
+      >Crearse una cuenta nueva</a
+    >
+  </nav>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+  <div>
+    <router-outlet></router-outlet>
   </div>
+</div>
