@@ -1,73 +1,75 @@
 <button mat-icon-button class="close-button" [mat-dialog-close]="true">
-  <mat-icon class="close-icon" color="primary">close</mat-icon>
-  </button>
-  
-  <div class="informacion" *ngIf="datos">
-  
-      <h2 class="titulo" mat-dialog-title>{{ datos.nombre }}</h2>
-  
-      <mat-dialog-content>
-  
-        <div *ngIf="datos.fotografia">
-          <div *ngFor="let foto of datos.fotografia">
-  
-          <img src="{{foto.fotografia}}">
-  
-          </div>
-        </div>
-  
-        <p>Descripción: {{datos.descripcion }}</p>
-  
-        <p>Cantidad: {{ datos.cantidad }}</p>
-  
-        <p>Estado del producto: {{ datos.estado_producto }}</p>
-  
-        <p>Precio: {{ datos.precio | currency : "₡" }}</p>
-  
-        <p>Categoría: {{ datos.categoria.descripcion}}</p>
-  
-        <p>Vendedor: {{ datos.usuario.nombre}} {{ datos.usuario.apellidos}}</p>
-  
+  <mat-icon class="close-icon">close</mat-icon>
+</button>
+
+<div class="informacion" *ngIf="datos">
+  <mat-dialog-content>
+    <div *ngIf="datos.fotografia">
+      <div *ngFor="let foto of datos.fotografia">
+        <img src="{{ foto.fotografia }}" />
+      </div>
+    </div>
+
+    <p>Descripción: {{ datos.descripcion }}</p>
+
+    <p>Cantidad: {{ datos.cantidad }}</p>
+
+    <p>Estado del producto: {{ datos.estado_producto }}</p>
+
+    <p>Precio: {{ datos.precio | currency : "₡" }}</p>
+
+    <p>Categoría: {{ datos.categoria.descripcion }}</p>
+
+    <p>Vendedor: {{ datos.usuario.nombre }} {{ datos.usuario.apellidos }}</p>
+
+    <mat-divider inset></mat-divider>
+    <br />
+
+    <h2>Mensajes más frecuentes</h2>
+    <ul *ngIf="datos.mensajeria">
+      <div *ngFor="let mensaje of datos.mensajeria">
+        <section class="msger">
+          <main class="msger-chat">
+            <div class="msg left-msg">
+              <div class="msg-bubble">
+                <div class="msg-info">
+                  <div class="msg-info-name">{{ mensaje.asunto }}</div>
+                </div>
+                <div class="msg-text">
+                  {{ mensaje.mensaje }}
+                </div>
+              </div>
+            </div>
+
+            <div class="msg right-msg">
+              <div class="msg-bubble">
+                <div class="msg-info">
+                  <div class="msg-info-name">{{ mensaje.estado_actual }}</div>
+                </div>
+
+                <div class="msg-text">
+                  {{ mensaje.respuesta }}
+                </div>
+              </div>
+            </div>
+          </main>
+        </section>
+
         <mat-divider inset></mat-divider>
-  
-        <ul *ngIf="datos.mensajeria">
-  
-          <h2 class="titulo" mat-dialog-title>Todos los mensajes guardados</h2>
-  
-          <div *ngFor="let mensaje of datos.mensajeria">
-  
-          <h2 class="titulo" mat-dialog-title>Mensaje # {{mensaje.id_mensajeria}}</h2>
-  
-          <li ><b>Asunto:</b> {{ mensaje.asunto }}</li>
-  
-          <li ><b>Mensaje:</b> {{ mensaje.mensaje }}</li>
-  
-          <li ><b>Respuesta:</b> {{ mensaje.respuesta }}</li>
-  
-          <li ><b>Estado del mensaje:</b> {{ mensaje.estado_actual }}</li>
-  
-          <mat-divider inset></mat-divider>
-  
-          <br>
-  
-          </div>
-          <h4>¿Buscas información específica?</h4>
-          <a
-        mat-fab
-        extended
-        matTooltip="Crear Mensaje"
-        aria-label="Crear Mensaje"
-        color="primary"
-        (click)="crearMensaje()"
-        ><mat-icon>add</mat-icon>
-          Enviar mensaje
-        </a>
-  
-        </ul>
-  
-      </mat-dialog-content>
-    
-      <mat-dialog-actions> </mat-dialog-actions>
-  </div>
-    
-  
+
+        <br />
+      </div>
+    </ul>
+  </mat-dialog-content>
+  <h4>¿Buscas información específica sobre este producto?</h4>
+  <p>Puedes enviarnos un mensaje al presionar este botón</p>
+  <a
+    mat-fab
+    matTooltip="Crear Mensaje"
+    aria-label="Crear Mensaje"
+    color="primary"
+    (click)="crearMensaje()"
+    ><mat-icon>email</mat-icon>
+  </a>
+  <mat-dialog-actions> </mat-dialog-actions>
+</div>
