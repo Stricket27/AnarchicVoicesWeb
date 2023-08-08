@@ -25,3 +25,11 @@
   .col:last-child {
     margin-right: 0;
   }
+
+  mat-card-title{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .radio{
+    margin-left: 16px;
+  }

@@ -13,24 +13,15 @@ import { NotificacionService,TipoMessage } from 'src/app/share/notification.serv
 })
 export class MensajeriaClienteFormComponent implements OnInit{
   destroy$: Subject<boolean> = new Subject<boolean>();
-  //Titulo
   titleForm: string = 'Crear';
-   //Lista de generos
-   productosList: any;
-   usuariosList:any;
-   productId: number;
-  //Videojuego a actualizar
+  productosList: any;
+  usuariosList:any;
+  productId: number;
   mensajeriaInfo: any;
-  
-  //Respuesta del API crear/modificar
   respMensajeria: any;
-  //Sí es submit
   submitted = false;
-  //Nombre del formulario
   mensajeriaForm: FormGroup;
-  //id del Videojuego
   idMensajeria: number = 0;
-  //Sí es crear
   isCreate: boolean = true;
 
   constructor(
@@ -47,47 +38,52 @@ export class MensajeriaClienteFormComponent implements OnInit{
     
     }
   
-    ngOnInit(): void {
+  ngOnInit(): void {
+    this.activeRouter.queryParams.subscribe(queryParams => {
+      const idProductoParam = queryParams['id_producto'];
+      if (idProductoParam && !isNaN(parseInt(idProductoParam))) {
+        this.productId = parseInt(idProductoParam);
+        console.log('Product ID:', this.productId);
+       
+       
+      }
+    });
    
-   
-    this.activeRouter.queryParams.subscribe((params:Params)=>{
-      const idProductoParam = params['id_producto'];
-      console.log('Product ID:', this.productId);
+  //Verificar si se envio un id por parametro para crear formulario para actualizar
+    this.activeRouter.params.subscribe((params:Params)=>{
+      this.idMensajeria = params['id'];
       
-    this.idMensajeria=params['id_mensajeria'];
-    if(this.idMensajeria!=undefined){
-    this.isCreate=false;
-    this.titleForm="Actualizar";
-    this.gService.get('mensajeria',this.idMensajeria).pipe(takeUntil(this.destroy$))
-    .subscribe((data:any)=>{
+      if(this.idMensajeria!=undefined){
+        this.isCreate=false;
+        this.titleForm="Actualizar";
+        //Obtener el mensaje del API
+        this.gService.get('mensajeria',this.idMensajeria).pipe(takeUntil(this.destroy$))
+        .subscribe((data:any)=>{
+          this.mensajeriaInfo=data;
+
+          //Establecer los valores del formulario mensajeria
+          console.log(this.mensajeriaInfo)
+          this.mensajeriaForm.setValue({
+            id:this.mensajeriaInfo.id_mensajeria,
+            asunto:this.mensajeriaInfo.asunto,
+            mensaje:this.mensajeriaInfo.mensaje,
+            respuesta:this.mensajeriaInfo.respuesta,
+            estado_actual:this.mensajeriaInfo.estado_actual,
+            producto:this.productId,
+            usuario:this.mensajeriaInfo.usuario,
+          })
+        });
+      }
+      
      
-     this.mensajeriaInfo=data;
-     console.log(this.mensajeriaInfo)
-    this.mensajeriaForm.setValue({
-    id_mensajeria:this.mensajeriaInfo.id_mensajeria,
-     asunto:this.mensajeriaInfo.asunto,
-     mensaje:this.mensajeriaInfo.mensaje,
-     respuesta:this.mensajeriaInfo.respuesta,
-     estado_actual:this.mensajeriaInfo.estado_actual,
-    producto:this.mensajeriaInfo.producto,
-    usuario:this.mensajeriaInfo.usuario,
-     })
-     });
-    }
-    if (idProductoParam && !isNaN(parseInt(idProductoParam))) {
-      this.productId = parseInt(idProductoParam);
-      console.log('Product ID:', this.productId);
-     
-       // Configurar el formulario para el caso de edición
-       this.configurarFormularioEdicion(this.productId);
-    }
-     });
-     this.listaProductos();
-    }
+    });
+   
+    this.listaProductos();
+  }
   
     formularioReactive() {
     this.mensajeriaForm=this.fb.group({
-    id_mensajeria:[null,null],
+    id:[null,null],
     respuesta:[null,Validators.compose([Validators.minLength(10),Validators.maxLength(100)])],
     
     estado_actual: ["Pendiente"],
@@ -96,12 +92,7 @@ export class MensajeriaClienteFormComponent implements OnInit{
     producto: [null, Validators.required],
     usuario: [null, Validators.required],
     })
-   // Verificar si el campo respuesta es nulo y establecer "Pendiente" por defecto
-  if (this.mensajeriaForm.get('respuesta').value != null ) {
-    this.mensajeriaForm.patchValue({
-      estado_actual: 'Pregunta respondida',
-    });
-  }
+  
     }
     
     getProductDescription(productId: number): string {
@@ -112,7 +103,7 @@ export class MensajeriaClienteFormComponent implements OnInit{
       return selectedProduct ? `${selectedProduct.nombre} - ${selectedProduct.descripcion}` : '';
       
     }
-  
+    
 
     listaUsuarios() {
     this.usuariosList = null;
@@ -135,20 +126,7 @@ export class MensajeriaClienteFormComponent implements OnInit{
     this.productosList = data;
     });
     }
-    configurarFormularioEdicion(idProducto: number) {
-      // Configurar el formulario para el caso de edición cuando tenemos solo el id_producto del mensaje
-    
-      // Obtener el objeto completo del producto
-      this.gService.get('producto', idProducto).pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
-        // Cargar la lista de productos (ya que estamos en el caso de edición)
-        this.listaProductos();
-    
-        // Configurar el valor del combo con el id_producto del mensaje
-        this.mensajeriaForm.patchValue({
-          producto: idProducto,
-        });
-      });
-    }
+   
     public errorHandling = (control: string, error: string) => {
     return this.mensajeriaForm.controls[control].hasError(error);
     };
@@ -173,29 +151,16 @@ export class MensajeriaClienteFormComponent implements OnInit{
   
     actualizarMensaje() {
       this.submitted = true;
-      this.isCreate=false;
       if (this.mensajeriaForm.invalid) {
         return;
       }
   
-      // Obtener el valor del campo producto del formulario
-      const productId = this.mensajeriaForm.get('producto')?.value;
-  
-      // Configurar el objeto a enviar para actualizar el mensaje
-      const mensajeActualizado = {
-        id_mensajeria: this.mensajeriaForm.get('id_mensajeria')?.value,
-        respuesta: this.mensajeriaForm.get('respuesta')?.value,
-        estado_actual: this.mensajeriaForm.get('estado_actual')?.value,
-        asunto: this.mensajeriaForm.get('asunto')?.value,
-        mensaje: this.mensajeriaForm.get('mensaje')?.value,
-        producto: productId,
-        usuario: this.mensajeriaForm.get('usuario')?.value,
-      };
-  
-      console.log(mensajeActualizado);
-      this.gService.update('mensajeria', mensajeActualizado)
+     
+     
+      this.gService.update('mensajeria', this.mensajeriaForm.value)
         .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
           this.respMensajeria = data;
+          this.noti.mensaje('Mensaje','Mensaje editado',TipoMessage.info)
           this.router.navigate(['/mensajeria/all'], {
             queryParams: { update: 'true' }
           });

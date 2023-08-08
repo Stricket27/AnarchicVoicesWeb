@@ -79,9 +79,8 @@ module.exports.update = async (request, response, next) => {
         mensaje: mensajeria.mensaje,
         respuesta: mensajeria.respuesta,
         estado_actual: mensajeria.estado_actual,
-        usuario: { connect: { id_usuario: mensajeria.usuario } },
-        disconnect:mensajeViejo,
-        producto: { connect: { id_producto: mensajeria.producto } }
+        usuario: {connect: mensajeria.id_usuario  },
+        producto: {connect:  mensajeria.id_producto  }
     },
   });
   response.json(newMensajeria);

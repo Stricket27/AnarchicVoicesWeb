@@ -1,5 +1,5 @@
-<form [formGroup]="mensajeriaForm" (ngSubmit)="crearMensaje()"  novalidate >
-  <input type="hidden" formControlName="id_mensajeria" />
+<form [formGroup]="mensajeriaForm" (ngSubmit)="isCreate ? crearMensaje(): actualizarMensaje()"  novalidate >
+  <input type="hidden" formControlName="id" />
   <mat-card class="shipping-card"> 
     <mat-card-header>
       <mat-card-title>{{titleForm}} Mensaje</mat-card-title>
@@ -25,8 +25,8 @@
       </div>
 
       <div class="col">
-        <mat-form-field class="full-width">
-          <mat-label>Mensaje</mat-label>
+        <mat-form-field class="full-width" >
+          <mat-label >Mensaje</mat-label>
           <input matInput formControlName="mensaje">
           <mat-error *ngIf="errorHandling('mensaje','required')">
             Mensaje es <strong>requerido</strong>
@@ -43,7 +43,7 @@
       <div class="col">
         <mat-form-field class="full-width">
           <mat-label>Respuesta</mat-label>
-          <input matInput formControlName="respuesta">
+          <input matInput formControlName="respuesta" >
          
           <mat-error *ngIf="errorHandling('respuesta','minlength')">
             Respuesta debe tener <strong>20 caracteres</strong>
@@ -58,25 +58,42 @@
         <mat-form-field class="full-width">
           <mat-label>Producto</mat-label>
           <mat-select formControlName="producto">
-            <mat-option [value]="productId">
+            <mat-option [value]="productId" >
               {{ getProductDescription(productId) }}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
-            <div class="col" *ngIf="usuariosList">
+            <!-- <div class="col" *ngIf="usuariosList">
               <mat-form-field class="full-width">
                   <mat-label>Usuario</mat-label>
                   <mat-select formControlName="usuario">
                     <mat-option *ngFor="let u of usuariosList" [value]="u.id_usuario">
                       {{u.nombre}} {{u.apellidos}}
                     </mat-option>
+                    
                   </mat-select>
+                  <mat-error *ngIf="errorHandling('usuario','required')">
+                    Usuario es <strong>requerido</strong>
+                  </mat-error>
                 </mat-form-field>
+          </div> -->
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Usuario</mat-label>
+              <input matInput formControlName="usuario" readonly value="{{ mensajeriaForm.get('usuario').value?.nombre }} {{ mensajeriaForm.get('usuario').value?.apellidos }}">
+            </mat-form-field>
           </div>
-      
-       
+         
+            <div class="col">
+              <mat-label class="radio">Estado actual</mat-label>
+              <mat-radio-group formControlName="estado_actual">
+                <mat-radio-button value="Pregunta respondida">Pregunta respondida</mat-radio-button>
+                <mat-radio-button value="Pendiente">Pendiente</mat-radio-button>
+              </mat-radio-group>
+            </div>
+         
     </mat-card-content>
 
     <mat-card-actions>
