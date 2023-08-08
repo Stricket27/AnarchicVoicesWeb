@@ -10,18 +10,6 @@
               <mat-label>Correo electrónico</mat-label>
               <input matInput type="text" placeholder="correo electrónico" formControlName="correo_electronico" />
              <mat-error *ngIf="errorHandling('correo_electronico', 'required')">
-                El correo electrónico es <strong>requerido</strong><!-- <form [formGroup]="formulario"  novalidate>
-    <mat-card class="shipping-card">
-      <mat-card-header>
-        <mat-card-title>Iniciar sesión de Usuario </mat-card-title>
-      </mat-card-header> 
-      <mat-card-content>
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <mat-label>Correo electrónico</mat-label>
-              <input matInput type="text" placeholder="correo electrónico" formControlName="correo_electronico" />
-             <mat-error *ngIf="errorHandling('correo_electronico', 'required')">
                 El correo electrónico es <strong>requerido</strong>
               </mat-error>
               <mat-error *ngIf="errorHandling('correo_electronico','correo_electronico')">
@@ -114,80 +102,3 @@
 </div>
 
 <div id="login"></div>
-
-              </mat-error>
-              <mat-error *ngIf="errorHandling('correo_electronico','correo_electronico')">
-                Verifique el <strong>formato</strong> del correo electrónico
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-            <mat-label>Contraseña</mat-label>
-            <input matInput [type]="hide ? 'contrasenna' : 'text'" placeholder="Contraseña" formControlName="contrasenna" />
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide contrasenna'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-           <mat-error *ngIf="errorHandling('contrasenna', 'required')">
-              La contraseña es <strong>requerido</strong>
-            </mat-error>
-          </mat-form-field>
-          </div>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="submitForm()">Iniciar sesión</button>
-        <button mat-raised-button color="accent" type="reset" (click)="onReset()">Cancelar</button>
-      </mat-card-actions>
-    </mat-card>
-    </form>
-  
-   -->
-
-      <div id="signup">   
-        <h1>Iniciar sesión</h1>
-        
-        <form [formGroup]="formulario"  novalidate>
-
-        <div class="field-wrap">
-            <input matInput type="text" placeholder="correo electrónico" formControlName="correo_electronico" />
-           <mat-error *ngIf="errorHandling('correo_electronico', 'required')">
-              El correo electrónico es <strong>requerido</strong>
-            </mat-error>
-            <mat-error *ngIf="errorHandling('correo_electronico','correo_electronico')">
-              Verifique el <strong>formato</strong> del correo electrónico
-            </mat-error>
-        </div>
-        
-        <div class="field-wrap">
-            <input type="password" matInput [type]="hide ? 'contrasenna' : 'text'" placeholder="Contraseña" formControlName="contrasenna" />
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide contrasenna'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-           <mat-error *ngIf="errorHandling('contrasenna', 'required')">
-              La contraseña es <strong>requerido</strong>
-            </mat-error>
-        </div>
-
-        <div class="top-row">
-          <div class="field-wrap">
-            <button class="button button-block" (click)="submitForm()">Iniciar sesión</button>
-          </div>
-
-          <div class="field-wrap">
-            <button class="button button-block" (click)="submitForm()">Cancelar</button>
-          </div>
-        </div>
-        
-        
-        
-        </form>
-
-      </div>
-      
-      <div id="login">
-      </div>
-      
-    
