@@ -2,8 +2,8 @@
   width: 100%;
 }
 
-mat-form-field{
-  background-color: #F4F4F9;
+mat-form-field {
+  background-color: #f4f4f9;
 }
 
 .shipping-card {
@@ -30,8 +30,19 @@ mat-form-field{
   margin-right: 0;
 }
 
-
 .example-card {
-  max-width: 400px;
-  background-color: #CED4DA;
+  max-width: 600px;
+  background-color: #ced4da;
+}
+
+p {
+  text-align: justify;
+}
+
+img {
+  width: 10pc;
+}
+
+h1 {
+  text-align: center;
 }
