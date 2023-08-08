@@ -132,7 +132,7 @@ model Producto{
   nombre String
   descripcion String
   precio Decimal @db.Decimal(10,2)
-  cantidad Int
+  cantidad String
   estado_producto String
   estado_actual String
 
@@ -149,7 +149,7 @@ model Producto{
 
 model Fotografia{
   id_fotografia Int @id @default(autoincrement())
-  fotografia String
+  fotografia String @db.VarChar(10000)
   estado_actual String
   
   id_producto Int
