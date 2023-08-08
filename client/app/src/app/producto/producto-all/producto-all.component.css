@@ -1,42 +1,41 @@
 .full-width-table {
-    width: 100%;
-    background-color: #212529;
-    border-radius: 14px;
-  }
+  width: 100%;
+  background-color: #212529;
+  border-radius: 14px;
+}
 
-  mat-icon{
-    color: white;
-  }
+mat-icon {
+  color: white;
+}
 
-   h1{
-    text-align: center;
-  }
+h1 {
+  text-align: center;
+}
 
- th{
-    color: white;
-  }
+th {
+  color: white;
+}
 
-  a{
+a {
   color: white;
   background-color: #495057;
-  }
-  
-  .full-width{
-    background-color: #F4F4F9;
-    box-shadow: none;
-  }
-  
-  mat-paginator{
-    background-color: #212529;
-    color: white;
-  }
-  
-  td{
-    background-color: #ADB5BD;
-    color: black;
-  }
-  
-  button{
-    background-color: #212529;
-  }
-  
+}
+
+.full-width {
+  background-color: #f4f4f9;
+  box-shadow: none;
+}
+
+mat-paginator {
+  background-color: #212529;
+  color: white;
+}
+
+td {
+  background-color: #adb5bd;
+  color: black;
+}
+
+button {
+  background-color: #212529;
+}
