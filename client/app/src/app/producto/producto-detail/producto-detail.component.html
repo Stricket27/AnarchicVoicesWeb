@@ -4,11 +4,25 @@
         {{datos.nombre }}
       </mat-card-title>
     </mat-card-header>
+    
     <mat-card-content class="dashboard-card-content">
       <p><b>Descripción: </b>{{datos.descripcion}}</p>
       <p><b>Precio: </b>{{datos.precio| currency:'USD'}}</p>
       <p><b>Cantidad: </b>{{datos.cantidad}}</p>
       <p><b>Estado del producto: </b>{{datos.estado_producto}}</p>
-      <!-- <p><b>Vendedor: </b></p> -->
+      <ul *ngIf = "datos">
+        <li> {{datos.usuario.nombre}} {{datos.usuario.apellidos}}</li>
+      </ul>
+      <ul *ngIf="datos">
+        <li> {{datos.categoria.descripcion}}</li>
+      </ul>
+      <ul *ngIf="datos.fotografia">
+        <li *ngFor="let item of datos.fotografia">
+          <img width="50%" src="{{item.fotografia}}">
+        </li>
+      </ul>
     </mat-card-content>
   </mat-card>
+
+
+  
