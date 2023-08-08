@@ -1,222 +1,180 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { Subject, takeUntil } from "rxjs";
-import { CurrencyPipe } from "@angular/common";
-import { GenericService } from "src/app/share/generic.service";
-import { DomSanitizer } from "@angular/platform-browser";
+<form
+  [formGroup]="productoForm"
+  (ngSubmit)="isCreate ? crearProducto() : actualizarProducto()"
+  novalidate
+>
+  <input type="hidden" formControlName="id_producto" />
+  <mat-card
+    class="shipping-card"
+    style="background-color: #f4f4f9; box-shadow: none"
+  >
+    <mat-card-header>
+      <h1>
+        <b>{{ titleForm }}</b>
+      </h1>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Nombre del producto</mat-label>
+            <input matInput formControlName="nombre" />
+            <mat-error *ngIf="errorHandling('nombre', 'required')">
+              Nombre es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
 
-@Component({
-  selector: "app-producto-form",
-  templateUrl: "./producto-form.component.html",
-  styleUrls: ["./producto-form.component.css"],
-})
-export class ProductoFormComponent implements OnInit {
-  destroy$: Subject<boolean> = new Subject<boolean>();
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <span matPrefix>Album: &nbsp;</span>
+            <mat-label>Descripción del producto</mat-label>
+            <input matInput formControlName="descripcion" />
+            <mat-error *ngIf="errorHandling('descripcion', 'required')">
+              Descripción es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-  titleForm: string = "Crear producto y fotografía";
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Precio del producto</mat-label>
+            <input matInput formControlName="precio" />
+            <mat-error *ngIf="errorHandling('precio', 'required')">
+              Precio es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-  usuarioList: any;
-  categoriaList: any;
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Cantidad del producto</mat-label>
+            <input matInput formControlName="cantidad" />
+            <mat-error *ngIf="errorHandling('cantidad', 'required')">
+              Cantidad es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
 
-  productoInfo: any;
-  fotografiaInfo: any;
+      <div class="row">
+        <div class="col" *ngIf="categoriaList">
+          <mat-form-field class="full-width">
+            <mat-label>Categoria del producto</mat-label>
+            <mat-select formControlName="categoria">
+              <mat-option
+                *ngFor="let c of categoriaList"
+                [value]="c.id_categoria"
+              >
+                {{ c.descripcion }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-  respProducto: any;
-  respFotografia: any;
+        <div class="col" *ngIf="usuarioList">
+          <mat-form-field class="full-width">
+            <mat-label>Usuario del producto</mat-label>
+            <mat-select formControlName="usuario">
+              <mat-option *ngFor="let u of usuarioList" [value]="u.id_usuario">
+                {{ u.nombre }} {{ u.apellidos }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
 
-  submitted = false;
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Estado del producto</mat-label>
+            <mat-select formControlName="estado_producto">
+              <mat-option value="Nuevo">Nuevo</mat-option>
+              <mat-option value="Semi-nuevo">Semi-nuevo</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-  productoForm: FormGroup;
-  fotografiaForm: FormGroup;
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Estado actual del producto</mat-label>
+            <mat-select formControlName="estado_actual">
+              <mat-option value="Activo">Activo</mat-option>
+              <mat-option value="Inactivo">Inactivo</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
 
-  idProducto: number = 0;
-  idFotografia: number = 0;
+    <!-- <input id="fileInput" type="file" (change)="linkFotografia($event)">
+    <img *ngIf="selectedImage" [src]="selectedImage" alt="Imagen seleccionada"> -->
 
-  isCreate: boolean = true;
+    <!-- <input type="text" (input)="linkFotografia($event)" /> -->
 
-  archivos: any = [];
-  txtFotografia: any;
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">
+        Guardar producto
+      </button>
+    </mat-card-actions>
 
-  // selectedImage: any;
+    <mat-card class="example-card" style="margin-left: 32%">
+      <mat-card-header>
+        <h1>Apartado de imagenes</h1>
+      </mat-card-header>
+      <mat-card-header>
+        <p>
+          <b>Nota:</b> Antes de agregar la fotogarafía debes de entrar a este
+          link <a href="https://es.imgbb.com/" target="_blank">IMG BB</a> este
+          link es para convertir la imagen en una URL y asi que puedas agregar
+          la imagen deseada, si no sabes exactamente como se hace, aqui te mostramos un
+          <a href="./assets/pdf/Manual de URL de imágenes.pdf" target="_blank">PDF</a> donde muestra los pasos a seguir. 
+        </p>
+      </mat-card-header>
+      <mat-card-header>
+        <p>
+          <b style="color: red">Advertencia:</b> Cuando vas agregar la imagen
+          con la URL que le generó, si de alguna manera no te gusta, la puedes
+          eliminar, antes de crear el producto deseado
+        </p>
+      </mat-card-header>
 
+      <mat-card-content style="background-color: #ced4da">
+        <mat-form-field class="full-width" style="background-color: #ced4da">
+          <mat-label>Link de la fotografia</mat-label>
+          <input matInput type="text" (input)="linkFotografia($event)" />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          mat-button
+          color="primary"
+          type="button"
+          (click)="agregarFotografia()"
+        >
+          Agregar fotografia deseada
+        </button>
+        <mat-card-actions> </mat-card-actions>
+      </mat-card-content>
 
-  constructor(
-    private fb: FormBuilder,
-    private gService: GenericService,
-    private router: Router,
-    private activeRouter: ActivatedRoute,
-
-    private sanitizer: DomSanitizer
-  ) {
-    this.formularioReactive();
-    this.listaCategoria();
-    this.listaUsuario();
-  }
-
-  ngOnInit(): void {
-    //Formulario de producto
-    this.activeRouter.params.subscribe((params: Params) => {
-      this.idProducto = params["id"];
-
-      if (this.idProducto != undefined) {
-        this.isCreate = false;
-        this.titleForm = "Actualizar el producto";
-        this.gService
-          .get("producto", this.idProducto)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((data: any) => {
-            this.productoInfo = data;
-            console.log(this.productoInfo)
-            this.productoForm.setValue({
-              id_producto: this.productoInfo.id_producto,
-              nombre: this.productoInfo.nombre,
-              descripcion: this.productoInfo.descripcion,
-              precio: this.productoInfo.precio,
-              cantidad: this.productoInfo.cantidad,
-              estado_producto: this.productoInfo.estado_producto,
-              estado_actual: this.productoInfo.estado_actual,
-              usuario: this.productoInfo.usuario.id_usuario,
-              categoria: this.productoInfo.categoria.id_categoria,
-              fotografias: this.productoInfo.fotografia,
-
-            });
-            this.archivos = this.productoInfo.fotografia;
-          });
-      }
-    });
-  }
-
-  formularioReactive() {
-    this.productoForm = this.fb.group({
-      id_producto: [null, null],
-      nombre: [null, Validators.required],
-      descripcion: [null, Validators.required],
-      precio: [null, Validators.required],
-      cantidad: [null, Validators.required],
-      estado_producto: [null, Validators.required],
-      estado_actual: [null, Validators.required],
-      usuario: [null, Validators.required],
-      categoria: [null, Validators.required],
-
-      fotografias: [null, Validators.required],
-    });
-  }
-
-  listaUsuario() {
-    this.usuarioList = null;
-    this.gService
-      .list("user")
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        console.log(data);
-        this.usuarioList = data;
-      });
-  }
-
-  listaCategoria() {
-    this.categoriaList = null;
-    this.gService
-      .list("categoria")
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        console.log(data);
-        this.categoriaList = data;
-      });
-  }
-
-  crearProducto(): void {
-    try {
-      this.submitted = true;
-      if (this.productoForm.invalid) {
-        return;
-      }
-      //producto
-      this.gService
-        .create("producto", this.productoForm.value)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((data: any) => {
-          this.respProducto = data;
-          this.router.navigate(["/producto/all"], {
-            queryParams: { create: "true" },
-          });
-          console.log(this.productoForm.value);
-        });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  linkFotografia(event) {
-    this.txtFotografia = event.target.value
-  }
-
-  agregarFotografia(): void {
-    // const inputElement: HTMLInputElement = document.getElementById('fileInput') as HTMLInputElement;
-    // const file: File = inputElement.files![0];
-    // const reader = new FileReader();
-    // reader.onload = () => {
-    //   this.selectedImage = reader.result;
-    // };
-    // reader.readAsDataURL(file);
-    this.archivos.push({
-      fotografia: this.txtFotografia,
-      estado_actual: 'Activo'
-    })
-    this.productoForm.patchValue({
-      fotografias: this.archivos
-    })
-    console.log(this.archivos)
-  }
-
-  eliminarFotografiaDeProducto(index: any) {
-    if (this.isCreate == false) {
-      this.eliminarFotografia(index)
-    }
-    else {
-      this.archivos.splice(index, 1)
-    }
-  }
-
-  eliminarFotografia(index: any) {
-    this.gService.update('fotografia/eliminarFoto', { id: this.archivos[index].id_fotografia })
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        this.respProducto = data;
-        this.archivos.splice(index, 1)
-        console.log('eliminado')
-      });
-
-  }
-
-  public errorHandling = (control: string, error: string) => {
-    return this.productoForm.controls[control].hasError(error);
-    };
-
-  actualizarProducto() {
-    console.log(this.productoForm.value);
-    this.gService
-      .update("producto", this.productoForm.value)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        this.respProducto = data;
-        this.router.navigate(["/producto/all"], {
-          queryParams: { update: "true" },
-        });
-      });
-  }
-
-  onReset() {
-    this.submitted = false;
-    this.productoForm.reset();
-  }
-
-  onBack() {
-    this.router.navigate(["/producto/all"]);
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
-  }
-} // llave final de "export class ProductoFormComponent implements OnInit" REVISAR
+      <div class="row">
+        <div
+          class="col-sm-6 col-md-4"
+          *ngFor="let item of archivos; let i = index"
+        >
+          <img src="{{ item.fotografia }}" />
+          <button
+            mat-raised-button
+            mat-button
+            color="warn"
+            type="button"
+            (click)="eliminarFotografiaDeProducto(i)"
+          >
+            Eliminar fotografia
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </mat-card>
+</form>
