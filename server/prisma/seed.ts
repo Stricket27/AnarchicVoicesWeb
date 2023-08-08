@@ -69,7 +69,7 @@ async function main() {
     });
     //direccion
     await prisma.direccion.create({
-        data:{
+        data: {
             provincia: 'Heredia',
             canton: 'Belen',
             distrito: 'Calle flores',
@@ -92,7 +92,7 @@ async function main() {
     //metodoPago
     //id:1
     await prisma.metodoPago.create({
-        data:{
+        data: {
             numeroCuenta: '1234567891024587',
             fechaExpiracion: new Date(),
             estado_actual: 'Activo',
@@ -102,7 +102,7 @@ async function main() {
     });
     //id:2
     await prisma.metodoPago.create({
-        data:{
+        data: {
             numeroCuenta: '5123456789012346',
             fechaExpiracion: new Date(),
             estado_actual: 'Activo',
@@ -112,7 +112,7 @@ async function main() {
     });
     //id:3
     await prisma.metodoPago.create({
-        data:{
+        data: {
             numeroCuenta: '5123619745395853',
             fechaExpiracion: new Date(),
             estado_actual: 'Activo',
@@ -120,21 +120,21 @@ async function main() {
             id_tipoPago: 2
         }
     });
-    
+
     //ordencompra
     //id:1
-     await prisma.ordenCompra.create({
-         data: {
-             monto_total: '22600.00',
-             estado_actual: 'Pendiente',
-             id_usuario: 3,
-             id_metodoPago: 2,
-             direccion: "San Isidro de San Ramón"
-         }
-     });
+    await prisma.ordenCompra.create({
+        data: {
+            monto_total: '22600.00',
+            estado_actual: 'Pendiente',
+            id_usuario: 3,
+            id_metodoPago: 2,
+            direccion: "San Isidro de San Ramón"
+        }
+    });
 
-     //id:2
-     await prisma.ordenCompra.create({
+    //id:2
+    await prisma.ordenCompra.create({
         data: {
             monto_total: '42600',
             estado_actual: 'Pendiente',
@@ -207,281 +207,281 @@ async function main() {
         }
     });
 
-     // producto
-     //id:1
+    // producto
+    //id:1
     await prisma.producto.create({
         data: {
             nombre: 'All That Remains',
             descripcion: 'Album: The Fall Of Ideals',
             precio: '10000.00',
-            cantidad: 10,
+            cantidad: "10",
             estado_producto: 'Nuevo',
             estado_actual: 'Activo',
             id_usuario: 2,
             id_categoria: 1
         }
     });
-//id:2
+    //id:2
     await prisma.producto.create({
         data: {
             nombre: 'Motionless in White',
             descripcion: 'Album: Creatures',
             precio: '20000.00',
-            cantidad: 5,
+            cantidad: "5",
             estado_producto: 'Semi-nuevo',
             estado_actual: 'Activo',
             id_usuario: 2,
             id_categoria: 2
         }
     });
-//id:3
+    //id:3
     await prisma.producto.create({
         data: {
             nombre: 'Bad Omens',
             descripcion: 'Album: Unite And Fight',
             precio: '20000.00',
-            cantidad: 15,
+            cantidad: "15",
             estado_producto: 'Usado',
             estado_actual: 'Activo',
             id_usuario: 2,
             id_categoria: 2
         }
     });
-//id:4
+    //id:4
     await prisma.producto.create({
         data: {
             nombre: 'Escape the Fate',
             descripcion: 'Album: Dying Is Your Latest Fashion',
             precio: '7000.00',
-            cantidad: 20,
+            cantidad: "20",
             estado_producto: 'Nuevo',
             estado_actual: 'Activo',
             id_usuario: 2,
             id_categoria: 3
         }
     });
-//id:5
-await prisma.producto.create({
-    data: {
-        nombre: 'Arch Enemy',
-        descripcion: 'Album: Decivers',
-        precio: '20000.00',
-        cantidad: 20,
-        estado_producto: 'Nuevo',
-        estado_actual: 'Activo',
-        id_usuario: 4,
-        id_categoria: 3
-    }
-});
-//id:6
-await prisma.producto.create({
-    data: {
-        nombre: 'SpiritBox',
-        descripcion: 'Album: Eternal Blue',
-        precio: '15000.00',
-        cantidad: 12,
-        estado_producto: 'Nuevo',
-        estado_actual: 'Activo',
-        id_usuario: 5,
-        id_categoria: 3
-    }
-});
-//id:7
-await prisma.producto.create({
-    data: {
-        nombre: 'Motionless In White',
-        descripcion: 'Album: 10 Year Anniversary',
-        precio: '20000.00',
-        cantidad: 10,
-        estado_producto: 'Nuevo',
-        estado_actual: 'Activo',
-        id_usuario: 4,
-        id_categoria: 3
-    }
-});
-     //lineaDetalle
-     //id:1 - All That Remains
-     await prisma.lineaDetalle.create({
-        data:{
+    //id:5
+    await prisma.producto.create({
+        data: {
+            nombre: 'Arch Enemy',
+            descripcion: 'Album: Decivers',
+            precio: '20000.00',
+            cantidad: "20",
+            estado_producto: 'Nuevo',
+            estado_actual: 'Activo',
+            id_usuario: 4,
+            id_categoria: 3
+        }
+    });
+    //id:6
+    await prisma.producto.create({
+        data: {
+            nombre: 'SpiritBox',
+            descripcion: 'Album: Eternal Blue',
+            precio: '15000.00',
+            cantidad: "12",
+            estado_producto: 'Nuevo',
+            estado_actual: 'Activo',
+            id_usuario: 5,
+            id_categoria: 3
+        }
+    });
+    //id:7
+    await prisma.producto.create({
+        data: {
+            nombre: 'Motionless In White',
+            descripcion: 'Album: 10 Year Anniversary',
+            precio: '20000.00',
+            cantidad: "10",
+            estado_producto: 'Nuevo',
+            estado_actual: 'Activo',
+            id_usuario: 4,
+            id_categoria: 3
+        }
+    });
+    //lineaDetalle
+    //id:1 - All That Remains
+    await prisma.lineaDetalle.create({
+        data: {
             cantidad: 2,
             sub_total: '20000.00',
             estado_actual: "Pagado",
             id_producto: 1,
             id_ordenCompra: 1
         }
-     })
-     //id:6 SpiritBox
-      await prisma.lineaDetalle.create({
-        data:{
+    })
+    //id:6 SpiritBox
+    await prisma.lineaDetalle.create({
+        data: {
             cantidad: 1,
             sub_total: '20000.00',
             estado_actual: "Pagado",
             id_producto: 6,
             id_ordenCompra: 1
         }
-     })
-     //id:2
-     await prisma.lineaDetalle.create({
-        data:{
+    })
+    //id:2
+    await prisma.lineaDetalle.create({
+        data: {
             cantidad: 1,
             sub_total: '20000.00',
             estado_actual: "Pagado",
             id_producto: 2,
             id_ordenCompra: 3
         }
-     })
-     //id:3
-     await prisma.lineaDetalle.create({
-        data:{
+    })
+    //id:3
+    await prisma.lineaDetalle.create({
+        data: {
             cantidad: 2,
             sub_total: '40000.00',
             estado_actual: "Pagado",
             id_producto: 3,
             id_ordenCompra: 2
         }
-     })
-     //id:4
-     await prisma.lineaDetalle.create({
-        data:{
+    })
+    //id:4
+    await prisma.lineaDetalle.create({
+        data: {
             cantidad: 2,
             sub_total: '14000.00',
             estado_actual: "Pagado",
             id_producto: 4,
             id_ordenCompra: 4
         }
-     })
-     //id:5
-     await prisma.lineaDetalle.create({
-        data:{
+    })
+    //id:5
+    await prisma.lineaDetalle.create({
+        data: {
             cantidad: 3,
             sub_total: '60000.00',
             estado_actual: "Pendiente",
             id_producto: 5,
             id_ordenCompra: 5
         }
-     })
-     //id:6
-     await prisma.lineaDetalle.create({
-        data:{
+    })
+    //id:6
+    await prisma.lineaDetalle.create({
+        data: {
             cantidad: 1,
             sub_total: '15000.00',
             estado_actual: "Pagado",
             id_producto: 6,
             id_ordenCompra: 6
         }
-     })
-     //id:7
-     await prisma.lineaDetalle.create({
-        data:{
+    })
+    //id:7
+    await prisma.lineaDetalle.create({
+        data: {
             cantidad: 5,
             sub_total: '100000.00',
             estado_actual: "Pendiente",
             id_producto: 7,
             id_ordenCompra: 7
         }
-     })
-     //id:8
-     await prisma.lineaDetalle.create({
-        data:{
+    })
+    //id:8
+    await prisma.lineaDetalle.create({
+        data: {
             cantidad: 2,
             sub_total: '20000.00',
             estado_actual: "Pagado",
             id_producto: 1,
             id_ordenCompra: 8
         }
-     })
+    })
     //fotografia
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/DY2njSn/All-That-Remains.png',
-                estado_actual: 'Activo',
-                id_producto: 1
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/xYZ9vpC/All-That-Remains-Lista.jpg',
-                estado_actual: 'Activo',
-                id_producto: 1
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/qs7Xc6P/Motionless-in-White-Completo.jpg',
-                estado_actual: 'Activo',
-                id_producto: 2
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/820NLd6/Motionless-in-White-Lista.jpg',
-                estado_actual: 'Activo',
-                id_producto: 2
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/8mSQZjL/Motionless-in-White-Solo-Disco.jpg',
-                estado_actual: 'Activo',
-                id_producto: 2
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/6HPp7mN/Motionless-in-White-Vinillo-Representacion.jpg',
-                estado_actual: 'Activo',
-                id_producto: 2
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/84RdPpd/Bad-Omens.jpg',
-                estado_actual: 'Activo',
-                id_producto: 3
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/nw3bv5D/Escape-The-Fate.png',
-                estado_actual: 'Activo',
-                id_producto: 4
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/KNsdmb2/Arch-Enemy-Frontal.png',
-                estado_actual: 'Activo',
-                id_producto: 5
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/rvJ94Rn/Arch-Enemy-Varios-Discos.jpg',
-                estado_actual: 'Activo',
-                id_producto: 5
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/0tL36bb/Arch-Enemy-Juego.jpg',
-                estado_actual: 'Activo',
-                id_producto: 5
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/wrMkxHM/Spirit-Box.png',
-                estado_actual: 'Activo',
-                id_producto: 6
-            }
-        });
-        await prisma.fotografia.create({
-            data: {
-                fotografia: 'https://i.ibb.co/NVVs5RV/Motionless-in-White-10-Anniversary.png',
-                estado_actual: 'Activo',
-                id_producto: 7
-            }
-        });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/DY2njSn/All-That-Remains.png',
+            estado_actual: 'Activo',
+            id_producto: 1
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/xYZ9vpC/All-That-Remains-Lista.jpg',
+            estado_actual: 'Activo',
+            id_producto: 1
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/qs7Xc6P/Motionless-in-White-Completo.jpg',
+            estado_actual: 'Activo',
+            id_producto: 2
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/820NLd6/Motionless-in-White-Lista.jpg',
+            estado_actual: 'Activo',
+            id_producto: 2
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/8mSQZjL/Motionless-in-White-Solo-Disco.jpg',
+            estado_actual: 'Activo',
+            id_producto: 2
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/6HPp7mN/Motionless-in-White-Vinillo-Representacion.jpg',
+            estado_actual: 'Activo',
+            id_producto: 2
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/84RdPpd/Bad-Omens.jpg',
+            estado_actual: 'Activo',
+            id_producto: 3
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/nw3bv5D/Escape-The-Fate.png',
+            estado_actual: 'Activo',
+            id_producto: 4
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/KNsdmb2/Arch-Enemy-Frontal.png',
+            estado_actual: 'Activo',
+            id_producto: 5
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/rvJ94Rn/Arch-Enemy-Varios-Discos.jpg',
+            estado_actual: 'Activo',
+            id_producto: 5
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/0tL36bb/Arch-Enemy-Juego.jpg',
+            estado_actual: 'Activo',
+            id_producto: 5
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/wrMkxHM/Spirit-Box.png',
+            estado_actual: 'Activo',
+            id_producto: 6
+        }
+    });
+    await prisma.fotografia.create({
+        data: {
+            fotografia: 'https://i.ibb.co/NVVs5RV/Motionless-in-White-10-Anniversary.png',
+            estado_actual: 'Activo',
+            id_producto: 7
+        }
+    });
     //mensajeria
     await prisma.mensajeria.create({
         data: {
@@ -535,11 +535,11 @@ await prisma.producto.create({
     });
 }
 main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async e => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+    .then(async () => {
+        await prisma.$disconnect();
+    })
+    .catch(async e => {
+        console.error(e);
+        await prisma.$disconnect();
+        process.exit(1);
+    });
