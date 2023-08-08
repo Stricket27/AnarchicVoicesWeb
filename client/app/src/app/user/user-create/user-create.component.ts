@@ -41,34 +41,34 @@ export class UserCreateComponent {
     });
     this.getTipoUsuario();
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   submitForm() {
-    this.makeSubmit=true;
+    this.makeSubmit = true;
     //Validación
-    if(this.formCreate.invalid){
-     return;
+    if (this.formCreate.invalid) {
+      return;
     }
     this.authService.createUser(this.formCreate.value)
-    .subscribe((respuesta:any)=>{
-      this.usuario=respuesta;
-      this.router.navigate(['/user/login'],{
-        //Mostrar un mensaje
-        queryParams:{register:'true'},
+      .subscribe((respuesta: any) => {
+        this.usuario = respuesta;
+        this.router.navigate(['/user/login'], {
+          //Mostrar un mensaje
+          queryParams: { register: 'true' },
+        })
       })
-    })
   }
   onReset() {
     this.formCreate.reset();
   }
 
-  getTipoUsuario(){
+  getTipoUsuario() {
     this.gService
-    .list('tipoUsuario')
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((data: any) => {
-      this.tipoUsuario = data;
-      console.log (this.tipoUsuario);
-    })
+      .list('tipoUsuario')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.tipoUsuario = data;
+        console.log(this.tipoUsuario);
+      })
   }
 
 
