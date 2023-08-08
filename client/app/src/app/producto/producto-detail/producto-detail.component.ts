@@ -26,7 +26,6 @@ export class ProductoDetailComponent {
   .get('producto',id)
   .pipe(takeUntil(this.destroy$))
   .subscribe((data:any)=>{
-  console.log(data);
   this.datos=data; 
   });
   }
