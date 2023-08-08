@@ -1,30 +1,33 @@
-<form [formGroup]="productoForm" (ngSubmit)="isCreate ? crearProducto(): actualizarProducto()"  novalidate >
+<form 
+  [formGroup]="productoForm"
+  (ngSubmit)="isCreate ? crearProducto() : actualizarProducto()"
+  novalidate
+>
   <input type="hidden" formControlName="id_producto" />
-  <mat-card class="shipping-card"> 
+  <mat-card class="shipping-card" style="background-color: #F4F4F9; box-shadow: none;">
     <mat-card-header>
-      <mat-card-title>{{titleForm}} Producto</mat-card-title>
+      <mat-card-title>{{ titleForm }} Producto</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Nombre del producto</mat-label>
-            <input matInput formControlName="nombre">
-            <mat-error *ngIf="errorHandling('nombre','required')">
+            <input matInput formControlName="nombre" />
+            <mat-error *ngIf="errorHandling('nombre', 'required')">
               Nombre es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <span matPrefix>Album: &nbsp;</span>
             <mat-label>Descripción del producto</mat-label>
-            <input matInput formControlName="descripcion">
-            <mat-error *ngIf="errorHandling('descripcion','required')">
+            <input matInput formControlName="descripcion" />
+            <mat-error *ngIf="errorHandling('descripcion', 'required')">
               Descripción es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
@@ -33,8 +36,8 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Precio del producto</mat-label>
-            <input matInput formControlName="precio">
-            <mat-error *ngIf="errorHandling('precio','required')">
+            <input matInput formControlName="precio" />
+            <mat-error *ngIf="errorHandling('precio', 'required')">
               Precio es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
@@ -43,82 +46,118 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Cantidad del producto</mat-label>
-            <input matInput formControlName="cantidad">
-            <mat-error *ngIf="errorHandling('cantidad','required')">
+            <input matInput formControlName="cantidad" />
+            <mat-error *ngIf="errorHandling('cantidad', 'required')">
               Cantidad es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
         </div>
       </div>
 
-            <div class="row">
-              <div class="col" *ngIf="categoriaList">
-                <mat-form-field class="full-width">
-                    <mat-label>Categoria del producto</mat-label>
-                    <mat-select formControlName="categoria">
-                      <mat-option *ngFor="let c of categoriaList" [value]="c.id_categoria">
-                        {{c.descripcion}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-            </div>
+      <div class="row">
+        <div class="col" *ngIf="categoriaList">
+          <mat-form-field class="full-width">
+            <mat-label>Categoria del producto</mat-label>
+            <mat-select formControlName="categoria">
+              <mat-option
+                *ngFor="let c of categoriaList"
+                [value]="c.id_categoria"
+              >
+                {{ c.descripcion }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-            <div class="col" *ngIf="usuarioList">
-              <mat-form-field class="full-width">
-                  <mat-label>Usuario del producto</mat-label>
-                  <mat-select formControlName="usuario">
-                    <mat-option *ngFor="let u of usuarioList" [value]="u.id_usuario">
-                      {{u.nombre}} {{u.apellidos}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-          </div>
-          </div>
-          
-          <mat-form-field>
-            <mat-label>Choose one</mat-label>
+        <div class="col" *ngIf="usuarioList">
+          <mat-form-field class="full-width">
+            <mat-label>Usuario del producto</mat-label>
+            <mat-select formControlName="usuario">
+              <mat-option *ngFor="let u of usuarioList" [value]="u.id_usuario">
+                {{ u.nombre }} {{ u.apellidos }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Estado del producto</mat-label>
             <mat-select formControlName="estado_producto">
-              <mat-option>Clear</mat-option>
               <mat-option value="Nuevo">Nuevo</mat-option>
               <mat-option value="Semi-nuevo">Semi-nuevo</mat-option>
             </mat-select>
           </mat-form-field>
-        
-      <!-- <div class="row">
-        <div class="col">
-          <mat-label>Estado del producto</mat-label>
-          <mat-radio-group formControlName="estado_producto">
-            <mat-radio-button [value]="false">Nuevo</mat-radio-button>
-            <mat-radio-button [value]="false">Semi-nuevo</mat-radio-button>
-            <mat-radio-button [value]="false">Usado</mat-radio-button>
-          </mat-radio-group>
         </div>
-      </div> -->
 
-      <!-- <div class="row">
-          <div class="col">
+        <div class="col">
+          <mat-form-field class="full-width">
             <mat-label>Estado actual del producto</mat-label>
-            <mat-radio-group formControlName="estado_actual">
-              <mat-radio-button [value]="true">Activo</mat-radio-button>
-              <mat-radio-button [value]="false">Inactivo</mat-radio-button>
-            </mat-radio-group>
-          </div>
-        </div> -->
-
-        <mat-form-field>
-          <mat-label>Choose one</mat-label>
-          <mat-select formControlName="estado_actual">
-            <mat-option>Clear</mat-option>
-            <mat-option value="Activo">Activo</mat-option>
-            <mat-option value="Inactivo">Inactivo</mat-option>
-          </mat-select>
-        </mat-form-field>
-
+            <mat-select formControlName="estado_actual">
+              <mat-option value="Activo">Activo</mat-option>
+              <mat-option value="Inactivo">Inactivo</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
     </mat-card-content>
 
+    <!-- <input id="fileInput" type="file" (change)="linkFotografia($event)">
+    <img *ngIf="selectedImage" [src]="selectedImage" alt="Imagen seleccionada"> -->
+
+    <!-- <input type="text" (input)="linkFotografia($event)" /> -->
+
+
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title><b>Apartado de fotografias</b></mat-card-title>
+      </mat-card-header>
+      <mat-card-content style="background-color: #CED4DA;">
+        <mat-form-field class="full-width"  style="background-color: #CED4DA;">
+          <mat-label >Link de la fotografia</mat-label>
+          <input matInput type="text" (input)="linkFotografia($event)" />
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button mat-button color="primary" type="button" (click)="agregarFotografia()">Agregar fotografia</button>
+      </mat-card-actions>
+
+      <div *ngFor="let item of archivos; let i = index">
+        <img src="{{ item.fotografia }}" />
+        <button  mat-raised-button mat-button color="warn" type="button" (click)="eliminarFotografiaDeProducto(i)">
+          Eliminar fotografia
+        </button>
+      </div>
+    </mat-card>
+    
+
+
+
+
+
+    <!-- <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Link de la fotografia</mat-label>
+          <input matInput type="text" (input)="linkFotografia($event)" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <button type="button" (click)="agregarFotografia()">
+      Agregar fotografia
+    </button>
+    <div *ngFor="let item of archivos; let i = index">
+      <img src="{{ item.fotografia }}" />
+      <button type="button" (click)="eliminarFotografiaDeProducto(i)">
+        Eliminar fotografia
+      </button>
+    </div> -->
+
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Guardar</button>
+      <button mat-raised-button color="primary" type="submit">Guardar nuevo producto</button>
     </mat-card-actions>
   </mat-card>
 </form>
-
