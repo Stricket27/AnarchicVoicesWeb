@@ -1,4 +1,4 @@
-<mat-card class="dashboard-card" *ngIf="datos"  >
+<!-- <mat-card class="dashboard-card" *ngIf="datos"  >
     <mat-card-header>
       <mat-card-title>
         {{datos.nombre }}
@@ -16,13 +16,51 @@
       <ul *ngIf="datos">
         <li> {{datos.categoria.descripcion}}</li>
       </ul>
-      <ul *ngIf="datos.fotografia">
+
+      <carousel [isAnimated]="true" *ngIf="datos.fotografia">
         <li *ngFor="let item of datos.fotografia">
-          <img width="50%" src="{{item.fotografia}}">
+          <slide>
+            <img src="{{item.fotografia}}" style="display: block; width: 30%;">
+          </slide>
         </li>
-      </ul>
+      </carousel>
+
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
 
-
-  
+<section class="content">
+  <article class="demo-area">
+    <div *ngIf="datos.fotografia">
+      <carousel [isAnimated]="true">
+        <div *ngFor="let item of datos.fotografia">
+          <slide>
+            <img src="{{ item.fotografia }}" style="display: block; width: 30%"
+            />
+          </slide>
+        </div>
+      </carousel>
+    </div>
+    <div class="detail">
+      <section>
+        <h3>{{ datos.nombre }}</h3>
+        <h2>
+          Vendedor: {{ datos.usuario.nombre }} {{ datos.usuario.apellidos }}
+        </h2>
+        <p>Especificaciones:</p>
+        <ul>
+          <li>{{ datos.descripcion }}</li>
+          <li>Cantidad existentes: {{ datos.cantidad }} unidades</li>
+          <li>Estado del producto: {{ datos.estado_producto }}</li>
+          <li>Categoría: {{ datos.categoria.descripcion }}</li>
+        </ul>
+        <h4>{{ datos.precio | currency : "₡" }}</h4>
+      </section>
+    </div>
+  </article>
+</section>
+<footer>
+  <hr />
+  <a
+    ><img src="./assets/images/Logo_Con_Nombre.png" width="200" height="90"
+  /></a>
+</footer>
