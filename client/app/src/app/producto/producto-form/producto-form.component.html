@@ -1,12 +1,17 @@
-<form 
+<form
   [formGroup]="productoForm"
   (ngSubmit)="isCreate ? crearProducto() : actualizarProducto()"
   novalidate
 >
   <input type="hidden" formControlName="id_producto" />
-  <mat-card class="shipping-card" style="background-color: #F4F4F9; box-shadow: none;">
+  <mat-card
+    class="shipping-card"
+    style="background-color: #f4f4f9; box-shadow: none"
+  >
     <mat-card-header>
-      <mat-card-title>{{ titleForm }} Producto</mat-card-title>
+      <h1>
+        <b>{{ titleForm }}</b>
+      </h1>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
@@ -109,55 +114,67 @@
 
     <!-- <input type="text" (input)="linkFotografia($event)" /> -->
 
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">
+        Guardar producto
+      </button>
+    </mat-card-actions>
 
-    <mat-card class="example-card">
+    <mat-card class="example-card" style="margin-left: 32%">
       <mat-card-header>
-        <mat-card-title><b>Apartado de fotografias</b></mat-card-title>
+        <h1>Apartado de imagenes</h1>
       </mat-card-header>
-      <mat-card-content style="background-color: #CED4DA;">
-        <mat-form-field class="full-width"  style="background-color: #CED4DA;">
-          <mat-label >Link de la fotografia</mat-label>
-          <input matInput type="text" (input)="linkFotografia($event)" />
-        </mat-form-field>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button mat-button color="primary" type="button" (click)="agregarFotografia()">Agregar fotografia</button>
-      </mat-card-actions>
+      <mat-card-header>
+        <p>
+          <b>Nota:</b> Antes de agregar la fotogarafía debes de entrar a este
+          link <a href="https://es.imgbb.com/" target="_blank">IMG BB</a> este
+          link es para convertir la imagen en una URL y asi que puedas agregar
+          la imagen deseada, si no sabes exactamente como se hace, aqui te mostramos un
+          <a href="./assets/pdf/Manual de URL de imágenes.pdf" target="_blank">PDF</a> donde muestra los pasos a seguir. 
+        </p>
+      </mat-card-header>
+      <mat-card-header>
+        <p>
+          <b style="color: red">Advertencia:</b> Cuando vas agregar la imagen
+          con la URL que le generó, si de alguna manera no te gusta, la puedes
+          eliminar, antes de crear el producto deseado
+        </p>
+      </mat-card-header>
 
-      <div *ngFor="let item of archivos; let i = index">
-        <img src="{{ item.fotografia }}" />
-        <button  mat-raised-button mat-button color="warn" type="button" (click)="eliminarFotografiaDeProducto(i)">
-          Eliminar fotografia
-        </button>
-      </div>
-    </mat-card>
-    
-
-
-
-
-
-    <!-- <div class="row">
-      <div class="col">
-        <mat-form-field class="full-width">
+      <mat-card-content style="background-color: #ced4da">
+        <mat-form-field class="full-width" style="background-color: #ced4da">
           <mat-label>Link de la fotografia</mat-label>
           <input matInput type="text" (input)="linkFotografia($event)" />
         </mat-form-field>
+        <button
+          mat-raised-button
+          mat-button
+          color="primary"
+          type="button"
+          (click)="agregarFotografia()"
+        >
+          Agregar fotografia deseada
+        </button>
+        <mat-card-actions> </mat-card-actions>
+      </mat-card-content>
+
+      <div class="row">
+        <div
+          class="col-sm-6 col-md-4"
+          *ngFor="let item of archivos; let i = index"
+        >
+          <img src="{{ item.fotografia }}" />
+          <button
+            mat-raised-button
+            mat-button
+            color="warn"
+            type="button"
+            (click)="eliminarFotografiaDeProducto(i)"
+          >
+            Eliminar fotografia
+          </button>
+        </div>
       </div>
-    </div>
-
-    <button type="button" (click)="agregarFotografia()">
-      Agregar fotografia
-    </button>
-    <div *ngFor="let item of archivos; let i = index">
-      <img src="{{ item.fotografia }}" />
-      <button type="button" (click)="eliminarFotografiaDeProducto(i)">
-        Eliminar fotografia
-      </button>
-    </div> -->
-
-    <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Guardar nuevo producto</button>
-    </mat-card-actions>
+    </mat-card>
   </mat-card>
 </form>
