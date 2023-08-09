@@ -24,7 +24,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 
-import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,6 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
   ],
   imports: [
     CommonModule,
-    CarouselModule.forRoot() ,
     ProductoRoutingModule,
 
     MatGridListModule,
