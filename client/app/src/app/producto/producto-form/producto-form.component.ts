@@ -14,7 +14,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class ProductoFormComponent implements OnInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  titleForm: string = "Crear producto y fotografía";
+  titleForm: string = "Crear producto y fotografia";
 
   usuarioList: any;
   categoriaList: any;
@@ -61,7 +61,7 @@ export class ProductoFormComponent implements OnInit {
 
       if (this.idProducto != undefined) {
         this.isCreate = false;
-        this.titleForm = "Actualizar el producto";
+        this.titleForm = "Actualizar";
         this.gService
           .get("producto", this.idProducto)
           .pipe(takeUntil(this.destroy$))
@@ -219,4 +219,4 @@ export class ProductoFormComponent implements OnInit {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
-} // llave final de "export class ProductoFormComponent implements OnInit" REVISAR
+}
