@@ -25,7 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -37,6 +37,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
   ],
   imports: [
     CommonModule,
+    CarouselModule.forRoot() ,
     ProductoRoutingModule,
 
     MatGridListModule,
@@ -52,8 +53,8 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    MatChipsModule,
     ReactiveFormsModule,
-    CarouselModule
   ],
   providers:[
     CurrencyPipe
