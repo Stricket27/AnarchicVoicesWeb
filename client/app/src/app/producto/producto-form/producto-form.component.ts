@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Subject, takeUntil } from "rxjs";
 import { CurrencyPipe } from "@angular/common";
 import { GenericService } from "src/app/share/generic.service";
 import { DomSanitizer } from "@angular/platform-browser";
+import { NotificacionService } from "src/app/share/notification.service";
+import { AuthenticationService } from "src/app/share/authentication.service";
 
 @Component({
   selector: "app-producto-form",
@@ -13,31 +15,26 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class ProductoFormComponent implements OnInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
-
-  titleForm: string = "Crear producto y fotografia";
-
+  titleForm: string = "Crear producto y fotografía";
   usuarioList: any;
   categoriaList: any;
-
+  productId: number;
   productoInfo: any;
   fotografiaInfo: any;
-
   respProducto: any;
   respFotografia: any;
-
   submitted = false;
-
   productoForm: FormGroup;
   fotografiaForm: FormGroup;
-
   idProducto: number = 0;
   idFotografia: number = 0;
-
   isCreate: boolean = true;
-
   archivos: any = [];
   txtFotografia: any;
 
+  isAutenticated: boolean;
+  currentUser: any;
+  isOwner: boolean = false;
   // selectedImage: any;
 
 
@@ -46,7 +43,8 @@ export class ProductoFormComponent implements OnInit {
     private gService: GenericService,
     private router: Router,
     private activeRouter: ActivatedRoute,
-
+    private noti: NotificacionService,
+    private authService: AuthenticationService,
     private sanitizer: DomSanitizer
   ) {
     this.formularioReactive();
@@ -55,19 +53,41 @@ export class ProductoFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //Formulario de producto
+    //Suscripción a la información del usuario actual
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x))
+    //Suscripción al booleano que indica si esta autenticado
+    this.authService.isAuthenticated.subscribe(
+      (valor) => (this.isAutenticated = valor)
+    )
+    this.activeRouter.queryParams.subscribe(queryParams => {
+      const idProductoParam = queryParams['id_producto'];
+      if (idProductoParam && !isNaN(parseInt(idProductoParam))) {
+        this.productId = parseInt(idProductoParam);
+        console.log('Product ID:', this.productId);
+
+
+      }
+      console.log(this.currentUser.user.nombre)
+    });
+
+
+    //Verificar si se envio un id por parametro para crear formulario para actualizar
     this.activeRouter.params.subscribe((params: Params) => {
       this.idProducto = params["id"];
 
       if (this.idProducto != undefined) {
         this.isCreate = false;
-        this.titleForm = "Actualizar";
+        this.titleForm = "Actualizar el producto";
         this.gService
           .get("producto", this.idProducto)
           .pipe(takeUntil(this.destroy$))
           .subscribe((data: any) => {
             this.productoInfo = data;
-            console.log(this.productoInfo)
+            // let producto = data;
+            if(this.productoInfo.id_usuario === this.currentUser.user.id_usuario){
+              this.isOwner = true
+            }
+            console.log(this.isOwner)
             this.productoForm.setValue({
               id_producto: this.productoInfo.id_producto,
               nombre: this.productoInfo.nombre,
@@ -76,31 +96,58 @@ export class ProductoFormComponent implements OnInit {
               cantidad: this.productoInfo.cantidad,
               estado_producto: this.productoInfo.estado_producto,
               estado_actual: this.productoInfo.estado_actual,
-              usuario: this.productoInfo.usuario.id_usuario,
+              usuario: this.productoInfo.id_usuario,
               categoria: this.productoInfo.categoria.id_categoria,
               fotografias: this.productoInfo.fotografia,
-
             });
             this.archivos = this.productoInfo.fotografia;
           });
       }
     });
+    if (this.isCreate) {
+      this.productoForm.patchValue({ usuario: this.currentUser.user.nombre + " " + this.currentUser.user.apellidos })
+    }
+    this.listaCategoria()
   }
 
   formularioReactive() {
     this.productoForm = this.fb.group({
       id_producto: [null, null],
-      nombre: [null, Validators.required],
-      descripcion: [null, Validators.required],
-      precio: [null, Validators.required],
-      cantidad: [null, Validators.required],
+      nombre: [null, Validators.compose([
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(100)
+      ])],
+      descripcion: [null, Validators.compose([
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(100)
+      ])],
+      precio: [null, Validators.compose([
+        Validators.required,
+        this.validateNumber
+      ])],
+      cantidad: [null, Validators.compose([
+        Validators.required,
+        this.validateNumber
+      ])],
       estado_producto: [null, Validators.required],
-      estado_actual: [null, Validators.required],
+      estado_actual: ['Activo'],
       usuario: [null, Validators.required],
       categoria: [null, Validators.required],
 
       fotografias: [null, Validators.required],
     });
+  }
+
+  validateNumber(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value === null || value === '') {
+      return null;  // Permite campos vacíos, si lo deseas
+    }
+
+    const isValid = /^\d+$/.test(value);
+    return isValid ? null : { numeric: true };
   }
 
   listaUsuario() {
@@ -131,7 +178,8 @@ export class ProductoFormComponent implements OnInit {
       if (this.productoForm.invalid) {
         return;
       }
-      //producto
+      this.productoForm.patchValue({usuario: this.currentUser.user.id_usuario})
+      console.log(this.productoForm.value)
       this.gService
         .create("producto", this.productoForm.value)
         .pipe(takeUntil(this.destroy$))
@@ -191,7 +239,7 @@ export class ProductoFormComponent implements OnInit {
 
   public errorHandling = (control: string, error: string) => {
     return this.productoForm.controls[control].hasError(error);
-    };
+  };
 
   actualizarProducto() {
     console.log(this.productoForm.value);
@@ -219,4 +267,4 @@ export class ProductoFormComponent implements OnInit {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
-}
+} // llave final de "export class ProductoFormComponent implements OnInit" REVISAR
