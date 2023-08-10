@@ -74,37 +74,54 @@
           </mat-form-field>
         </div>
 
-        <div class="col" *ngIf="usuarioList">
+        <div class="col" hidden>
           <mat-form-field class="full-width">
-            <mat-label>Usuario del producto</mat-label>
-            <mat-select formControlName="usuario">
-              <mat-option *ngFor="let u of usuarioList" [value]="u.id_usuario">
-                {{ u.nombre }} {{ u.apellidos }}
-              </mat-option>
-            </mat-select>
+            <mat-label>Usuario</mat-label>
+            <input matInput formControlName="usuario" readonly />
           </mat-form-field>
         </div>
       </div>
 
       <div class="row">
         <div class="col">
+          <mat-label>Estado del producto</mat-label>
+          <mat-chip-listbox
+            formControlName="estado_producto"
+            aria-label="Fish selection"
+          >
+            <mat-chip-option value="Nuevo">Nuevo</mat-chip-option>
+            <mat-chip-option value="Semi-nuevo">Semi-nuevo</mat-chip-option>
+            <mat-chip-option value="Usado">Usado</mat-chip-option>
+          </mat-chip-listbox>
+        </div>
+
+        <!-- <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Estado del producto</mat-label>
             <mat-select formControlName="estado_producto">
               <mat-option value="Nuevo">Nuevo</mat-option>
               <mat-option value="Semi-nuevo">Semi-nuevo</mat-option>
+              <mat-option value="Usado">Usado</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div> -->
 
         <div class="col">
-          <mat-form-field class="full-width">
+          <mat-label>Estado actual del producto</mat-label>
+          <mat-chip-listbox
+            formControlName="estado_actual"
+            aria-label="Fish selection"
+          >
+            <mat-chip-option value="Activo" selected>Activo</mat-chip-option>
+            <mat-chip-option value="Inactivo">Inactivo</mat-chip-option>
+          </mat-chip-listbox>
+          <!-- <mat-form-field class="full-width">
             <mat-label>Estado actual del producto</mat-label>
             <mat-select formControlName="estado_actual">
               <mat-option value="Activo">Activo</mat-option>
               <mat-option value="Inactivo">Inactivo</mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
       </div>
     </mat-card-content>
