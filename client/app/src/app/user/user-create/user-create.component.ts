@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { GenericService } from 'src/app/share/generic.service';
 import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NotificacionService } from 'src/app/share/notification.service';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 
@@ -31,16 +31,48 @@ export class UserCreateComponent {
 
   reactiveForm() {
     this.formCreate = this.fb.group({
-      nombre: ['', [Validators.required]],
-      apellidos: ['', [Validators.required]],
-      numero_telefono: ['', [Validators.required]],
-      correo_electronico: ['', [Validators.required]],
-      contrasenna: ['', [Validators.required]],
+      nombre: ['', Validators.compose
+        ([Validators.required, 
+          Validators.minLength(4)])
+      ],
+      apellidos: ['', Validators.compose([
+        Validators.required, 
+        Validators.minLength(3), 
+        Validators.maxLength(100)
+      ]
+      )],
+      numero_telefono: ['', Validators.compose([
+        Validators.required, 
+        this.validateNumber, 
+        Validators.maxLength(8)
+      ])],
+      correo_electronico: ['', Validators.compose([
+        Validators.required, 
+        Validators.minLength(5), 
+        Validators.maxLength(100),
+        Validators.email
+      ])],
+      contrasenna: ['', Validators.compose([
+        Validators.required, 
+        Validators.minLength(5), 
+        Validators.maxLength(100),
+      ])],
       estado_actual: ['Activo'],
       tipoUsuario: ['', [Validators.required]]
     });
     this.getTipoUsuario();
   }
+
+  validateNumber(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value === null || value === '') {
+      return null;  // Permite campos vacíos, si lo deseas
+    }
+
+    const isValid = /^\d+$/.test(value);
+    return isValid ? null : { numeric: true };
+  }
+
   ngOnInit(): void { }
   submitForm() {
     this.makeSubmit = true;
@@ -66,7 +98,7 @@ export class UserCreateComponent {
       .list('tipoUsuario')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        this.tipoUsuario = data;
+        this.tipoUsuario = data.filter((tipo => tipo.descripcion !== 'Administrador'));
         console.log(this.tipoUsuario);
       })
   }
