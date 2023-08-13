@@ -29,6 +29,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTabsModule} from '@angular/material/tabs';
 
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatSelectModule,
     MatRadioModule,
     MatTabsModule,
+    MatChipsModule,
 
     LayoutModule,
 
