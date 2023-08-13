@@ -56,11 +56,13 @@
       <input
         type="password"
         matInput
-        [type]="hide ? 'contrasenna' : 'text'"
+        [type]="hide ? 'password' : 'text'"
         placeholder="Contraseña usuario"
         formControlName="contrasenna"
       />
+      <br />
       <button
+        style="background-color: white"
         mat-icon-button
         matSuffix
         (click)="hide = !hide"
@@ -72,7 +74,7 @@
       <mat-error *ngIf="errorHandling('contrasenna', 'required')">
         La contraseña es <strong>requerido</strong>
       </mat-error>
-
+      <br /><br />
       <mat-form-field class="full-width">
         <mat-label>Tipo de usuario</mat-label>
         <mat-select
@@ -86,6 +88,10 @@
             >{{ t.descripcion }}</mat-option
           >
         </mat-select>
+        <mat-error *ngIf="errorHandling('tipoUsuario', 'required')">
+          El tipo de usuario es <strong>requerido</strong>, por favor seleccione
+          un tipo de usuario que desea registrarsé
+        </mat-error>
       </mat-form-field>
     </div>
 
