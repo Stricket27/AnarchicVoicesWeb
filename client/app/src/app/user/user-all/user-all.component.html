@@ -1,1 +1,78 @@
-<p>user-all works!</p>
+<mat-card class="full-width">
+
+    <h1 class="mat-h1"><b>Lista de usuarios</b></h1>
+    <mat-card-content>
+      <br>
+      <div class="mat-elevation-z8" *ngIf="dataSource">
+
+        <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
+
+          <ng-container matColumnDef="NombreCompleto">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre completo</th>
+            <td mat-cell *matCellDef="let row">  {{ row.nombre }} {{row.apellidos}}</td>
+          </ng-container>
+
+           <ng-container matColumnDef="NumeroTelefono">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Número de contacto</th>
+            <td mat-cell *matCellDef="let row">{{ row.numero_telefono }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="CorreoElectronico">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo electrónico</th>
+            <td mat-cell *matCellDef="let row"> {{ row.correo_electronico }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="EstadoActual">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado actual</th>
+            <td mat-cell *matCellDef="let row"> {{ row.estado_actual }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+
+            <td mat-cell *matCellDef="let row">
+              <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Actualizar Usuario"
+              aria-label="Actualizar Usuario"
+              color="primary"
+              (click)="actualizarUsuario(row.id_usuario)"
+              ><mat-icon class="mat-18">edit</mat-icon>
+              </button>
+
+              <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Detalle Usuario"
+              aria-label="Detalle Usuario"
+              color="primary"
+              (click)="detalle(row.id_usuario)"
+              ><mat-icon class="mat-18">info</mat-icon>
+              </button>
+
+            </td>
+
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        </table>
+  
+        <mat-paginator
+          #paginator
+          [length]="dataSource?.data?.length"
+          [pageIndex]="0"
+          [pageSize]="10"
+          [pageSizeOptions]="[10, 20, 50]"
+          aria-label="Selecccione una página"
+        ></mat-paginator>
+
+      </div>
+      
+    </mat-card-content>
+
+</mat-card>
+  
