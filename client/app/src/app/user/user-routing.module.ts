@@ -4,6 +4,9 @@ import { UserIndexComponent } from './user-index/user-index.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 
+import { UserAllComponent } from './user-all/user-all.component';
+import { UserFormComponent } from './user-form/user-form.component';
+
 const routes: Routes = [
   {
     path: 'user',
@@ -13,6 +16,9 @@ const routes: Routes = [
       { path: 'login', component: UserLoginComponent },
     ],
   },
+
+  {path: 'user/all', component: UserAllComponent},
+  {path: 'user/update/:id', component: UserFormComponent}
 ];
 
 @NgModule({
