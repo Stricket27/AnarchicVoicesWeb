@@ -1,1 +1,78 @@
-<p>user-form works!</p>
+<form
+  [formGroup]="userForm"
+  (ngSubmit)="isCreate ? crearUsuario() : actualizarUsuario()"
+  novalidate
+>
+  <input type="hidden" formControlName="id_usuario" />
+  <mat-card class="shipping-card">
+    <mat-card-content>
+      <div class="row">
+
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              formControlName="nombre"
+              maxlength="20"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              formControlName="apellidos"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              formControlName="numero_telefono"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              formControlName="correo_electronico"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              formControlName="contrasenna"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col">
+        <mat-label>Estado actual del usuario</mat-label>
+        <mat-chip-listbox
+          formControlName="estado_actual"
+          aria-label="Fish selection"
+        >
+          <mat-chip-option value="Activo">Activo</mat-chip-option>
+          <mat-chip-option value="Inactivo">Inactivo</mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
