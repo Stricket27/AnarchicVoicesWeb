@@ -31,24 +31,25 @@
         Nuestros productos
       </button>
 
-      <button
+      <!-- <button
         class="button-navbar"
         *ngIf="isAutenticated && !cliente"
         mat-button
         [matMenuTriggerFor]="menu"
       >
         Mantenimientos
-      </button>
-      <button
+      </button> -->
+
+      <!-- <button
         class="button-navbar"
         *ngIf="isAutenticated"
         mat-button
         [matMenuTriggerFor]="menu2"
       >
         Listados
-      </button>
+      </button> -->
 
-      <mat-menu #menu="matMenu">
+      <!-- <mat-menu #menu="matMenu">
         <button
           mat-menu-item
           mat-menu-item
@@ -56,8 +57,9 @@
           *ngIf="isAutenticated && vendedor"
           [routerLink]="['/producto/all']"
         >
-          Producto por vendedor
+          Productos
         </button>
+
         <button
           mat-menu-item
           mat-menu-item
@@ -67,6 +69,7 @@
         >
           Mensajería
         </button>
+
         <button
           mat-menu-item
           mat-menu-item
@@ -76,6 +79,7 @@
         >
           Mensajería de mis productos
         </button>
+
         <button
           mat-menu-item
           mat-menu-item
@@ -85,9 +89,9 @@
         >
           Mis mensajes
         </button>
-      </mat-menu>
+      </mat-menu> -->
 
-      <mat-menu #menu2="matMenu">
+      <!-- <mat-menu #menu2="matMenu">
         <button
           mat-menu-item
           mat-menu-item
@@ -96,11 +100,11 @@
         >
           Pedidos
         </button>
-      </mat-menu>
+      </mat-menu> -->
     </div>
   </section>
 
-  <!-- DROPDOWN DE INICIAR SESION -->
+  <!-- DROPDOWN CUANDO INICIA SESION -->
   <div class="example-spacer">
     <!--enlaces de la app-->
     <!--https://fonts.google.com/icons-->
@@ -141,6 +145,60 @@
           {{ currentUser.user.correo_electronico }}</span
         >
       </a>
+
+      <!-- ESTE REMPLAZA EL BOTON DE "LISTADO/PEDIDOS" QUE ESTA EN COMENTARIO -->
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated"
+        [routerLink]="['/orden-compra-cliente/all']"
+      >
+        <span class="mat-caption" *ngIf="isAutenticated || cliente || vendedor">
+          Pedidos</span
+        >
+        <mat-icon>local_shipping</mat-icon>
+      </a>
+      <!--  -->
+
+      <!-- ESTOS REMPLAZA LOS BOTONES DE MANTENIMIENTO DE PRODUCTO Y MENSAJERIA -->
+
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && vendedor"
+        [routerLink]="['/producto/all']"
+      >
+        <span class="mat-caption"> Mantenimiento de producto</span>
+        <mat-icon>build</mat-icon>
+      </a>
+
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && !titulo && !cliente"
+        [routerLink]="['/mensajeria/all']"
+      >
+        <span class="mat-caption"> Mantenimiento de mensajería</span>
+        <mat-icon>build</mat-icon>
+      </a>
+
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && titulo"
+        [routerLink]="['/mensajeria/all']"
+      >
+        <span class="mat-caption"> Mensajería de mis productos</span>
+        <mat-icon>mail</mat-icon>
+      </a>
+
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && vendedorCliente"
+        [routerLink]="['/mensajeria-vendedor/all']"
+      >
+        <span class="mat-caption"> Mis mensajes</span>
+        <mat-icon>mail</mat-icon>
+      </a>
+
+      <!--  -->
+
       <a
         mat-menu-item
         *ngIf="isAutenticated && cliente"
@@ -156,7 +214,11 @@
         <span class="mat-caption" *ngIf="isAutenticated"> Mis ubicaciones</span>
       </a>
 
-      <a mat-menu-item *ngIf="isAutenticated" [routerLink]="['/metodoPago/']">
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && cliente"
+        [routerLink]="['/metodoPago/']"
+      >
         <mat-icon>payments</mat-icon>
         <span class="mat-caption" *ngIf="isAutenticated"> Mis tarjetas</span>
       </a>
