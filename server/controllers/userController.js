@@ -88,25 +88,25 @@ module.exports.register = async (request, response, next) => {
       estado_actual: userData.estado_actual,
     },
   });
-  // await prisma.detalle_UsuarioTipo.createMany({
-  //   data: userData.tipoUsuario.map((id_tipoUsuario) => ({
-  //     id_usuario: user.id_usuario,
-  //     id_tipoUsuario: id_tipoUsuario,
-  //   })),
-  // });
-  const tipoUsuariosPermitidos = ["Vendedor", "Cliente"];
-  const tipoUsuariosValidos = userData.tipoUsuario.filter((tipo) =>
-    tipoUsuariosPermitidos.includes(tipo)
-  );
+  await prisma.detalle_UsuarioTipo.createMany({
+    data: userData.tipoUsuario.map((id_tipoUsuario) => ({
+      id_usuario: user.id_usuario,
+      id_tipoUsuario: id_tipoUsuario,
+    })),
+  });
+  // const tipoUsuariosPermitidos = ["Vendedor", "Cliente"];
+  // const tipoUsuariosValidos = userData.tipoUsuario.filter((tipo) =>
+  //   tipoUsuariosPermitidos.includes(tipo)
+  // );
 
-  for (const tipo of tipoUsuariosValidos) {
-    await prisma.detalle_UsuarioTipo.create({
-      data: {
-        id_usuario: user.id_usuario,
-        id_tipoUsuario: tipo,
-      },
-    });
-  }
+  // for (const tipo of tipoUsuariosValidos) {
+  //   await prisma.detalle_UsuarioTipo.create({
+  //     data: {
+  //       id_usuario: user.id_usuario,
+  //       id_tipoUsuario: tipo,
+  //     },
+  //   });
+  // }
 
   response.status(200).json({
     status: true,
