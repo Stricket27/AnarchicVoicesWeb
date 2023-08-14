@@ -1,0 +1,77 @@
+.full-width {
+    width: 100%;
+  }
+  
+  .shipping-card {
+    min-width: 120px;
+    margin: 20px auto;
+  }
+  
+  .mat-radio-button {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .col {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .col:last-child {
+    margin-right: 0;
+  }
+  
+  .dropzone, .old-files{
+    width: 95%;
+    margin: 0 auto;
+  }
+  
+  .old-files{
+    margin-bottom: 3rem;
+  }
+  
+  .old-files img{
+    border-radius: .5rem;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    height: 150px;
+  }
+  
+  .old-file-item{
+    display: flex;
+    justify-content: start;
+    align-items: baseline;
+    flex-direction: column;
+    margin: 0 15px;
+  }
+  
+  .delete-file-btn{
+    padding: .5rem 2rem;
+    background-color: red;
+    font-size: 1rem;
+    font-weight: bolder;
+    width: 250px;
+    border: none;
+    outline: none;
+    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .submit-btn{
+    padding: .5rem 3rem !important;
+    margin: 2rem 1rem 2rem auto;
+  }
+  
+  .old-files-container{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+  
