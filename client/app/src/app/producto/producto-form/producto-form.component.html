@@ -4,14 +4,9 @@
   novalidate
 >
   <input type="hidden" formControlName="id_producto" />
-  <mat-card
-    class="shipping-card"
-    style="background-color: #f4f4f9; box-shadow: none"
-  >
+  <mat-card class="shipping-card">
     <mat-card-header>
-      <h1>
-        <b>{{ titleForm }}</b>
-      </h1>
+      <mat-card-title>{{ titleForm }} Producto</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
@@ -29,7 +24,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <span matPrefix>Album: &nbsp;</span>
+            <span matPrefix>Album&nbsp;</span>
             <mat-label>Descripción del producto</mat-label>
             <input matInput formControlName="descripcion" />
             <mat-error *ngIf="errorHandling('descripcion', 'required')">
@@ -40,12 +35,20 @@
 
         <div class="col">
           <mat-form-field class="full-width">
+            <span matPrefix>₡&nbsp;</span>
+            <mat-label>Precio del producto</mat-label>
+            <input matInput formControlName="precio" />
+            <mat-error *ngIf="errorHandling('precio', 'required')">
+              El precio es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- <mat-form-field class="full-width">
             <mat-label>Precio del producto</mat-label>
             <input matInput formControlName="precio" />
             <mat-error *ngIf="errorHandling('precio', 'required')">
               Precio es <strong>requerido</strong>
             </mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
 
         <div class="col">
@@ -74,6 +77,43 @@
           </mat-form-field>
         </div>
 
+        <div class="col">
+          <mat-label>Estado del producto</mat-label>
+          <mat-chip-listbox
+            aria-label="Fish selection"
+            formControlName="estado_producto"
+          >
+            <mat-chip-option value="Nuevo">Nuevo</mat-chip-option>
+            <mat-chip-option value="Semi-nuevo">Semi - nuevo</mat-chip-option>
+            <mat-chip-option value="Usado">Usado</mat-chip-option>
+          </mat-chip-listbox>
+          <!-- <mat-form-field>
+            <mat-label>Estado del producto</mat-label>
+            <mat-select formControlName="estado_producto">
+              <mat-option value="Nuevo">Nuevo</mat-option>
+              <mat-option value="Semi-nuevo">Semi-nuevo</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+        </div>
+
+        <div class="col">
+          <mat-label>Estado actual del producto</mat-label>
+          <mat-chip-listbox
+            aria-label="Fish selection"
+            formControlName="estado_actual"
+          >
+            <mat-chip-option value="Activo" select>Habilitado</mat-chip-option>
+            <mat-chip-option value="Inactivo">Deshabilitado</mat-chip-option>
+          </mat-chip-listbox>
+          <!-- <mat-form-field>
+            <mat-label>Estado actual del producto</mat-label>
+            <mat-select formControlName="estado_actual">
+              <mat-option value="Activo">Activo</mat-option>
+              <mat-option value="Inactivo">Inactivo</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+        </div>
+
         <div class="col" hidden>
           <mat-form-field class="full-width">
             <mat-label>Usuario</mat-label>
@@ -82,119 +122,82 @@
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col">
-          <mat-label>Estado del producto</mat-label>
-          <mat-chip-listbox
-            formControlName="estado_producto"
-            aria-label="Fish selection"
-          >
-            <mat-chip-option value="Nuevo">Nuevo</mat-chip-option>
-            <mat-chip-option value="Semi-nuevo">Semi-nuevo</mat-chip-option>
-            <mat-chip-option value="Usado">Usado</mat-chip-option>
-          </mat-chip-listbox>
-        </div>
-
-        <!-- <div class="col">
-          <mat-form-field class="full-width">
+          <mat-form-field>
             <mat-label>Estado del producto</mat-label>
             <mat-select formControlName="estado_producto">
               <mat-option value="Nuevo">Nuevo</mat-option>
               <mat-option value="Semi-nuevo">Semi-nuevo</mat-option>
-              <mat-option value="Usado">Usado</mat-option>
             </mat-select>
           </mat-form-field>
-        </div> -->
+        </div>
 
         <div class="col">
-          <mat-label>Estado actual del producto</mat-label>
-          <mat-chip-listbox
-            formControlName="estado_actual"
-            aria-label="Fish selection"
-          >
-            <mat-chip-option value="Activo" selected>Activo</mat-chip-option>
-            <mat-chip-option value="Inactivo">Inactivo</mat-chip-option>
-          </mat-chip-listbox>
-          <!-- <mat-form-field class="full-width">
+          <mat-form-field>
             <mat-label>Estado actual del producto</mat-label>
             <mat-select formControlName="estado_actual">
               <mat-option value="Activo">Activo</mat-option>
               <mat-option value="Inactivo">Inactivo</mat-option>
             </mat-select>
-          </mat-form-field> -->
+          </mat-form-field>
+        </div>
+      </div> -->
+    </mat-card-content>
+    <mat-card-header>
+      <h2>Apartado de fotografias</h2>
+    </mat-card-header>
+    
+    <mat-card-header>
+      <mat-card-title><b style="color: red;">Advertencia: </b></mat-card-title> <p> Antes de agregar las fotografias deseadas y crear el producto, verifique si las fotogrfias a escoger son las correctas, si no, bien puedes eliminarlas al momento de crear el producto</p>
+    </mat-card-header>
+    
+    <div *ngIf="!isCreate" class="old-files">
+      <h3>Fotografías agregadas</h3>
+      <div class="old-files-container">
+        <div *ngFor="let item of archivos">
+          <div class="old-file-item">
+            <img
+              width="250"
+              src="http://localhost:3000/{{ item.fotografia }}"
+            />
+            <button
+              class="delete-file-btn"
+              type="button"
+              (click)="eliminarFoto(item.id_fotografia)"
+            >
+              Eliminar fotografía
+            </button>
+          </div>
         </div>
       </div>
-    </mat-card-content>
-
-    <!-- <input id="fileInput" type="file" (change)="linkFotografia($event)">
-    <img *ngIf="selectedImage" [src]="selectedImage" alt="Imagen seleccionada"> -->
-
-    <!-- <input type="text" (input)="linkFotografia($event)" /> -->
+    </div>
+    <div class="dropzone">
+      <ngx-dropzone (change)="onSelect($event)">
+        <ngx-dropzone-label
+          >Arrastra las fotografias aquí o haz click para explorar
+          fotografias</ngx-dropzone-label
+        >
+        <ngx-dropzone-image-preview
+          ngProjectAs="ngx-dropzone-preview"
+          *ngFor="let f of files"
+          [file]="f"
+          [removable]="true"
+          (removed)="onRemove(f)"
+        >
+        </ngx-dropzone-image-preview>
+      </ngx-dropzone>
+    </div>
 
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">
-        Guardar producto
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="submit-btn"
+      >
+        Guardar
       </button>
     </mat-card-actions>
-
-    <mat-card class="example-card" style="margin-left: 32%">
-      <mat-card-header>
-        <h1>Apartado de imagenes</h1>
-      </mat-card-header>
-      <mat-card-header>
-        <p>
-          <b>Nota:</b> Antes de agregar la fotogarafía debes de entrar a este
-          link <a href="https://es.imgbb.com/" target="_blank">IMG BB</a> este
-          link es para convertir la imagen en una URL, si no tienes idea de como
-          hacer, dejamos este
-          <a href="./assets/pdf/Manual de URL de imágenes.pdf" target="_blank"
-            >PDF</a
-          >
-          para que puedas hacer los pasos a seguir de como hacerlo
-        </p>
-      </mat-card-header>
-      <mat-card-header>
-        <p>
-          <b style="color: red">Advertencia:</b> Cuando vas agregar la imagen
-          con la URL que le generó, si de alguna manera no te gusta, la puedes
-          eliminar, antes de crear el producto deseado
-        </p>
-      </mat-card-header>
-
-      <mat-card-content style="background-color: #ced4da">
-        <mat-form-field class="full-width" style="background-color: #ced4da">
-          <mat-label>Link de la fotografia</mat-label>
-          <input matInput type="text" (input)="linkFotografia($event)" />
-        </mat-form-field>
-        <button
-          mat-raised-button
-          mat-button
-          color="primary"
-          type="button"
-          (click)="agregarFotografia()"
-        >
-          Agregar fotografia deseada
-        </button>
-        <mat-card-actions> </mat-card-actions>
-      </mat-card-content>
-
-      <div class="row">
-        <div
-          class="col-sm-6 col-md-4"
-          *ngFor="let item of archivos; let i = index"
-        >
-          <img src="{{ item.fotografia }}" />
-          <button
-            mat-raised-button
-            mat-button
-            color="warn"
-            type="button"
-            (click)="eliminarFotografiaDeProducto(i)"
-          >
-            Eliminar fotografia
-          </button>
-        </div>
-      </div>
-    </mat-card>
   </mat-card>
 </form>
