@@ -1,72 +1,164 @@
-<mat-toolbar class="nav" >
-  <button mat-icon-button [routerLink]="['/']" class="example-icon" aria-label="Example icon-button with menu icon">
-      <img class="icon" src="./assets/images/Logo_Sin_Fondo.png"/>
+<mat-toolbar class="nav">
+  <button
+    mat-icon-button
+    [routerLink]="['/']"
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <img class="icon" src="./assets/images/Logo_Sin_Fondo.png" />
   </button>
-    <span class="example-spacer"></span>
-    
+  <span class="example-spacer"></span>
 
-    <section>
-      <div class="example-button-row">
-        <button class="button-navbar" mat-button [routerLink]="['/']" routerLinkActive="mat-raised-buttom">Inicio</button>
-        <button class="button-navbar" mat-button [routerLink]="['/acerca-de']">Acerca de</button>
-        <button class="button-navbar" mat-button [routerLinkActive]="'mat-raised-button'" [routerLink]="['/producto']">Nuestros productos</button>
-        
-        <button class="button-navbar" *ngIf="isAutenticated&&!cliente" mat-button [matMenuTriggerFor]="menu" >Mantenimientos</button>
-        <button class="button-navbar" *ngIf="isAutenticated" mat-button [matMenuTriggerFor]="menu2">Listados</button>
+  <section>
+    <div class="example-button-row">
+      <button
+        class="button-navbar"
+        mat-button
+        [routerLink]="['/']"
+        routerLinkActive="mat-raised-buttom"
+      >
+        Inicio
+      </button>
+      <button class="button-navbar" mat-button [routerLink]="['/acerca-de']">
+        Acerca de
+      </button>
+      <button
+        class="button-navbar"
+        mat-button
+        [routerLinkActive]="'mat-raised-button'"
+        [routerLink]="['/producto']"
+      >
+        Nuestros productos
+      </button>
 
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" *ngIf="isAutenticated&&vendedor" [routerLink]="['/producto/all']">Producto por vendedor</button>
-          <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" *ngIf="isAutenticated&&!titulo&&!cliente" [routerLink]="['/mensajeria/all']">Mensajería</button>
-          <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" *ngIf="isAutenticated&&titulo" [routerLink]="['/mensajeria/all']">Mensajería de mis productos</button>
-          <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" *ngIf="isAutenticated&&vendedorCliente" [routerLink]="['/mensajeria-vendedor/all']">Mis mensajes</button>         
-          <!-- <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/user/all']">Usuario</button> -->
-          <!-- <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/calificacion-usuario/all']">Calificación del usuario</button> -->
-          <!-- <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/direccion/all']">Direcciones</button> -->
-          </mat-menu>
+      <button
+        class="button-navbar"
+        *ngIf="isAutenticated && !cliente"
+        mat-button
+        [matMenuTriggerFor]="menu"
+      >
+        Mantenimientos
+      </button>
+      <button
+        class="button-navbar"
+        *ngIf="isAutenticated"
+        mat-button
+        [matMenuTriggerFor]="menu2"
+      >
+        Listados
+      </button>
 
-          <mat-menu #menu2="matMenu">
-            <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/orden-compra-cliente/all']">Pedidos</button>
-            <!-- <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/orden-compra-vendedor/all']">Pedidos para vendedor</button> -->
-            <!-- <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" [routerLink]="['/producto/all']">Producto por vendedor</button> -->
-          </mat-menu>
-        
-      </div>
-    </section>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          mat-menu-item
+          [routerLinkActive]="'mat-raised-button'"
+          *ngIf="isAutenticated && vendedor"
+          [routerLink]="['/producto/all']"
+        >
+          Producto por vendedor
+        </button>
+        <button
+          mat-menu-item
+          mat-menu-item
+          [routerLinkActive]="'mat-raised-button'"
+          *ngIf="isAutenticated && !titulo && !cliente"
+          [routerLink]="['/mensajeria/all']"
+        >
+          Mensajería
+        </button>
+        <button
+          mat-menu-item
+          mat-menu-item
+          [routerLinkActive]="'mat-raised-button'"
+          *ngIf="isAutenticated && titulo"
+          [routerLink]="['/mensajeria/all']"
+        >
+          Mensajería de mis productos
+        </button>
+        <button
+          mat-menu-item
+          mat-menu-item
+          [routerLinkActive]="'mat-raised-button'"
+          *ngIf="isAutenticated && vendedorCliente"
+          [routerLink]="['/mensajeria-vendedor/all']"
+        >
+          Mis mensajes
+        </button>
+      </mat-menu>
 
-    <!-- DROPDOWN DE INICIAR SESION -->
-    <div class="example-spacer">
+      <mat-menu #menu2="matMenu">
+        <button
+          mat-menu-item
+          mat-menu-item
+          [routerLinkActive]="'mat-raised-button'"
+          [routerLink]="['/orden-compra-cliente/all']"
+        >
+          Pedidos
+        </button>
+      </mat-menu>
+    </div>
+  </section>
+
+  <!-- DROPDOWN DE INICIAR SESION -->
+  <div class="example-spacer">
     <!--enlaces de la app-->
     <!--https://fonts.google.com/icons-->
     <!--https://material.angular.io/guide/typography-->
     <!-- Carrito de comprar presenta la cantidad -->
-    <button mat-icon-button matBadgeColor="accent" [matBadge]="qtyItems.toString()" 
-       [routerLink]="'/orden'" [routerLinkActive]="'mat-raised-button'"  aria-label="Cantidad">
-     <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">shopping_cart</mat-icon>
-   </button> |   
+    <button
+      mat-icon-button
+      matBadgeColor="accent"
+      [matBadge]="qtyItems.toString()"
+      [routerLink]="'/orden'"
+      [routerLinkActive]="'mat-raised-button'"
+      aria-label="Cantidad"
+    >
+      <mat-icon [ngStyle]="{ color: isAutenticated ? 'white' : '#9E9E9E' }"
+        >shopping_cart</mat-icon
+      >
+    </button>
+    |
     <!--Usuario-->
-    
+
     <button mat-icon-button [matMenuTriggerFor]="menu3">
-      <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">person</mat-icon>
-      <span class="mat-caption" *ngIf="isAutenticated" style="color: white;"> {{currentUser.user.nombre}} {{currentUser.user.apellidos}}</span>
+      <mat-icon [ngStyle]="{ color: isAutenticated ? 'white' : '#9E9E9E' }"
+        >person</mat-icon
+      >
+      <span class="mat-caption" *ngIf="isAutenticated" style="color: white">
+        {{ currentUser.user.nombre }} {{ currentUser.user.apellidos }}</span
+      >
     </button>
     <!--Menu usuario-->
     <mat-menu #menu3="matMenu">
-      <a mat-menu-item *ngIf="!(isAutenticated)" (click)="login()">
+      <a mat-menu-item *ngIf="!isAutenticated" (click)="login()">
         <mat-icon>login</mat-icon>
         <span>Iniciar sesión</span>
       </a>
       <a mat-menu-item *ngIf="isAutenticated">
         <mat-icon>contact_mail</mat-icon>
-        <span class="mat-caption" *ngIf="isAutenticated"> {{currentUser.user.correo_electronico}}</span>
+        <span class="mat-caption" *ngIf="isAutenticated">
+          {{ currentUser.user.correo_electronico }}</span
+        >
       </a>
-      <a mat-menu-item  *ngIf="isAutenticated&&cliente" [routerLink]="['/mensajeria/all']">
-        <span class="mat-caption" *ngIf="isAutenticated&&!titulo"> Mis mensajes</span>
-        <!-- <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" *ngIf="isAutenticated&&!titulo" [routerLink]="['/mensajeria/all']">Mis mensajes</button>  -->
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && cliente"
+        [routerLink]="['/mensajeria/all']"
+      >
+        <span class="mat-caption" *ngIf="isAutenticated && !titulo">
+          Mis mensajes</span
+        >
         <mat-icon>mail</mat-icon>
       </a>
       <a mat-menu-item *ngIf="isAutenticated" [routerLink]="['/direccion/']">
         <mat-icon>location_on</mat-icon>
         <span class="mat-caption" *ngIf="isAutenticated"> Mis ubicaciones</span>
+      </a>
+
+      <a mat-menu-item *ngIf="isAutenticated" [routerLink]="['/metodoPago/']">
+        <mat-icon>payments</mat-icon>
+        <span class="mat-caption" *ngIf="isAutenticated"> Mis tarjetas</span>
       </a>
 
       <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
@@ -76,8 +168,4 @@
     </mat-menu>
   </div>
   <!--  -->
-
-
-
-  </mat-toolbar>
-
+</mat-toolbar>
