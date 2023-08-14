@@ -1,1 +1,93 @@
-<p>direccion-form works!</p>
+<form
+  [formGroup]="direccionForm"
+  (ngSubmit)="isCreate ? crearDireccion() : actualizarDireccion()"
+  novalidate
+>
+  <input type="hidden" formControlName="id_direccion" />
+  <mat-card class="shipping-card">
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Provincia</mat-label>
+            <input matInput formControlName="provincia" />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Cantón</mat-label>
+            <input matInput formControlName="canton" />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Distrito</mat-label>
+            <input matInput formControlName="distrito" />
+          </mat-form-field>
+        </div>
+      </div>
+        
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Dirección exacta</mat-label>
+            <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+            formControlName="direccion_exacta"></textarea>
+            <!-- <input matInput formControlName="direccion_exacta" /> -->
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Código postal</mat-label>
+              <input matInput formControlName="codigo_postal" />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Teléfono de contacto</mat-label>
+              <input matInput formControlName="telefono" />
+            </mat-form-field>
+          </div>
+        </div>
+        
+
+        <div class="col">
+          <mat-label>Estado actual</mat-label>
+          <mat-chip-listbox
+            aria-label="Fish selection"
+            formControlName="estado_actual"
+          >
+            <mat-chip-option value="Activo" selected
+              >Habilitado</mat-chip-option
+            >
+            <mat-chip-option value="Inactivo">Deshabilitado</mat-chip-option>
+          </mat-chip-listbox>
+        </div>
+
+        <div class="col" hidden>
+          <mat-form-field class="full-width">
+            <mat-label>Usuario</mat-label>
+            <input matInput formControlName="usuario" readonly />
+          </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="submit-btn"
+      >
+        Guardar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
