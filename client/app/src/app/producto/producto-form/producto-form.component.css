@@ -2,10 +2,6 @@
   width: 100%;
 }
 
-mat-form-field {
-  background-color: #f4f4f9;
-}
-
 .shipping-card {
   min-width: 120px;
   margin: 20px auto;
@@ -30,19 +26,51 @@ mat-form-field {
   margin-right: 0;
 }
 
-.example-card {
-  max-width: 600px;
-  background-color: #ced4da;
+.dropzone, .old-files{
+  width: 95%;
+  margin: 0 auto;
 }
 
-p {
-  text-align: justify;
+.old-files{
+  margin-bottom: 3rem;
 }
 
-img {
-  width: 10pc;
+.old-files img{
+  border-radius: .5rem;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  height: 150px;
 }
 
-h1 {
-  text-align: center;
+.old-file-item{
+  display: flex;
+  justify-content: start;
+  align-items: baseline;
+  flex-direction: column;
+  margin: 0 15px;
+}
+
+.delete-file-btn{
+  padding: .5rem 2rem;
+  background-color: red;
+  font-size: 1rem;
+  font-weight: bolder;
+  width: 250px;
+  border: none;
+  outline: none;
+  border-bottom-right-radius: .5rem;
+  border-bottom-left-radius: .5rem;
+  color: white;
+  cursor: pointer;
+}
+
+.submit-btn{
+  padding: .5rem 3rem !important;
+  margin: 2rem 1rem 2rem auto;
+}
+
+.old-files-container{
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
