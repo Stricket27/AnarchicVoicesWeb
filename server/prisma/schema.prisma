@@ -137,7 +137,7 @@ model Producto {
   nombre          String
   descripcion     String
   precio          Decimal @db.Decimal(10, 2)
-  cantidad        String
+  cantidad        Int
   estado_producto String
   estado_actual   String
 
