@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MensajeriaVendedorAllComponent } from './mensajeria-vendedor-all/mensajeria-vendedor-all.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MensajeriaDetailComponent,
     MensajeriaClienteFormComponent,
     MensajeriaVendedorFormComponent,
+    MensajeriaVendedorAllComponent,
   ],
   imports: [
     CommonModule,

@@ -1,8 +1,0 @@
-* Esto debe de hacerse antes de de correr el proyecto, ya que los "node_modules" no reconoce las carpetas *
-
-*** Terminal de Angular ***
-
-1. Carousel
-ng add ngx-bootstrap  --component carousel
-Esto es para que haga la animación de las fotografias
-

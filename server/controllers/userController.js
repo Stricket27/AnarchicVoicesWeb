@@ -10,6 +10,9 @@ module.exports.get = async (request, response, next) => {
     orderBy: {
       nombre: "asc",
     },
+    include:{
+      detalle_usuarioTipo:true
+    }
   });
   response.json(usuario);
 };
@@ -85,7 +88,12 @@ module.exports.register = async (request, response, next) => {
       estado_actual: userData.estado_actual,
     },
   });
-
+  // await prisma.detalle_UsuarioTipo.createMany({
+  //   data: userData.tipoUsuario.map((id_tipoUsuario) => ({
+  //     id_usuario: user.id_usuario,
+  //     id_tipoUsuario: id_tipoUsuario,
+  //   })),
+  // });
   const tipoUsuariosPermitidos = ["Vendedor", "Cliente"];
   const tipoUsuariosValidos = userData.tipoUsuario.filter((tipo) =>
     tipoUsuariosPermitidos.includes(tipo)
@@ -113,6 +121,8 @@ module.exports.login = async (request, response, next) => {
     where: {
       correo_electronico: userReq.correo_electronico,
     },
+    
+    include:{detalle_usuarioTipo:true}
   });
   if (!user) {
     response.status(401).send({
@@ -132,6 +142,7 @@ module.exports.login = async (request, response, next) => {
   } else {
     const payload = {
       correo_electronico: user.correo_electronico,
+      detalle_usuarioTipo: user.detalle_usuarioTipo
     };
     const token = jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRE,

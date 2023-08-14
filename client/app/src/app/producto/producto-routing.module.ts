@@ -8,11 +8,11 @@ import { ProductoIndexComponent } from './producto-index/producto-index.componen
 import { AuthGuard } from '../share/guards/auth.guard';
 
 const routes: Routes = [
-{path: 'producto', component: ProductoIndexComponent},
-{path: 'producto/all' , canActivate:[AuthGuard], data:{roles:[2],}, component: ProductoAllComponent},
-{path: 'producto/create', canActivate:[AuthGuard], data:{roles:[2],}, component: ProductoFormComponent},
-{path: 'producto/:id', canActivate:[AuthGuard], data:{roles:[2],},component: ProductoDetailComponent},
-{path: 'producto/update/:id', component: ProductoFormComponent}
+    {path: 'producto', component: ProductoIndexComponent},
+    {path: 'producto/all' , canActivate:[AuthGuard], data:{roles:[2],}, component: ProductoAllComponent},
+    {path: 'producto/create', canActivate:[AuthGuard], data:{roles:[2],}, component: ProductoFormComponent},
+    {path: 'producto/:id', canActivate:[AuthGuard], data:{roles:[2],},component: ProductoDetailComponent},
+    {path: 'producto/update/:id', canActivate:[AuthGuard], data:{roles:[2],}, component: ProductoFormComponent}
 ];
 
 @NgModule({

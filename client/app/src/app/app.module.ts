@@ -26,6 +26,7 @@ import { MatSortModule } from '@angular/material/sort';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ MatTableModule,
 MatPaginatorModule,
 MatSortModule,
 // al final el gestor de las rutas principal 
-AppRoutingModule, 
+AppRoutingModule,
+CarouselModule.forRoot(), 
 
 ],
 providers: [{

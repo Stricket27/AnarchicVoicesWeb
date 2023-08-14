@@ -10,7 +10,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Asunto</mat-label>
-            <input matInput formControlName="asunto">
+            <input matInput formControlName="asunto" [readonly]="noEditable">
             <mat-error *ngIf="errorHandling('asunto','required')">
               Asunto es <strong>requerido</strong>
             </mat-error>
@@ -27,7 +27,7 @@
       <div class="col">
         <mat-form-field class="full-width" >
           <mat-label >Mensaje</mat-label>
-          <input matInput formControlName="mensaje">
+          <input matInput formControlName="mensaje" [readonly]="noEditable">
           <mat-error *ngIf="errorHandling('mensaje','required')">
             Mensaje es <strong>requerido</strong>
           </mat-error>
@@ -40,7 +40,7 @@
         </mat-form-field>
       </div>
       
-      <div class="col">
+      <div class="col" *ngIf="!isCreate&&isOwner">
         <mat-form-field class="full-width">
           <mat-label>Respuesta</mat-label>
           <input matInput formControlName="respuesta" >
@@ -82,11 +82,11 @@
           <div class="col">
             <mat-form-field class="full-width">
               <mat-label>Usuario</mat-label>
-              <input matInput formControlName="usuario" readonly value="{{ mensajeriaForm.get('usuario').value?.nombre }} {{ mensajeriaForm.get('usuario').value?.apellidos }}">
+              <input matInput formControlName="usuario" readonly>
             </mat-form-field>
           </div>
          
-            <div class="col">
+            <div class="col"*ngIf="isOwner">
               <mat-label class="radio">Estado actual</mat-label>
               <mat-radio-group formControlName="estado_actual">
                 <mat-radio-button value="Pregunta respondida">Pregunta respondida</mat-radio-button>

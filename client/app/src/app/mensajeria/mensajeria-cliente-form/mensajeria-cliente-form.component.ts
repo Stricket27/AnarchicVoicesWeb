@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
 import { NotificacionService,TipoMessage } from 'src/app/share/notification.service';
 
@@ -23,13 +24,18 @@ export class MensajeriaClienteFormComponent implements OnInit{
   mensajeriaForm: FormGroup;
   idMensajeria: number = 0;
   isCreate: boolean = true;
+  isAutenticated: boolean;
+  currentUser: any;
+  isOwner:boolean= false;
+  tieneRespuesta:boolean=false;
+  noEditable: boolean=false;
 
   constructor(
     private fb: FormBuilder,
     private gService: GenericService,
     private router: Router,
     private activeRouter: ActivatedRoute,
-    private noti:NotificacionService
+    private noti:NotificacionService, private authService: AuthenticationService
     )
     {
     this.formularioReactive();
@@ -39,6 +45,14 @@ export class MensajeriaClienteFormComponent implements OnInit{
     }
   
   ngOnInit(): void {
+    
+    //Suscripción a la información del usuario actual
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x))
+    //Suscripción al booleano que indica si esta autenticado
+    this.authService.isAuthenticated.subscribe(
+      (valor) => (this.isAutenticated = valor)
+    )
+   
     this.activeRouter.queryParams.subscribe(queryParams => {
       const idProductoParam = queryParams['id_producto'];
       if (idProductoParam && !isNaN(parseInt(idProductoParam))) {
@@ -47,8 +61,11 @@ export class MensajeriaClienteFormComponent implements OnInit{
        
        
       }
+      console.log(this.currentUser.user.nombre)
+      
     });
    
+    
   //Verificar si se envio un id por parametro para crear formulario para actualizar
     this.activeRouter.params.subscribe((params:Params)=>{
       this.idMensajeria = params['id'];
@@ -60,9 +77,11 @@ export class MensajeriaClienteFormComponent implements OnInit{
         this.gService.get('mensajeria',this.idMensajeria).pipe(takeUntil(this.destroy$))
         .subscribe((data:any)=>{
           this.mensajeriaInfo=data;
-
+         
           //Establecer los valores del formulario mensajeria
-          console.log(this.mensajeriaInfo)
+          if (this.mensajeriaInfo&&this.mensajeriaInfo.respuesta!=null) {
+           this.tieneRespuesta=true;
+          }
           this.mensajeriaForm.setValue({
             id:this.mensajeriaInfo.id_mensajeria,
             asunto:this.mensajeriaInfo.asunto,
@@ -70,15 +89,36 @@ export class MensajeriaClienteFormComponent implements OnInit{
             respuesta:this.mensajeriaInfo.respuesta,
             estado_actual:this.mensajeriaInfo.estado_actual,
             producto:this.productId,
-            usuario:this.mensajeriaInfo.usuario,
+            usuario:this.mensajeriaInfo.usuario.nombre+" "+this.mensajeriaInfo.usuario.apellidos,
           })
         });
       }
-      
+      if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario===2) {
+        this.noEditable=true;
+        console.log("editable "+this.noEditable)
+      }
      
+     
+
+      this.gService
+        .get("producto", this.productId)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data: any) => {
+          let producto = data;
+          if (producto.id_usuario === this.currentUser.user.id_usuario) {
+            this.isOwner=true;
+            console.log(this.isOwner)
+                     }
+        });
+       
     });
-   
+   if(this.isCreate){
+    this.mensajeriaForm.patchValue({usuario:this.currentUser.user.nombre+" "+this.currentUser.user.apellidos})
+   }
     this.listaProductos();
+    
+   
+    
   }
   
     formularioReactive() {
@@ -99,7 +139,6 @@ export class MensajeriaClienteFormComponent implements OnInit{
       if (!this.productosList) return '';
   
       const selectedProduct = this.productosList.find((p) => p.id_producto === productId);
-      console.log(selectedProduct);
       return selectedProduct ? `${selectedProduct.nombre} - ${selectedProduct.descripcion}` : '';
       
     }
@@ -111,7 +150,6 @@ export class MensajeriaClienteFormComponent implements OnInit{
     .list('user')
     .pipe(takeUntil(this.destroy$))
     .subscribe((data: any) => {
-    console.log(data);
     this.usuariosList = data;
     });
     }
@@ -122,7 +160,6 @@ export class MensajeriaClienteFormComponent implements OnInit{
     .list('producto')
     .pipe(takeUntil(this.destroy$))
     .subscribe((data: any) => {
-    console.log(data);
     this.productosList = data;
     });
     }
@@ -136,8 +173,7 @@ export class MensajeriaClienteFormComponent implements OnInit{
     if(this.mensajeriaForm.invalid){
     return;
     }
-    
-    console.log(this.mensajeriaForm.value);
+    this.mensajeriaForm.patchValue({usuario:this.currentUser.user.id_usuario})
     this.gService.create('mensajeria',this.mensajeriaForm.value)
     .pipe(takeUntil(this.destroy$)) .subscribe((data: any) => {
     this.respMensajeria=data;
@@ -154,18 +190,57 @@ export class MensajeriaClienteFormComponent implements OnInit{
       if (this.mensajeriaForm.invalid) {
         return;
       }
-  
-     
-     
-      this.gService.update('mensajeria', this.mensajeriaForm.value)
-        .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
-          this.respMensajeria = data;
-          this.noti.mensaje('Mensaje','Mensaje editado',TipoMessage.info)
-          this.router.navigate(['/mensajeria/all'], {
-            queryParams: { update: 'true' }
+      console.log("tipoU "+  this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario)
+      
+      if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario===2&&!this.tieneRespuesta) {
+    
+        
+        this.gService.update('mensajeria', this.mensajeriaForm.value)
+          .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
+           
+            this.respMensajeria = data;
+            this.noti.mensaje('Mensaje','Mensaje editado',TipoMessage.info)
+            this.router.navigate(['/mensajeria/all'], {
+              queryParams: { update: 'true' }
+            });
           });
-        });
+         
+      } else {
+        // Verificar si el usuario es de tipo cliente y si el mensaje no tiene respuesta
+        if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario===3&&!this.tieneRespuesta) {
+    
+          
+          this.gService.update('mensajeria', this.mensajeriaForm.value)
+            .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
+              this.respMensajeria = data;
+              this.noti.mensaje('Mensaje','Mensaje editado',TipoMessage.info)
+              this.router.navigate(['/mensajeria/all'], {
+                queryParams: { update: 'true' }
+              });
+            });
+        } else {
+          // Mostrar un mensaje o tomar alguna acción si el usuario no tiene permiso
+          this.noti.mensaje('Mensaje','El mensaje no puede ser editado porque ya tiene respuesta',TipoMessage.error)
+          this.router.navigate(['/mensajeria/all'], {
+            queryParams: { update: 'false' }
+          });
+        }
+      }
+      
+ 
+     
+     
+      // this.gService.update('mensajeria', this.mensajeriaForm.value)
+      //   .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
+      //     this.respMensajeria = data;
+      //     this.noti.mensaje('Mensaje','Mensaje editado',TipoMessage.info)
+      //     this.router.navigate(['/mensajeria/all'], {
+      //       queryParams: { update: 'true' }
+      //     });
+      //   });
     }
+
+  
     
   
     onReset() {

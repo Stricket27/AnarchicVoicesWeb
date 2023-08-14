@@ -2,18 +2,18 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MensajeriaAllDataSource, MensajeriaAllItem } from './mensajeria-all-datasource';
+import { MensajeriaVendedorAllDataSource, MensajeriaVendedorAllItem } from './mensajeria-vendedor-all-datasource';
 import { Subject, map, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GenericService } from 'src/app/share/generic.service';
 import { AuthenticationService } from 'src/app/share/authentication.service';
+import { GenericService } from 'src/app/share/generic.service';
 
 @Component({
-  selector: 'app-mensajeria-all',
-  templateUrl: './mensajeria-all.component.html',
-  styleUrls: ['./mensajeria-all.component.css']
+  selector: 'app-mensajeria-vendedor-all',
+  templateUrl: './mensajeria-vendedor-all.component.html',
+  styleUrls: ['./mensajeria-vendedor-all.component.css']
 })
-export class MensajeriaAllComponent implements AfterViewInit {
+export class MensajeriaVendedorAllComponent implements AfterViewInit {
   usuarios: any[];
   usuariosCargados = false;
   productos: any[];
@@ -46,32 +46,25 @@ export class MensajeriaAllComponent implements AfterViewInit {
   });
   }
   listaMensajeria(id_usuario: number) {
-    this.getProductosDelUsuario(id_usuario)
-      .subscribe((productos: any[]) => {
-        this.gService.list('mensajeria/')
-          .pipe(
-            map((data: any[]) => {
-              return productos.length > 0
-                ? data.filter(mensaje => productos.some(producto => producto.id_producto === mensaje.id_producto))
-                : data.filter(mensaje => mensaje.id_usuario === id_usuario);
-            })
-          )
-          .subscribe((filteredData: any[]) => {
-            console.log(filteredData);
-            this.datos = filteredData;
-            this.dataSource = new MatTableDataSource(this.datos);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-          });
-      });
+    this.gService.list('mensajeria/')
+    .pipe(
+      map((data: any[]) => data.filter(mensaje => mensaje.id_usuario === id_usuario))
+    )
+    .subscribe((filteredData: any[]) => {
+      console.log(filteredData);
+      this.datos = filteredData;
+      this.dataSource = new MatTableDataSource(this.datos);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
-  getProductosDelUsuario(id_usuario: number) {
-    return this.gService.list('producto/')
-      .pipe(
-        takeUntil(this.destroy$),
-        map((data: any[]) => data.filter(producto => producto.id_usuario === id_usuario))
-      );
-  }
+  // getProductosDelUsuario(id_usuario: number) {
+  //   return this.gService.list('producto/')
+  //     .pipe(
+  //       takeUntil(this.destroy$),
+  //       map((data: any[]) => data.filter(producto => producto.id_usuario === id_usuario))
+  //     );
+  // }
 
   listaUsuarios(){
   this.gService.list('user/')
@@ -122,7 +115,7 @@ export class MensajeriaAllComponent implements AfterViewInit {
 
   actualizarMensaje(idProducto:number,id_mensajeria: number) {
     console.log(id_mensajeria)
-    this.router.navigate(['/mensajeria-cliente/update', id_mensajeria], {
+    this.router.navigate(['/mensajeria-vendedor/update', id_mensajeria], {
     relativeTo: this.route,
     queryParams: { id_producto: idProducto }
     });

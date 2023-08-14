@@ -12,6 +12,10 @@ export class HeaderComponent {
   isAutenticated: boolean;
   currentUser: any;
   qtyItems:Number = 0;
+  vendedor:boolean=false;
+  vendedorCliente:boolean=false;
+  cliente:boolean=false;
+  titulo:boolean=false;
   constructor(private cartService: CartService,
     private router: Router,
     private authService: AuthenticationService) {      
@@ -22,16 +26,76 @@ export class HeaderComponent {
 
 
     //Suscripción a la información del usuario actual
-    this.authService.currentUser.subscribe((x) => (this.currentUser = x))
+    this.authService.currentUser.subscribe((x) => {
+      this.currentUser = x;
+      console.log(this.currentUser);
+    
+      if (this.currentUser && this.currentUser.user.detalle_usuarioTipo) {
+       
+        if (this.currentUser.user.detalle_usuarioTipo.length === 2) {
+          if (
+            this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2 &&
+            this.currentUser.user.detalle_usuarioTipo[1].id_tipoUsuario === 3
+          ) {
+            this.titulo=true
+            this.vendedorCliente = true;
+            this.vendedor = true;
+          } else {
+            this.titulo=false
+            this.vendedorCliente = false;
+            this.vendedor = false;
+          }
+        } else if (this.currentUser.user.detalle_usuarioTipo.length === 1) {
+          if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2) {
+            this.vendedor = true;
+            this.cliente=false;
+            
+          } else {
+            this.vendedor = false;
+            this.cliente=true;
+            console.log("cliente:"+this.cliente)
+          }
+        } else {
+          // No cumple ningún caso, reiniciar los valores
+          this.vendedor = false;
+          this.titulo=false
+          this.vendedorCliente = false;
+          this.cliente=false;
+        }
+      } else {
+        // Usuario no autenticado, reiniciar los valores
+        this.vendedor = false;
+        this.titulo=false
+        this.vendedorCliente = false;
+        this.cliente=false;
+      }
+    });
     //Suscripción al booleano que indica si esta autenticado
     this.authService.isAuthenticated.subscribe(
       (valor) => (this.isAutenticated = valor)
+      
     )
 
     //Suscribirse al observable que gestiona la cantidad de items del carrito
     this.cartService.countItems.subscribe((value)=>{
       this.qtyItems=value
-     })
+     }
+     
+     )
+    
+    //  if (this.currentUser.user.detalle_usuarioTipo.length === 2) {
+    //   if (
+    //     this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2 &&
+    //     this.currentUser.user.detalle_usuarioTipo[1].id_tipoUsuario === 3
+    //   ) {
+    //     this.vendedorCliente = true;
+    //   }
+    // } else if (this.currentUser.user.detalle_usuarioTipo.length === 1) {
+    //   if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2) {
+    //     this.vendedor = true;
+    //   }
+    // }
+    
   }
   login(){
     this.router.navigate(['user/login'])

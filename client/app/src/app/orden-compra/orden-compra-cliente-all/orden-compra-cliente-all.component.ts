@@ -7,6 +7,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { GenericService } from 'src/app/share/generic.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 
 @Component({
   selector: 'app-orden-compra-cliente-all',
@@ -17,7 +18,7 @@ export class OrdenCompraClienteAllComponent {
   usuarios: any[];
   usuariosCargados = false;
   datos:any;
-
+  currentUser: any;
   destroy$:Subject<boolean>=new Subject<boolean>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -29,20 +30,27 @@ export class OrdenCompraClienteAllComponent {
 
   constructor(private router:Router,
   private route:ActivatedRoute,
-  private gService:GenericService,private http: HttpClient,private datePipe: DatePipe) {
+  private gService:GenericService,private http: HttpClient,private datePipe: DatePipe,private authService: AuthenticationService) {
   }
 
   ngAfterViewInit(): void {
-  this.listaPedidos();
+ 
   this.listaUsuarios();
+  this.authService.currentUser.subscribe((user) => {
+    this.currentUser = user;
+    console.log(this.currentUser)
+    if (this.currentUser) {
+      this.listaPedidos(this.currentUser.user.id_usuario);
+    }
+  });
   }
 
-  listaPedidos() {
+  listaPedidos(id_usuario: number) {
   this.gService.list('ordencompra/')
   .pipe(
   takeUntil(this.destroy$),
-  map((data: any[]) => data.filter(pedido => pedido.id_usuario == 3))
-  )
+  map((data: any[]) => data.filter(pedido => pedido.id_usuario === id_usuario))
+    )
   .subscribe((filteredData: any[]) => {
   console.log(filteredData);
   this.datos = filteredData;
@@ -52,6 +60,7 @@ export class OrdenCompraClienteAllComponent {
   });
   }
 
+ 
   formatDate(date: string): string {
   return this.datePipe.transform(date, 'dd/MM/yyyy');
   }

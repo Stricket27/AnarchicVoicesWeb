@@ -31,20 +31,27 @@ export class AuthGuard implements CanActivate {
   //con alguno de los indicados
   checkUserLogin(route: ActivatedRouteSnapshot, url: any): boolean {
     if (this.isAuthenticated) {
-      // const userRole = this.currentUser.user.role;
-      //roles.length && roles.indexOf(verify.role)===-1
-      // if(route.data['roles'].length && !route.data['roles'].includes(userRole)){ //Esto sirve para el proyecto con la tabla intermedia
-      //   this.router.navigate(['/usuario/login'], {
-      //     //Parametro para mostrar mensaje en login
-      //     queryParams: { auth: 'no' }
-      //   });
-      //   return false;
-      // }
-      return true;
-    } 
+      let userRole = [];
+      if (this.currentUser) {
+        for (
+          let index = 0;
+          index < this.currentUser.user.detalle_usuarioTipo.length;
+          index++
+        ) {
+          userRole[index] = this.currentUser.user.detalle_usuarioTipo[index].id_tipoUsuario;
+        }
+        console.log(userRole);
+      }
+
+      for (let index = 0; index < userRole.length; index++) {
+        if (userRole[index] === route.data['roles'][0]) {
+          return true;
+        }
+      }
+    }
 
     this.router.navigate(['/user/login'], {
-      queryParams: { auth: 'no'}
+      queryParams: { auth: 'no' },
     });
     return false;
   }

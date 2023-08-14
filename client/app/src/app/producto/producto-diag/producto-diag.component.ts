@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Subject, map, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 
 
 @Component({
@@ -14,6 +15,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export class ProductoDiagComponent implements OnInit {
   datos: any;
+  isAutenticated: boolean;
+  currentUser: any;
   datosDialog: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -21,12 +24,18 @@ export class ProductoDiagComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data, private router: Router,
     private route: ActivatedRoute,
     private dialogRef: MatDialogRef<ProductoDiagComponent>,
-    private gService: GenericService, public dialog: MatDialog
+    private gService: GenericService, public dialog: MatDialog,private authService: AuthenticationService
   ) {
     this.datosDialog = data;
   }
 
   ngOnInit(): void {
+    //Suscripción a la información del usuario actual
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x))
+    //Suscripción al booleano que indica si esta autenticado
+    this.authService.isAuthenticated.subscribe(
+      (valor) => (this.isAutenticated = valor)
+    )
     if (this.datosDialog.id_producto) {
       this.obtenerProducto(this.datosDialog.id_producto);
     }
@@ -43,18 +52,34 @@ export class ProductoDiagComponent implements OnInit {
   }
 
   crearMensaje() {
-    this.router.navigate(['/mensajeria-cliente/create'], {
-      relativeTo: this.route,
-      queryParams: { id_producto: this.datosDialog.id_producto }
-    });
-    this.close();
-  }
-
-  crearFotografia() {
-    this.router.navigate(['/fotografia/create'], {
-      relativeTo: this.route,
-      queryParams: { id_producto: this.datosDialog.id_producto }
-    });
+    if (this.currentUser.user.detalle_usuarioTipo.length === 2) {
+      const secondDetalle = this.currentUser.user.detalle_usuarioTipo[1];
+      if (secondDetalle.id_tipoUsuario === 3) {
+        this.router.navigate(['/mensajeria-vendedor/create'], {
+          relativeTo: this.route,
+          queryParams: { id_producto: this.datosDialog.id_producto }
+        });
+      } else {
+        this.router.navigate(['/mensajeria-vendedor/create'], {
+          relativeTo: this.route,
+          queryParams: { id_producto: this.datosDialog.id_producto }
+        });
+      }
+    } else {
+      const firstDetalle = this.currentUser.user.detalle_usuarioTipo[0];
+      if (firstDetalle.id_tipoUsuario === 3) {
+        this.router.navigate(['/mensajeria-cliente/create'], {
+          relativeTo: this.route,
+          queryParams: { id_producto: this.datosDialog.id_producto }
+        });
+      } else {
+        this.router.navigate(['/mensajeria-vendedor/create'], {
+          relativeTo: this.route,
+          queryParams: { id_producto: this.datosDialog.id_producto }
+        });
+      }
+    }
+     
     this.close();
   }
 

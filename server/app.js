@@ -18,7 +18,7 @@ const fotografiaRoutes = require("./routes/fotografiaRoutes")
 const categoriaRoutes = require("./routes/categoriaRoutes");
 const metodoPagoRoutes = require("./routes/metodoPagoRoutes");
 const mensajeriaRoutes = require("./routes/mensajeriaRoutes");
-
+const detalle_usuarioTipo = require("./routes/detalle_usuarioTipoRoutes")
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -48,7 +48,7 @@ app.use("/fotografia/", fotografiaRoutes);
 app.use("/categoria/", categoriaRoutes);
 app.use("/metodoPago/", metodoPagoRoutes);
 app.use("/mensajeria/",mensajeriaRoutes);
-
+app.use("/detalle_usuarioTipo/", detalle_usuarioTipo);
 // Servidor
 app.listen(port, () => { 
 console.log(`http://localhost:${port}`);

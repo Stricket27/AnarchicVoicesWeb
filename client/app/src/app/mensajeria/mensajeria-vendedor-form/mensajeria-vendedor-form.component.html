@@ -1,1 +1,107 @@
-<p>mensajeria-mensajeria-vendedor-form works!</p>
+<form [formGroup]="mensajeriaForm" (ngSubmit)="isCreate ? crearMensaje(): actualizarMensaje()"  novalidate >
+    <input type="hidden" formControlName="id" />
+    <mat-card class="shipping-card"> 
+      <mat-card-header>
+        <mat-card-title>{{titleForm}} Mensaje</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Asunto</mat-label>
+              <input matInput formControlName="asunto" >
+              <mat-error *ngIf="errorHandling('asunto','required')">
+                Asunto es <strong>requerido</strong>
+              </mat-error>
+              <mat-error *ngIf="errorHandling('asunto','minlength')">
+                Asunto debe tener <strong>10 caracteres</strong>
+              </mat-error>
+              <mat-error *ngIf="errorHandling('asunto','maxlength')">
+                Asunto no debe tener más de <strong>100 caracteres</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="col">
+          <mat-form-field class="full-width" >
+            <mat-label >Mensaje</mat-label>
+            <input matInput formControlName="mensaje">
+            <mat-error *ngIf="errorHandling('mensaje','required')">
+              Mensaje es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('mensaje','minlength')">
+              Mensaje debe tener <strong>20 caracteres</strong>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('mensaje','maxlength')">
+              Mensaje no debe tener más de <strong>100 caracteres</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <!-- <div class="col" *ngIf="!isCreate">
+          <mat-form-field class="full-width">
+            <mat-label>Respuesta</mat-label>
+            <input matInput formControlName="respuesta" >
+           
+            <mat-error *ngIf="errorHandling('respuesta','minlength')">
+              Respuesta debe tener <strong>20 caracteres</strong>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('respuesta','maxlength')">
+              Respuesta no debe tener más de <strong>100 caracteres</strong>
+            </mat-error>
+          </mat-form-field>
+        </div> -->
+         
+        <div class="col" *ngIf="productosList && productId">
+          <mat-form-field class="full-width">
+            <mat-label>Producto</mat-label>
+            <mat-select formControlName="producto">
+              <mat-option [value]="productId" >
+                {{ getProductDescription(productId) }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+              <!-- <div class="col" *ngIf="usuariosList">
+                <mat-form-field class="full-width">
+                    <mat-label>Usuario</mat-label>
+                    <mat-select formControlName="usuario">
+                      <mat-option *ngFor="let u of usuariosList" [value]="u.id_usuario">
+                        {{u.nombre}} {{u.apellidos}}
+                      </mat-option>
+                      
+                    </mat-select>
+                    <mat-error *ngIf="errorHandling('usuario','required')">
+                      Usuario es <strong>requerido</strong>
+                    </mat-error>
+                  </mat-form-field>
+            </div> -->
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Usuario</mat-label>
+                <input matInput formControlName="usuario" readonly>
+              </mat-form-field>
+            </div>
+           
+              <!-- <div class="col"*ngIf="isOwner">
+                <mat-label class="radio">Estado actual</mat-label>
+                <mat-radio-group formControlName="estado_actual">
+                  <mat-radio-button value="Pregunta respondida">Pregunta respondida</mat-radio-button>
+                  <mat-radio-button value="Pendiente">Pendiente</mat-radio-button>
+                </mat-radio-group>
+              </div> -->
+           
+      </mat-card-content>
+  
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">
+          Guardar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+  
+  
