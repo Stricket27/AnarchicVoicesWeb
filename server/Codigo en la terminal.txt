@@ -6,3 +6,9 @@
 ng add ngx-bootstrap  --component carousel
 Esto es para que haga la animación de las fotografias
 
+
+** Terminal del servidor **
+
+1. Multer
+npm i multer
+Esto para la creación de las fotografías
