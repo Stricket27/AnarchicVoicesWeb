@@ -1,124 +1,94 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+<mat-card class="full-width">
+  <h1 class="mat-h1"><b>Mantenimiento de producto por vendedor</b></h1>
+  <mat-card-content>
+    <mat-card-title>
+      <a
+        mat-fab
+        extended
+        matTooltip="Crear Producto"
+        aria-label="Crear Producto"
+        color="primary"
+        (click)="crearProducto()"
+        ><mat-icon>add</mat-icon>
+        Crear un nuevo producto
+      </a>
+    </mat-card-title>
+    <br />
+    <div class="mat-elevation-z8" *ngIf="dataSource">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="full-width-table"
+        matSort
+        aria-label="Elements"
+      >
+        <ng-container matColumnDef="producto">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.nombre }} - {{ row.descripcion }}
+          </td>
+        </ng-container>
 
-import { Subject, map, takeUntil } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GenericService } from 'src/app/share/generic.service';
-import { AuthenticationService } from 'src/app/share/authentication.service';
+        <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.precio | currency : "₡" }}
+          </td>
+        </ng-container>
 
-@Component({
-  selector: 'app-producto-all',
-  templateUrl: './producto-all.component.html',
-  styleUrls: ['./producto-all.component.css']
-})
-export class ProductoAllComponent {
-  usuarios: any[];
-  usuariosCargados = false;
-  categorias: any[];
-  categoriasCargadas = false;
-  datos: any;
-  currentUser: any;
-  destroy$: Subject<boolean> = new Subject<boolean>();
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
+          <td mat-cell *matCellDef="let row">{{ row.cantidad }}</td>
+        </ng-container>
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+        <ng-container matColumnDef="id_usuario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Vendedor</th>
+          <td mat-cell *matCellDef="let row">
+            {{ getNombreUsuario(row.id_usuario) }}
+          </td>
+        </ng-container>
 
-  dataSource = new MatTableDataSource<any>();
-  displayedColumns = ['producto', 'precio', 'cantidad', 'id_usuario', 'acciones'];
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
 
-  constructor(private router: Router,
-    private route: ActivatedRoute,
-    private gService: GenericService,
-    private authService: AuthenticationService) {
-  }
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Actualizar producto"
+              aria-label="Actualizar producto"
+              color="primary"
+              (click)="actualizarProducto(row.id_producto)"
+            >
+              <mat-icon class="mat-18">edit</mat-icon>
+            </button>
 
-  ngAfterViewInit(): void {
-    this.listaUsuarios();
+            <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Detalle Producto"
+              aria-label="Detalle Producto"
+              color="primary"
+              (click)="detalle(row.id_producto)"
+            >
+              <mat-icon class="mat-18">info</mat-icon>
+            </button>
+          </td>
+        </ng-container>
 
-    this.authService.currentUser.subscribe((user) => {
-      this.currentUser = user;
-      console.log(this.currentUser)
-      if (this.currentUser) {
-        this.listaProductos(this.currentUser.user.id_usuario)
-      }
-    })
-  }
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-  listaProductos(id_usuario: number) {
-    this.getProductosDeUsuario(id_usuario)
-      .subscribe((productos: any[]) => {
-        this.gService.list('producto/')
-          .pipe(
-            map((data: any[]) => {
-              return productos.length > 0
-                ? data.filter(todoProducto => productos.some(producto => producto.id_producto === todoProducto.id_producto))
-                : data.filter(todoProducto => todoProducto.id_usuario === id_usuario);
-            })
-          )
-          .subscribe((filteredData: any[]) => {
-            console.log(filteredData);
-            this.datos = filteredData;
-            this.dataSource = new MatTableDataSource(this.datos);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-          });
-      });
-  }
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
 
-  getProductosDeUsuario(id_usuario: number) {
-    return this.gService.list('producto/')
-      .pipe(
-        takeUntil(this.destroy$),
-        map((data: any[]) => data.filter(producto => producto.id_usuario === id_usuario))
-      );
-  }
-
-  listaUsuarios() {
-    this.gService.list('user/')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        console.log(data);
-        this.usuarios = data;
-        console.log(this.usuarios)
-        this.usuariosCargados = true;
-      });
-  }
-
-  getNombreUsuario(id: number): string {
-    if (this.usuariosCargados) {
-      const usuario = this.usuarios.find(u => u.id_usuario === id);
-      return usuario ? usuario.nombre + " " + usuario.apellidos : '';
-    } else {
-      return '';
-    }
-  }
-
-  detalle(id: number) {
-    this.router.navigate(['/producto', id],
-      {
-        relativeTo: this.route
-      })
-  }
-
-  actualizarProducto(id_producto: number) {
-    console.log(id_producto)
-    this.router.navigate(['/producto/update', id_producto], {
-      relativeTo: this.route,
-      // queryParams: { id_producto: id_producto }
-    });
-  }
-
-  crearProducto() {
-    this.router.navigate(['/producto/create'], {
-      relativeTo: this.route,
-    });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
-  }
-
-}
+      <mat-paginator
+        #paginator
+        [length]="dataSource?.data?.length"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[10, 20, 50]"
+        aria-label="Selecccione una página"
+      ></mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>
