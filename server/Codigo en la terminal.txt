@@ -6,6 +6,10 @@
 ng add ngx-bootstrap  --component carousel
 Esto es para que haga la animación de las fotografias
 
+2. Dropzone
+npm i ngx-dropzone
+Esto para el espacio para seleccionar las fotografías
+
 
 ** Terminal del servidor **
 
