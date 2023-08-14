@@ -1,12 +1,12 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 module.exports.get = async (request, response, next) => {
   const fotografia = await prisma.fotografia.findMany({
     orderBy: {
-      id_fotografia: "asc",
-    },
+      id_fotografia: 'asc'
+    }
   });
-  response.json(fotografia);
+  response.json(fotografia)
 };
 
 //Obtener por Id
@@ -15,26 +15,52 @@ module.exports.getById = async (request, response, next) => {
   const fotografia = await prisma.fotografia.findUnique({
     where: { id_fotografia: id },
     include: {
-      producto: true,
-    },
-  });
+      producto: true
+    }
+  })
   response.json(fotografia);
 };
 
-//Crear
 module.exports.create = async (request, response, next) => {
   let fotografia = request.body;
+  const id_producto = fotografia.Producto;
+  console.log('fotou', fotografia);
   const newFotografia = await prisma.fotografia.create({
     data: {
-      fotografia: fotografia.fotografia,
-      estado_actual: fotografia.estado_actual,
+        fotografia: fotografia.fotografia,
+        estado_actual: fotografia.estado_actual,
+        id_producto: id_producto  
+    },
+  }); 
+  response.json({created: true});
+};
+
+module.exports.deleteFoto = async (request, response, next) => {
+  let idFotografia = parseInt(request.params.id);
+  const fotografiaViejo = await prisma.fotografia.findUnique({
+    where: { id_fotografia: idFotografia },
+    include: {
       producto: {
-        connect: fotografia.producto,
-      },
+        select: {
+          id_producto: true
+        }
+      }
+    }
+  });
+  
+  const deleteFotografia = await prisma.fotografia.update({
+    where: {
+      id_fotografia: idFotografia,
+    },
+    data: {
+      estado_actual: 'Inactivo',
     },
   });
-  response.json(newFotografia);
+
+  response.json({created: true});
 };
+
+
 
 module.exports.update = async (request, response, next) => {
   let fotografia = request.body;
@@ -44,10 +70,10 @@ module.exports.update = async (request, response, next) => {
     include: {
       producto: {
         select: {
-          id_producto: true,
-        },
-      },
-    },
+          id_producto: true
+        }
+      }
+    }
   });
 
   const newFotografia = await prisma.fotografia.update({
@@ -59,28 +85,9 @@ module.exports.update = async (request, response, next) => {
       estado_actual: fotografia.estado_actual,
       producto: {
         disconnect: fotografiaViejo.producto,
-        connect: fotografia.producto,
+        connect: fotografia.producto
       },
     },
   });
   response.json(newFotografia);
-};
-
-module.exports.EliminarFotografias = async (request, response, next) => {
-  try {
-    let id = parseInt(request.params.id);
-    console.log(id);
-    await prisma.fotografia.update({
-      where: {
-        id_fotografia: id,
-      },
-
-      data: {
-        estado_actual: "Inactivo",
-      },
-    });
-    console.log(response.json(id))
-  } catch (error) {
-    console.log(error);
-  }
 };
