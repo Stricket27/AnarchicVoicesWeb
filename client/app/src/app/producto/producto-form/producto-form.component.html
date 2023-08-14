@@ -42,19 +42,12 @@
               El precio es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
-          <!-- <mat-form-field class="full-width">
-            <mat-label>Precio del producto</mat-label>
-            <input matInput formControlName="precio" />
-            <mat-error *ngIf="errorHandling('precio', 'required')">
-              Precio es <strong>requerido</strong>
-            </mat-error>
-          </mat-form-field> -->
         </div>
 
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Cantidad del producto</mat-label>
-            <input matInput formControlName="cantidad" />
+            <input type="number" matInput formControlName="cantidad" />
             <mat-error *ngIf="errorHandling('cantidad', 'required')">
               Cantidad es <strong>requerido</strong>
             </mat-error>
