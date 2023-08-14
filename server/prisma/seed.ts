@@ -96,7 +96,7 @@ async function main() {
             numeroCuenta: '1234567891024587',
             mesVencimiento: 8,
             annoVencimiento: 2025,
-            codigoSeguridad: 444,
+            codigoSeguridad: "444",
             estado_actual: 'Activo',
             id_usuario: 1,
             id_tipoPago: 1
@@ -108,7 +108,7 @@ async function main() {
             numeroCuenta: '5123456789012346',
             mesVencimiento: 8,
             annoVencimiento: 2025,
-            codigoSeguridad: 435,
+            codigoSeguridad: "435",
             estado_actual: 'Activo',
             id_usuario: 2,
             id_tipoPago: 2
@@ -120,7 +120,7 @@ async function main() {
             numeroCuenta: '5123619745395853',
             mesVencimiento: 8,
             annoVencimiento: 2025,
-            codigoSeguridad: 586,
+            codigoSeguridad: "586",
             estado_actual: 'Activo',
             id_usuario: 3,
             id_tipoPago: 2
