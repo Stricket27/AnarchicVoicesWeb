@@ -94,7 +94,8 @@ async function main() {
     await prisma.metodoPago.create({
         data: {
             numeroCuenta: '1234567891024587',
-            fechaExpiracion: new Date(),
+            mesVencimiento: 8,
+            annoVencimiento: 2025,
             estado_actual: 'Activo',
             id_usuario: 1,
             id_tipoPago: 1
@@ -104,7 +105,8 @@ async function main() {
     await prisma.metodoPago.create({
         data: {
             numeroCuenta: '5123456789012346',
-            fechaExpiracion: new Date(),
+            mesVencimiento: 8,
+            annoVencimiento: 2025,
             estado_actual: 'Activo',
             id_usuario: 2,
             id_tipoPago: 2
@@ -114,7 +116,8 @@ async function main() {
     await prisma.metodoPago.create({
         data: {
             numeroCuenta: '5123619745395853',
-            fechaExpiracion: new Date(),
+            mesVencimiento: 8,
+            annoVencimiento: 2025,
             estado_actual: 'Activo',
             id_usuario: 3,
             id_tipoPago: 2
