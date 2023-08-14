@@ -1,40 +1,10 @@
-<!-- <mat-card class="dashboard-card" *ngIf="datos"  >
-    <mat-card-header>
-      <mat-card-title>
-        {{datos.nombre }}
-      </mat-card-title>
-    </mat-card-header>
-    
-    <mat-card-content class="dashboard-card-content">
-      <p><b>Descripción: </b>{{datos.descripcion}}</p>
-      <p><b>Precio: </b>{{datos.precio| currency:'USD'}}</p>
-      <p><b>Cantidad: </b>{{datos.cantidad}}</p>
-      <p><b>Estado del producto: </b>{{datos.estado_producto}}</p>
-      <ul *ngIf = "datos">
-        <li> {{datos.usuario.nombre}} {{datos.usuario.apellidos}}</li>
-      </ul>
-      <ul *ngIf="datos">
-        <li> {{datos.categoria.descripcion}}</li>
-      </ul>
-
-      <carousel [isAnimated]="true" *ngIf="datos.fotografia">
-        <li *ngFor="let item of datos.fotografia">
-          <slide>
-            <img src="{{item.fotografia}}" style="display: block; width: 30%;">
-          </slide>
-        </li>
-      </carousel>
-
-    </mat-card-content>
-  </mat-card> -->
-
 <section class="content">
   <article class="demo-area">
     <div *ngIf="datos.fotografia">
       <carousel [isAnimated]="true">
         <div *ngFor="let item of datos.fotografia">
           <slide>
-            <img src="{{ item.fotografia }}" style="display: block; width: 30%"
+            <img src="http://localhost:3000/{{item.fotografia}}" style="display: block; width: 30%"
             />
           </slide>
         </div>
@@ -43,12 +13,9 @@
     <div class="detail">
       <section>
         <h3>{{ datos.nombre }}</h3>
-        <h2>
-          Vendedor: {{ datos.usuario.nombre }} {{ datos.usuario.apellidos }}
-        </h2>
         <p>Especificaciones:</p>
         <ul>
-          <li>{{ datos.descripcion }}</li>
+          <li>Album: {{ datos.descripcion }}</li>
           <li>Cantidad existentes: {{ datos.cantidad }} unidades</li>
           <li>Estado del producto: {{ datos.estado_producto }}</li>
           <li>Categoría: {{ datos.categoria.descripcion }}</li>
@@ -64,3 +31,30 @@
     ><img src="./assets/images/Logo_Con_Nombre.png" width="200" height="90"
   /></a>
 </footer>
+
+
+<!-- <mat-card class="dashboard-card" *ngIf="datos"  >
+  <mat-card-header>
+    <mat-card-title>
+      {{datos.nombre }}
+    </mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content class="dashboard-card-content">
+    <p><b>Descripción: </b>{{datos.descripcion}}</p>
+    <p><b>Precio: </b>{{datos.precio| currency:'USD'}}</p>
+    <p><b>Cantidad: </b>{{datos.cantidad}}</p>
+    <p><b>Estado del producto: </b>{{datos.estado_producto}}</p>
+    <ul *ngIf = "datos">
+      <li> {{datos.usuario.nombre}} {{datos.usuario.apellidos}}</li>
+    </ul>
+    <ul *ngIf="datos">
+      <li> {{datos.categoria.descripcion}}</li>
+    </ul>
+    <ul *ngIf="datos.fotografia">
+      <li *ngFor="let item of datos.fotografia" class="img-item">
+        <img width="50%" src="http://localhost:3000/{{item.fotografia}}">
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card> -->
