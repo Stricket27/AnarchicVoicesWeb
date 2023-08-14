@@ -7,7 +7,7 @@
     <carousel [isAnimated]="true" *ngIf="datos.fotografia">
       <!-- <li > -->
         <slide *ngFor="let item of datos.fotografia">
-          <img src="{{item.fotografia}}" style="display: block; width: 100%; margin-left:30%;">
+          <img src="http://localhost:3000/{{item.fotografia}}" style="display: block; width: 100%; margin-left:30%;">
         </slide>
       <!-- </li> -->
     </carousel>
