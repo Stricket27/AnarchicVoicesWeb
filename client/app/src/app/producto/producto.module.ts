@@ -23,9 +23,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,6 @@ import {MatChipsModule} from '@angular/material/chips';
   ],
   imports: [
     CommonModule,
-    CarouselModule.forRoot() ,
     ProductoRoutingModule,
 
     MatGridListModule,
@@ -53,8 +53,10 @@ import {MatChipsModule} from '@angular/material/chips';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
-    MatChipsModule,
     ReactiveFormsModule,
+    NgxDropzoneModule,
+    CarouselModule,
+    MatChipsModule
   ],
   providers:[
     CurrencyPipe
