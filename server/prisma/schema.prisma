@@ -77,7 +77,9 @@ model Direccion{
 model MetodoPago{
   id_metodoPago Int @id @default(autoincrement())
   numeroCuenta String
-  fechaExpiracion DateTime
+  mesVencimiento Int
+  annoVencimiento Int
+  // fechaExpiracion DateTime
   estado_actual String
   
   id_usuario Int
