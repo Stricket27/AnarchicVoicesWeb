@@ -6,6 +6,7 @@ const cors = require("cors");
 const logger = require("morgan");
 const app = express();
 const prism = new PrismaClient();
+const bodyParser = require('body-parser');
 
 //---Archivos de rutas---
 const userRoutes = require("./routes/userRoutes");
