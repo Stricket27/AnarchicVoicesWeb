@@ -79,6 +79,7 @@ model MetodoPago{
   numeroCuenta String
   mesVencimiento Int
   annoVencimiento Int
+  codigoSeguridad Int
   // fechaExpiracion DateTime
   estado_actual String
   
