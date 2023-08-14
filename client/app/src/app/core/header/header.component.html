@@ -55,14 +55,20 @@
         <mat-icon>login</mat-icon>
         <span>Iniciar sesión</span>
       </a>
-      <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
+      <a mat-menu-item *ngIf="isAutenticated">
         <mat-icon>contact_mail</mat-icon>
         <span class="mat-caption" *ngIf="isAutenticated"> {{currentUser.user.correo_electronico}}</span>
       </a>
       <a mat-menu-item  *ngIf="isAutenticated&&cliente" [routerLink]="['/mensajeria/all']">
-        <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" *ngIf="isAutenticated&&!titulo" [routerLink]="['/mensajeria/all']">Mis mensajes</button> 
+        <span class="mat-caption" *ngIf="isAutenticated&&!titulo"> Mis mensajes</span>
+        <!-- <button mat-menu-item mat-menu-item [routerLinkActive]="'mat-raised-button'" *ngIf="isAutenticated&&!titulo" [routerLink]="['/mensajeria/all']">Mis mensajes</button>  -->
         <mat-icon>mail</mat-icon>
       </a>
+      <a mat-menu-item *ngIf="isAutenticated" [routerLink]="['/direccion/']">
+        <mat-icon>location_on</mat-icon>
+        <span class="mat-caption" *ngIf="isAutenticated"> Mis ubicaciones</span>
+      </a>
+
       <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Cerrar sesión</span>
