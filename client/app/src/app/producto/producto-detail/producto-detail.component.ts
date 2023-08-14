@@ -9,29 +9,35 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./producto-detail.component.css']
 })
 export class ProductoDetailComponent {
-  datos:any;
-  destroy$:Subject<boolean>=new Subject<boolean>();
+  datos: any;
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor( private gService: GenericService,
-  private route:ActivatedRoute
-  ){
-  let id=this.route.snapshot.paramMap.get('id');
-  if(!isNaN(Number(id))){
-  this.obtenerProducto(Number(id));
-  }
+  constructor(private gService: GenericService,
+    private route: ActivatedRoute
+  ) {
+    let id = this.route.snapshot.paramMap.get('id');
+    if (!isNaN(Number(id))) {
+      this.obtenerProducto(Number(id));
+    }
   }
 
-  obtenerProducto(id:any){
-  this.gService
-  .get('producto',id)
-  .pipe(takeUntil(this.destroy$))
-  .subscribe((data:any)=>{
-  this.datos=data; 
-  });
+  obtenerProducto(id: any) {
+    this.gService
+      .get('producto', id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.datos = data;
+        console.log('datos', data)
+      });
   }
+
+  
+
+
 
   ngOnDestroy() {
-  this.destroy$.next(true);
-  this.destroy$.unsubscribe();
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }
+
