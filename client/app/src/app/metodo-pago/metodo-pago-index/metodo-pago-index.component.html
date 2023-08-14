@@ -1,1 +1,34 @@
-<p>metodo-pago-index works!</p>
+<div class="grid-container">
+  <h1 class="mat-h1"><b>Mis tarjetas</b></h1>
+
+  <mat-card-title>
+    <a
+      mat-fab
+      extended
+      matTooltip="Crear Metodo Pago"
+      aria-label="Crear Metodo Pago"
+      color="primary"
+      (click)="crearMetodoPago()"
+      ><mat-icon>add</mat-icon>
+      Crear una tarjeta
+    </a>
+  </mat-card-title>
+
+  <mat-grid-list [cols]="3" rowHeight="15em" gutterSize="20px">
+    <mat-grid-tile *ngFor="let item of datos">
+      <mat-card class="dashboard-card">
+        <mat-card-title style="text-align: center">
+          <b>{{ item.numeroCuenta }}</b>
+        </mat-card-title>
+
+        <mat-card-content class="dashboard-card-content">
+          <div><b>Mes de vencimiento:</b> {{ item.mesVencimiento }}</div>
+        </mat-card-content>
+
+        <mat-card-content class="dashboard-card-content">
+          <div><b>Año de vencimiento:</b> {{ item.annoVencimiento }}</div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
