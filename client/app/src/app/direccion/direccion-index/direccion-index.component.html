@@ -1,1 +1,65 @@
-<p>direccion-index works!</p>
+<div class="grid-container">
+  <h1 class="mat-h1"><b>Mis direcciones</b></h1>
+
+  <mat-card-title>
+    <a
+      mat-fab
+      extended
+      matTooltip="Crear Dirección"
+      aria-label="Crear Dirección"
+      color="primary"
+      (click)="crearDireccion()"
+      ><mat-icon>add</mat-icon>
+      Crear una dirección
+    </a>
+  </mat-card-title>
+
+  <mat-grid-list [cols]="3" rowHeight="15em" gutterSize="20px">
+    <mat-grid-tile *ngFor="let item of datos">
+      <mat-card class="dashboard-card">
+        <mat-card-title style="text-align: center">
+          <b>{{ item.provincia }}</b>
+        </mat-card-title>
+
+        <mat-card-content class="dashboard-card-content">
+          <div><b>Cantón:</b> {{ item.canton }}</div>
+        </mat-card-content>
+
+        <mat-card-content class="dashboard-card-content">
+          <div><b>Distrito:</b> {{ item.distrito }}</div>
+        </mat-card-content>
+
+        <mat-card-content class="dashboard-card-content">
+          <div><b>Dirección exacta:</b> {{ item.direccion_exacta }}</div>
+        </mat-card-content>
+
+        <mat-card-content class="dashboard-card-content">
+          <div><b>Código postal:</b> {{ item.codigo_postal }}</div>
+        </mat-card-content>
+
+        <mat-card-content class="dashboard-card-content">
+          <div>
+            <b>Número telefonico de contacto:</b> {{ item.codigo_postal }}
+          </div>
+        </mat-card-content>
+
+        <!-- <mat-card-content class="dashboard-card-content">
+          <div><b>Precio:</b> {{ item.precio | currency : "₡" }}</div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button
+            mat-mini-fab
+            color="accent"
+            matTooltip="Detalle producto"
+            aria-label="Detalle producto"
+            color="primary"
+            (click)="detalleProducto(item.id_producto)"
+          >
+            <mat-icon class="mat-18">info</mat-icon>
+          </button>
+        </mat-card-actions> -->
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
