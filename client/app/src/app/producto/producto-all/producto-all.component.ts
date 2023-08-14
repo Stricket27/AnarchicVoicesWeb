@@ -16,7 +16,7 @@ import { AuthenticationService } from 'src/app/share/authentication.service';
 export class ProductoAllComponent {
   usuarios: any[];
   usuariosCargados = false;
-  categorias: any [];
+  categorias: any[];
   categoriasCargadas = false;
   datos: any;
   currentUser: any;
@@ -35,7 +35,6 @@ export class ProductoAllComponent {
   }
 
   ngAfterViewInit(): void {
-    // this.listaProductos();
     this.listaUsuarios();
 
     this.authService.currentUser.subscribe((user) => {
@@ -75,18 +74,6 @@ export class ProductoAllComponent {
         map((data: any[]) => data.filter(producto => producto.id_usuario === id_usuario))
       );
   }
-
-  // listaProductos() {
-  //   this.gService.list('producto/')
-  //     .pipe(takeUntil(this.destroy$), map((data: any[]) => data.filter(producto => producto.id_usuario == 2)))
-  //     .subscribe((data: any) => {
-  //       console.log(data);
-  //       this.datos = data;
-  //       this.dataSource = new MatTableDataSource(this.datos);
-  //       this.dataSource.sort = this.sort;
-  //       this.dataSource.paginator = this.paginator;
-  //     });
-  // }
 
   listaUsuarios() {
     this.gService.list('user/')
