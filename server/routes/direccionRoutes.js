@@ -13,6 +13,6 @@ router.post('/', direccionController.create);
 
 router.get('/:id',direccionController.getById);
 
-router.put('/', direccionController.update);
+router.put('/:id', direccionController.update);
 
 module.exports=router
