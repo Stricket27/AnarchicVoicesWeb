@@ -1,7 +1,16 @@
 .dashboard-card{
-    background-color: #F4F4F9;
-    box-shadow: none;
+  background-color: #F4F4F9;
+  box-shadow: none;
 }
+
+.img-item{
+  list-style: none !important;
+}
+
+.img-item img{
+  width: 250px;
+}
+
 
 
 @charset "UTF-8";
