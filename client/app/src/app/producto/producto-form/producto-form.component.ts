@@ -211,11 +211,13 @@ export class ProductoFormComponent implements OnInit {
   };
 
   async crearProducto() {
+    const producto = this.productoForm.value;
     this.submitted = true;
     console.log(this.productoForm.value);
     if (this.productoForm.invalid) {
       return;
     }
+    producto.cantidad = parseInt(producto.cantidad);
     this.productoForm.patchValue({ usuario: this.currentUser.user.id_usuario })
     console.log(this.productoForm.value)
     //producto
@@ -262,11 +264,13 @@ export class ProductoFormComponent implements OnInit {
   }
 
   async actualizarProducto() {
+    const producto = this.productoForm.value;
     this.submitted = true;
+    console.log(this.productoForm.value);
     if (this.productoForm.invalid) {
       return;
     }
-
+    producto.cantidad = parseInt(producto.cantidad);
     console.log(this.productoForm.value);
     this.gService.update('producto', this.productoForm.value)
       .pipe(takeUntil(this.destroy$)).subscribe(async (data: any) => {
