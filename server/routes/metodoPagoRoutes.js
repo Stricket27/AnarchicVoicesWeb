@@ -13,6 +13,6 @@ router.post('/', metodoPagoController.create);
 
 router.get('/:id',metodoPagoController.getById);
 
-router.put('/', metodoPagoController.update);
+router.put('/:id', metodoPagoController.update);
 
 module.exports=router
