@@ -68,13 +68,14 @@
       </div>
     </ul>
   </mat-dialog-content>
-  <h4>¿Buscas información específica sobre este producto?</h4>
-  <p>Puedes enviarnos un mensaje al presionar este botón</p>
-  <a
+  <h4 *ngIf="isAutenticated">¿Buscas información específica sobre este producto?</h4>
+  <p *ngIf="isAutenticated">Puedes enviarnos un mensaje al presionar este botón</p>
+  <a 
     mat-fab
     matTooltip="Crear Mensaje"
     aria-label="Crear Mensaje"
     color="primary"
+    *ngIf="isAutenticated"
     (click)="crearMensaje()"
     ><mat-icon>email</mat-icon>
   </a>

@@ -8,8 +8,9 @@ export class ItemCart {
   precio: number;
   subtotal: number;
 }
+
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class CartService {
   private cart = new BehaviorSubject<ItemCart[]>(null); //Definimos nuestro BehaviorSubject, este debe tener un valor inicial siempre
@@ -18,20 +19,20 @@ export class CartService {
   constructor() {
     //Obtener los datos de la variable orden guardada en el localStorage
     this.cart = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('orden'))
+      JSON.parse(localStorage.getItem('ordenCompra'))
     );
 
     //Establecer un observable para los datos del carrito
     this.currentDataCart$ = this.cart.asObservable();
   }
   saveCart(): void {
-    localStorage.setItem('orden', JSON.stringify(this.cart.getValue()));
+    localStorage.setItem('ordenCompra', JSON.stringify(this.cart.getValue()));
   }
   addToCart(producto: any) {
     const newItem = new ItemCart();
     //Armar instancia de ItemCart con los valores respectivos del producto
     //producto.id es cuando viene desde el boton comprar y trae la información del API
-    newItem.idItem = producto.id | producto.idItem;
+    newItem.idItem = producto.id_producto | producto.idItem;
     newItem.precio = producto.precio;
     newItem.cantidad = 1;
     newItem.subtotal = this.calculoSubtotal(newItem);
@@ -45,7 +46,12 @@ export class CartService {
       //Si ya cargamos uno aumentamos su cantidad
       if (objIndex != -1) {
         //Verificar que el producto tenga la propiedad cantidad
+       
+       
         if (producto.hasOwnProperty('cantidad')) {
+          if(producto.cantidad == Number.MIN_VALUE){
+            listCart[objIndex].cantidad+=1
+          }else
           //Si la cantidad es menor o igual a 0 se elimina del carrito
           if (producto.cantidad <= 0) {
             this.removeFromCart(newItem);
@@ -136,6 +142,17 @@ export class CartService {
     }
 
     return total;
+  }
+
+  public getTotalIVA(): number {
+    let total = 0;
+    let listCart = this.cart.getValue();
+    if (listCart != null) {
+      total += this.getTotal()*1.13;
+     
+    }
+    return total;
+   
   }
   
   //Borra toda los items del carrito

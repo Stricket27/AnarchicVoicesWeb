@@ -1,0 +1,30 @@
+.footer-row {
+    font-weight: bold;
+  }
+  .box { margin: 2em 2em; padding: 2em 2em;}
+  .header{
+    background-color: #212529;
+    color: white;
+  }
+  .footer-row{
+    background-color:#e8e8e8;
+    
+  }
+  .footer-total{
+    font-size: 1.2em;
+    font-weight: bolder;
+  }
+
+  .btnComprar{
+    background-color: #212529;
+    color: white;
+  }
+
+  mat-header-cell{
+    background-color: #212529;
+    color: white;
+  }
+
+  mat-cell{
+   background-color:#ADB5BD
+  }

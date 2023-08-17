@@ -26,9 +26,12 @@ module.exports.getById = async (request, response, next) => {
     const ordencompra = await prisma.ordenCompra.findUnique({
       where: { id_ordenCompra: id },
       include: {
+        usuario: true,
         lineaDetalle: {
-          include: {
-            producto: true
+          select: {
+            producto: true,
+            cantidad:true,
+            sub_total:true
           }
         }
       }
@@ -54,15 +57,26 @@ module.exports.getById = async (request, response, next) => {
 };
 //Crear una OrdenCompra
 module.exports.create = async (request, response, next) => {
-  let ordenCompra = request.body;
+  let infoOrden = request.body;
   const newOrdenCompra = await prisma.ordenCompra.create({
     data: {
-      fecha: ordenCompra.fecha,
-      monto_total: ordenCompra.monto_total,
-      estado_actual: ordenCompra.estado_actual,
-      direccion: ordenCompra.direccion,
-      id_usuario: ordenCompra.id_usuario,
-      id_metodoPago: ordenCompra,id_metodoPago
+      fecha: infoOrden.fecha,
+      usuario: { connect: { id_usuario: infoOrden.usuario } },
+      lineaDetalle:{
+        createMany:{
+          //[{videojuegoId, cantidad}]
+          data: infoOrden.lineaDetalle,    
+        }
+          
+        },
+        
+      sub_total: infoOrden.sub_total,
+      monto_total: infoOrden.monto_total,
+      estado_actual: infoOrden.estado_actual,
+      direccion: infoOrden.direccion,
+      // id_usuario: ordenCompra.id_usuario,
+      metodoPago: infoOrden.metodoPago,
+     
     },
   });
   response.json(newOrdenCompra);

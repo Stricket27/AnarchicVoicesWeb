@@ -114,7 +114,7 @@
       mat-icon-button
       matBadgeColor="accent"
       [matBadge]="qtyItems.toString()"
-      [routerLink]="'/orden'"
+      [routerLink]="'/ordenCompra'"
       [routerLinkActive]="'mat-raised-button'"
       aria-label="Cantidad"
     >
@@ -212,6 +212,13 @@
       <a mat-menu-item *ngIf="isAutenticated" [routerLink]="['/direccion/']">
         <mat-icon>location_on</mat-icon>
         <span class="mat-caption" *ngIf="isAutenticated"> Mis ubicaciones</span>
+      </a>
+
+      <a mat-menu-item *ngIf="isAutenticated&&cliente||vendedorCliente" [routerLink]="['/ordenCompra']">
+        <mat-icon class="material-symbols-outlined">
+          shopping_bag
+        </mat-icon>
+        <span class="mat-caption" *ngIf="isAutenticated">Ordenes de compra</span>
       </a>
 
       <a

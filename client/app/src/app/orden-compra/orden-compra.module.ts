@@ -7,6 +7,7 @@ import { OrdenCompraClienteDetailComponent } from './orden-compra-cliente-detail
 import { OrdenCompraClienteDiagComponent } from './orden-compra-cliente-diag/orden-compra-cliente-diag.component';
 import { OrdenCompraVendedorAllComponent } from './orden-compra-vendedor-all/orden-compra-vendedor-all.component';
 import { OrdenCompraVendedorDetailComponent } from './orden-compra-vendedor-detail/orden-compra-vendedor-detail.component';
+import { OrdenCompraIndexComponent } from './orden-compra-index/orden-compra-index.component';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card'; 
@@ -21,7 +22,7 @@ import { MatDialogModule} from "@angular/material/dialog";
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     OrdenCompraClienteDiagComponent,
     OrdenCompraVendedorAllComponent,
     OrdenCompraVendedorDetailComponent,
+    OrdenCompraIndexComponent,
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
-    ReactiveFormsModule,
+    FormsModule, ReactiveFormsModule,
   ],
   providers: [DatePipe],
 })
