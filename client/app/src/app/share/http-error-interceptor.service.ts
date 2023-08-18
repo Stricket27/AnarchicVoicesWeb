@@ -20,27 +20,41 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
     private noti: NotificacionService
   ) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    //Obtener token
-    let token = null;
-    if (this.auth.currentUserValue != null) {
-      token = this.auth.currentUserValue.token;
-    }
-    //Agregar headers a la solicitud
-    if (token) {
-      //Header con el token
+    const isExternalApi = request.url.startsWith('https://ubicaciones.paginasweb.cr');
+    const token = localStorage.getItem('token');
+
+    if (token && !isExternalApi) {
       request = request.clone({
-        headers: request.headers.set('Authorization', 'Bearer ' + token),
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
       });
     }
+
+    // ESTO FUE LO QUE LA PROFE ME DIJO QUE LO QUITARA
+    //Obtener token
+    // let token = null;
+    // if (this.auth.currentUserValue != null) {
+    //   token = this.auth.currentUserValue.token;
+    // }
+    //Agregar headers a la solicitud
+    // if (token) {
+    //   //Header con el token
+    //   request = request.clone({
+    //     headers: request.headers.set('Authorization', 'Bearer ' + token),
+    //   });
+    // }
+
+    //ESTO SE TENIA QUE QUITAR PARA LAS FOTOGRAFIA
     //Opcional indicar el tipo de contenido JSON
     //if (!request.headers.has('Content-Type')) {
-      //request = request.clone({
-        //headers: request.headers.set('Content-Type', 'application/json'),
-      //});
-   // }
+    //request = request.clone({
+    //headers: request.headers.set('Content-Type', 'application/json'),
+    //});
+    // }
 
-   // request = request.clone({
-      //headers: request.headers.set('Accept', 'application/json'),
+    // request = request.clone({
+    //headers: request.headers.set('Accept', 'application/json'),
     //});
 
     //Capturar el error
@@ -63,9 +77,9 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
             break;
         }
         //Mostrar un mensaje de error
-        this.noti.mensaje('Error',error.status+' '+ message,TipoMessage.error);
+        this.noti.mensaje('Error', error.status + ' ' + message, TipoMessage.error);
         throw new Error(error.message);
       })
-      );
-    }
+    );
+  }
   }

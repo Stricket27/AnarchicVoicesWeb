@@ -7,6 +7,7 @@ import { GenericService } from 'src/app/share/generic.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotificacionService, TipoMessage } from 'src/app/share/notification.service';
 import { AuthenticationService } from 'src/app/share/authentication.service';
+import { LocationService } from 'src/app/share/location.service';
 
 @Component({
   selector: 'app-direccion-form',
@@ -14,30 +15,25 @@ import { AuthenticationService } from 'src/app/share/authentication.service';
   styleUrls: ['./direccion-form.component.css']
 })
 export class DireccionFormComponent {
-
   destroy$: Subject<boolean> = new Subject<boolean>();
-
-  titleForm: string = 'Crear';
-
   usuarioList: any;
-
   direccionInfo: any;
-
   submitted = false;
-
   direccionForm: FormGroup;
-
   respDireccion: any;
-
   idDireccion: any;
-
+  idUsuario: number;
   isCreate: boolean = true
-
   isAutenticated: boolean;
   currentUser: any;
   isOwner: boolean = false;
-
   directId: number;
+  Provincias: any[];
+  Cantones: any[];
+  Distritos: any[];
+  selectedProvincia: string;
+  selectedCanton: string;
+  selectedDistrito: string;
 
   constructor(
     private fb: FormBuilder,
@@ -46,10 +42,12 @@ export class DireccionFormComponent {
     private activeRouter: ActivatedRoute,
     private noti: NotificacionService,
     private authService: AuthenticationService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private locationService: LocationService
   ) {
     this.formularioReactive();
     this.listaUsuario();
+    this.getProvincia();
   }
 
   ngOnInit(): void {
@@ -65,16 +63,12 @@ export class DireccionFormComponent {
       }
       console.log(this.currentUser.user.nombre)
     });
-
-
-
     //Formulario de producto
     this.activeRouter.params.subscribe((params: Params) => {
       this.idDireccion = params['id'];
       console.log('id', this.idDireccion);
       if (this.idDireccion != undefined) {
         this.isCreate = false;
-        this.titleForm = "Actualizar";
         this.gService
           .get('direccion', this.idDireccion)
           .pipe(takeUntil(this.destroy$))
@@ -91,15 +85,6 @@ export class DireccionFormComponent {
               telefono: this.direccionInfo.telefono,
               estado_actual: this.direccionInfo.estado_actual,
               usuario: this.direccionInfo.usuario.id_usuario
-              // id_producto: this.productoInfo.id_producto,
-              // nombre: this.productoInfo.nombre,
-              // descripcion: this.productoInfo.descripcion,
-              // precio: this.productoInfo.precio,
-              // cantidad: this.productoInfo.cantidad,
-              // estado_producto: this.productoInfo.estado_producto,
-              // estado_actual: this.productoInfo.estado_actual,
-              // usuario: this.productoInfo.usuario.id_usuario,
-              // categoria: this.productoInfo.categoria.id_categoria,
             })
           });
       }
@@ -160,15 +145,30 @@ export class DireccionFormComponent {
 
   crearDireccion(): void {
     this.submitted = true;
+    this.direccionForm.patchValue({ id_usuario: this.idUsuario })
     console.log(this.direccionForm.value);
     if (this.direccionForm.invalid) {
       return;
     }
+
+    const direccionDATA = {
+      provincia: this.selectedProvincia,
+      canton: this.selectedCanton,
+      distrito: this.selectedDistrito,
+      direccion_exacta: this.direccionForm.value.direccion_exacta,
+      codigo_postal: this.direccionForm.value.codigo_postal,
+      telefono: this.direccionForm.value.telefono,
+      estado_actual: this.direccionForm.value.estado_actual,
+      usuario: this.currentUser.user.id_usuario
+    }
+    // this.direccionForm.value.id_usuario = this.idUsuaio;
     this.direccionForm.patchValue({ usuario: this.currentUser.user.id_usuario })
     console.log(this.direccionForm.value);
-    this.gService.create('direccion', this.direccionForm.value)
+    this.gService.create('direccion', direccionDATA) /* this.direccionForm.value*/
       .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
+        console.log('Nombre', this.currentUser.user.nombre)
         this.respDireccion = data;
+        console.log('Dirección creada:', this.respDireccion);
         this.noti.mensaje('Dirección', 'Dirección creado', TipoMessage.success)
         this.router.navigate(['/direccion/'], {
           queryParams: { create: 'true' }
@@ -180,9 +180,7 @@ export class DireccionFormComponent {
     this.submitted = true;
     if (this.direccionForm.invalid) {
       return;
-
     }
-
     this.gService.update('direccion', this.direccionForm.value)
       .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
 
@@ -194,6 +192,52 @@ export class DireccionFormComponent {
       });
   }
 
+
+  async getProvincia() {
+    this.Provincias = await this.locationService.getProvincia();
+    const provincesArray = Object.entries(this.Provincias).map(
+      ([id, nombre]) => ({
+        id,
+        nombre
+      })
+    );
+    this.Provincias = provincesArray
+  }
+
+  async getCantones(idProvince) {
+    this.selectedProvincia = this.Provincias.find(p => p.id === idProvince)?.nombre;
+    const cantons = await this.locationService.getCantones(idProvince);
+    const cantonsArray = Object.entries(cantons).map(([id, nombre]) => ({
+      id,
+      nombre,
+      provinceId: idProvince
+    }));
+    this.Cantones = cantonsArray
+  }
+
+  async getDistritos(idCanton, idPronvince) {
+    console.log('getDistritos called with', idCanton, idPronvince);
+    this.selectedCanton = this.Cantones.find(c => c.id === idCanton)?.nombre;
+    this.selectedProvincia = this.Provincias.find(p => p.id === idPronvince)?.nombre;
+
+    const districts = await this.locationService.getDistritos(idPronvince, idCanton);
+    const districtsArray = Object.entries(districts).map(([id, nombre]) => ({
+      id,
+      nombre
+    }));
+    this.Distritos = districtsArray;
+
+    const currentSelectedDistrict = this.direccionForm.get('distrito').value;
+    if (!currentSelectedDistrict || !this.Distritos.some(d => d.nombre === currentSelectedDistrict)) {
+      if (this.Distritos.length > 0) {
+        const firsDistrictName = this.Distritos[0].nombre;
+        this.selectedDistrito = firsDistrictName;
+      }
+    }
+    else {
+      this.selectedDistrito = currentSelectedDistrict;
+    }
+  }
 
 
 }

@@ -30,39 +30,40 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 
 @NgModule({
-declarations: [AppComponent],
-imports: [
-BrowserModule, // importar HttpClientModule después BrowserModule. 
-BrowserAnimationsModule,
-// comunicarse con un servidor a través del protocolo HTTP 
-HttpClientModule, // Debe agregar el import respectivo // importar otras 
-//dependencias que sean necesario cargar en el componente principal.
-ToastrModule.forRoot(),
-// importar los módulos creados propios en orden 
-CoreModule, 
-ShareModule, 
-HomeModule, 
-UserModule, 
-CalificacionUsuarioModule,
-DireccionModule, 
-MetodoPagoModule, 
-OrdenCompraModule,
-ProductoModule, 
-FotografiaModule,
-MensajeriaModule,
-
-MatTableModule,
-MatPaginatorModule,
-MatSortModule,
-// al final el gestor de las rutas principal 
-AppRoutingModule,
-CarouselModule.forRoot(), 
-
-],
-providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: HttpErrorInterceptorService, multi: true
-  }],
-bootstrap: [AppComponent],
-})
-export class AppModule {}
+  declarations: [AppComponent],
+  imports: [
+  BrowserModule, // importar HttpClientModule después BrowserModule. 
+  BrowserAnimationsModule,
+  // comunicarse con un servidor a través del protocolo HTTP 
+  HttpClientModule, // Debe agregar el import respectivo // importar otras 
+  //dependencias que sean necesario cargar en el componente principal.
+  ToastrModule.forRoot(),
+  // importar los módulos creados propios en orden 
+  CoreModule, 
+  ShareModule, 
+  HomeModule, 
+  UserModule, 
+  CalificacionUsuarioModule,
+  DireccionModule, 
+  MetodoPagoModule, 
+  OrdenCompraModule,
+  ProductoModule, 
+  FotografiaModule,
+  MensajeriaModule,
+  
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  // al final el gestor de las rutas principal 
+  AppRoutingModule,
+  CarouselModule.forRoot(), 
+  
+  ],
+  providers: [{
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptorService, multi: true
+    }],
+  bootstrap: [AppComponent],
+  })
+  export class AppModule {}
+  

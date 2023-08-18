@@ -19,7 +19,7 @@ import { MatDialogModule} from "@angular/material/dialog";
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
@@ -36,7 +36,7 @@ import { MatChipsModule} from '@angular/material/chips';
   imports: [
     CommonModule,
     DireccionRoutingModule,
-
+    FormsModule,
     
     MatGridListModule,
     MatCardModule,
