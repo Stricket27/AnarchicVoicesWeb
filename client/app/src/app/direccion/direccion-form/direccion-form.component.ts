@@ -35,6 +35,9 @@ export class DireccionFormComponent {
   selectedCanton: string;
   selectedDistrito: string;
 
+  cantidadDirecciones: number = 0;
+  vendedor: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private gService: GenericService,
@@ -54,9 +57,14 @@ export class DireccionFormComponent {
     this.authService.currentUser.subscribe((x) => (this.currentUser = x))
     this.authService.isAuthenticated.subscribe(
       (valor) => (this.isAutenticated = valor)
-    )
+    );
+    if (this.isAutenticated) {
+      this.calcularCantidadDireccionesUsuario(this.currentUser.user.id_usuario);
+      this.vendedor = this.esVendedor(this.currentUser.user);
+    }
+
     this.activeRouter.queryParams.subscribe(queryParams => {
-      const idDireccionParam = queryParams['id_direccion'];
+      const idDireccionParam = queryParams['id'];
       if (idDireccionParam && !isNaN(parseInt(idDireccionParam))) {
         this.directId = parseInt(idDireccionParam);
         console.log('Direct ID:', this.directId);
@@ -150,18 +158,22 @@ export class DireccionFormComponent {
     if (this.direccionForm.invalid) {
       return;
     }
+    const limiteDirecciones = this.vendedor ? 1 : 5;
+    if (this.cantidadDirecciones >= limiteDirecciones) {
+      this.noti.mensaje('Dirección', 'Ya has alcanzado los limites de direcciones', TipoMessage.warning)
+      return;
+    }
 
     const direccionDATA = {
       provincia: this.selectedProvincia,
       canton: this.selectedCanton,
-      distrito: this.selectedDistrito,
+      distrito: /*this.selectedDistrito,*/ this.direccionForm.value.distrito,
       direccion_exacta: this.direccionForm.value.direccion_exacta,
       codigo_postal: this.direccionForm.value.codigo_postal,
       telefono: this.direccionForm.value.telefono,
       estado_actual: this.direccionForm.value.estado_actual,
       usuario: this.currentUser.user.id_usuario
     }
-    // this.direccionForm.value.id_usuario = this.idUsuaio;
     this.direccionForm.patchValue({ usuario: this.currentUser.user.id_usuario })
     console.log(this.direccionForm.value);
     this.gService.create('direccion', direccionDATA) /* this.direccionForm.value*/
@@ -175,6 +187,22 @@ export class DireccionFormComponent {
         });
       })
   }
+
+  esVendedor(usuario: any): boolean {
+    if (usuario.detalle_usuarioTipo) {
+      return usuario.detalle_usuarioTipo.some(detalle => detalle.id_tipoUsuario === 2);
+    }
+    return false;
+  }
+
+  calcularCantidadDireccionesUsuario(idUsuario: number): void {
+    this.gService.list('direccion')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((direcciones: any[]) => {
+        this.cantidadDirecciones = direcciones.filter(direccion => direccion.usuario.id_usuario === idUsuario).length;
+      });
+  }
+
 
   actualizarDireccion() {
     this.submitted = true;
@@ -204,7 +232,7 @@ export class DireccionFormComponent {
     this.Provincias = provincesArray
   }
 
-  async getCantones(idProvince) {
+  async getCantones(idProvince: string) {
     this.selectedProvincia = this.Provincias.find(p => p.id === idProvince)?.nombre;
     const cantons = await this.locationService.getCantones(idProvince);
     const cantonsArray = Object.entries(cantons).map(([id, nombre]) => ({
@@ -215,7 +243,7 @@ export class DireccionFormComponent {
     this.Cantones = cantonsArray
   }
 
-  async getDistritos(idCanton, idPronvince) {
+  async getDistritos(idCanton: string, idPronvince: string) {
     console.log('getDistritos called with', idCanton, idPronvince);
     this.selectedCanton = this.Cantones.find(c => c.id === idCanton)?.nombre;
     this.selectedProvincia = this.Provincias.find(p => p.id === idPronvince)?.nombre;
@@ -227,7 +255,7 @@ export class DireccionFormComponent {
     }));
     this.Distritos = districtsArray;
 
-    const currentSelectedDistrict = this.direccionForm.get('distrito').value;
+    const currentSelectedDistrict = this.direccionForm.get('distrito').value; 
     if (!currentSelectedDistrict || !this.Distritos.some(d => d.nombre === currentSelectedDistrict)) {
       if (this.Distritos.length > 0) {
         const firsDistrictName = this.Distritos[0].nombre;
