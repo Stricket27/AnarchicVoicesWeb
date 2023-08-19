@@ -1,31 +1,73 @@
 <div class="grid-container">
-    
   <h1 class="mat-h1"><b>Nuestros productos</b></h1>
 
+  <mat-form-field>
+    <mat-label>Categoria</mat-label>
+    <mat-select (selectionChange)="filtrarDatoPorCategoria($event.value)">
+      <mat-option [value]="null">Todos</mat-option>
+      <mat-option *ngFor="let item of categorias" [value]="item.id_categoria">
+        {{ item.descripcion }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Ordenar por:</mat-label>
+    <mat-select (selectionChange)="filtrarDatoPorOrden($event.value)">
+      <mat-option value="1">Precio: mas alto al mas bajo</mat-option>
+      <mat-option value="2">Precio: mas bajo al mas alto</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="col">
+    <mat-form-field class="full-width">
+      <mat-label>Buscar por nombre del producto</mat-label>
+      <input
+        matInput
+        type="text"
+        #filter
+        (input)="filtrarDatoPorNombre(filter.value)"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        color="primary"
+        (click)="filtrarDatoPorNombre(filter.value)"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <!-- <ul>
+    <li *ngFor="let producto of filtrarDato">
+      {{ producto.nombre }}
+    </li>
+  </ul> -->
+
   <mat-grid-list [cols]="3" rowHeight="15em" gutterSize="20px">
-
-    <mat-grid-tile *ngFor="let item of datos">
-
+    <mat-grid-tile *ngFor="let item of filtrarDato">
       <mat-card class="dashboard-card">
-
-          <mat-card-title style="text-align: center;"> <b>{{item.nombre}}</b> </mat-card-title>
+        <mat-card-title style="text-align: center">
+          <b>{{ item.nombre }}</b>
+        </mat-card-title>
 
         <mat-card-content class="dashboard-card-content">
-          <div><b>Descripción:</b> {{item.descripcion }}</div>
+          <div><b>Descripción:</b> {{ item.descripcion }}</div>
         </mat-card-content>
 
         <mat-card-content class="dashboard-card-content">
-          <div><b>Cantidad:</b> {{item.cantidad }}</div>
+          <div><b>Cantidad:</b> {{ item.cantidad }}</div>
         </mat-card-content>
 
         <mat-card-content class="dashboard-card-content">
-          <div><b>Estado del producto:</b> {{item.estado_producto }}</div>
+          <div><b>Estado del producto:</b> {{ item.estado_producto }}</div>
         </mat-card-content>
 
         <mat-card-content class="dashboard-card-content">
-          <div><b>Precio:</b> {{item.precio | currency:"₡" }}</div>
+          <div><b>Precio:</b> {{ item.precio | currency : "₡" }}</div>
         </mat-card-content>
-        
+
         <mat-card-actions>
           <button
             mat-mini-fab
@@ -38,7 +80,8 @@
             <mat-icon class="mat-18">info</mat-icon>
           </button>
 
-          <button *ngIf="isAutenticated&&cliente"
+          <button
+            *ngIf="isAutenticated && cliente"
             mat-mini-fab
             color="accent"
             matTooltip="comprar"
@@ -48,14 +91,8 @@
           >
             <mat-icon class="mat-18">add_shopping_cart</mat-icon>
           </button>
-
         </mat-card-actions>
-
       </mat-card>
-
     </mat-grid-tile>
-    
   </mat-grid-list>
-  
 </div>
-
