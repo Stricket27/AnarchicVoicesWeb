@@ -10,9 +10,9 @@ module.exports.get = async (request, response, next) => {
     orderBy: {
       nombre: "asc",
     },
-    include:{
-      detalle_usuarioTipo:true
-    }
+    include: {
+      detalle_usuarioTipo: true,
+    },
   });
   response.json(usuario);
 };
@@ -22,54 +22,44 @@ module.exports.getById = async (request, response, next) => {
   let id = parseInt(request.params.id);
   const usuario = await prisma.usuario.findUnique({
     where: { id_usuario: id },
-    include: {
-      nombre: true,
-      apellidos: true,
-      numero_telefono: true,
-      correo_electronico: true,
-      contrasenna: true,
-      estado_actual: true
-    }
   });
   response.json(usuario);
 };
 
 //Actualizar un usuario
 module.exports.update = async (request, response, next) => {
-
   let usuario = request.body;
-  let IDUsuario = parseInt(request.params.id);
+  const { id_usuario } = request.body;
+  console.log(request.body);
+  // let usuario = request.body;
+  // let IDUsuario = parseInt(request.params.id);
 
-  const usuarioViejo = await prisma.usuario.findUnique({
-    where: { id_usuario: IDUsuario},
-    include: {
-      nombre: true,
-      apellidos: true,
-      numero_telefono: true,
-      correo_electronico: true,
-      contrasenna: true,
-      estado_actual: true
-    }
-  });
+  // const usuarioViejo = await prisma.usuario.findUnique({
+  //   where: { id_usuario: IDUsuario},
+  //     nombre: true,
+  //     apellidos: true,
+  //     numero_telefono: true,
+  //     correo_electronico: true,
+  //     contrasenna: true,
+  //     estado_actual: true
+  // });
 
-  console.log(usuarioViejo);
+  // console.log(usuarioViejo);
 
   const newUsuario = await prisma.usuario.update({
     where: {
-      id_usuario: IDUsuario
+      id_usuario: id_usuario,
     },
-
-    data:{
+    data: {
       nombre: usuario.nombre,
       apellidos: usuario.apellidos,
       numero_telefono: usuario.numero_telefono,
       correo_electronico: usuario.correo_electronico,
       contrasenna: usuario.contrasenna,
-      estado_actual: usuario.estado_actual
-    }
+      estado_actual: usuario.estado_actual,
+    },
   });
   response.json(newUsuario);
-
 };
 
 //Crear nuevo usuario
@@ -121,39 +111,46 @@ module.exports.login = async (request, response, next) => {
     where: {
       correo_electronico: userReq.correo_electronico,
     },
-    
-    include:{detalle_usuarioTipo:true}
+
+    include: { detalle_usuarioTipo: true },
   });
   if (!user) {
     response.status(401).send({
       success: false,
       message: "Usuario no registrado",
     });
-  }
-  const checkPassword = await bcrypt.compare(
-    userReq.contrasenna,
-    user.contrasenna
-  );
-  if (checkPassword === false) {
+  } else if (user.estado_actual !== "Activo") {
     response.status(401).send({
       success: false,
-      message: "Credenciales no valido",
+      message: "Usuario no está activo",
     });
+    return;
   } else {
-    const payload = {
-      correo_electronico: user.correo_electronico,
-      detalle_usuarioTipo: user.detalle_usuarioTipo
-    };
-    const token = jwt.sign(payload, process.env.SECRET_KEY, {
-      expiresIn: process.env.JWT_EXPIRE,
-    });
-    response.json({
-      success: true,
-      message: "Usuario registrado",
-      data: {
-        user,
-        token,
-      },
-    });
+    const checkPassword = await bcrypt.compare(
+      userReq.contrasenna,
+      user.contrasenna
+    );
+    if (checkPassword === false) {
+      response.status(401).send({
+        success: false,
+        message: "Credenciales no valido",
+      });
+    } else {
+      const payload = {
+        correo_electronico: user.correo_electronico,
+        detalle_usuarioTipo: user.detalle_usuarioTipo,
+      };
+      const token = jwt.sign(payload, process.env.SECRET_KEY, {
+        expiresIn: process.env.JWT_EXPIRE,
+      });
+      response.json({
+        success: true,
+        message: "Usuario registrado",
+        data: {
+          user,
+          token,
+        },
+      });
+    }
   }
 };
