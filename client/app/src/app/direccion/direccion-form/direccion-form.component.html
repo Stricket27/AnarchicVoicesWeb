@@ -14,7 +14,7 @@
               <mat-option
                 *ngFor="let p of Provincias"
                 [value]="p.id"
-                (onSelectionChange)="getCantones(p.id)"
+                (click)="getCantones(p.id)"
                 >{{ p.nombre }}
               </mat-option>
             </mat-select>
@@ -28,7 +28,7 @@
               <mat-option
                 *ngFor="let c of Cantones"
                 [value]="c.id"
-                (onSelectionChange)="getDistritos(c.id, c.provinceId)"
+                (click)="getDistritos(c.id, c.provinceId)"
               >
                 {{ c.nombre }}
               </mat-option>
@@ -40,7 +40,7 @@
           <mat-form-field class="full-width">
             <mat-label>Distrito</mat-label>
             <mat-select formControlName="distrito" placeholder="Distrito">
-              <mat-option *ngFor="let d of Distritos" [value]="d.id">{{
+              <mat-option *ngFor="let d of Distritos" [value]="d.nombre">{{
                 d.nombre
               }}</mat-option>
             </mat-select>
@@ -88,7 +88,7 @@
         </mat-chip-listbox>
       </div>
 
-      <div class="col">
+      <div class="col" hidden>
         <mat-form-field class="full-width">
           <mat-label>Usuario</mat-label>
           <input matInput formControlName="usuario" readonly />
