@@ -29,6 +29,7 @@ module.exports.getById = async (request, response, next) => {
         usuario: true,
         lineaDetalle: {
           select: {
+          
             producto: true,
             cantidad:true,
             sub_total:true
@@ -39,18 +40,18 @@ module.exports.getById = async (request, response, next) => {
 
     console.log(ordencompra);
 
-    if (ordencompra && ordencompra.lineaDetalle) {
-        ordencompra.lineaDetalle.forEach((detalle) => {
-            console.log(detalle); // Accede a cada elemento de lineaDetalle
-            console.log(detalle.id_producto); // Accede al ID de producto en cada elemento de lineaDetalle
-        });
-    }
-    if (ordencompra && ordencompra.producto) {
-      ordencompra.lineaDetalle.forEach((producto) => {
-          console.log(producto); // Accede a cada elemento de lineaDetalle
-          console.log(producto.id_producto); // Accede al ID de producto en cada elemento de lineaDetalle
-      });
-  }
+  //   if (ordencompra && ordencompra.lineaDetalle) {
+  //       ordencompra.lineaDetalle.forEach((detalle) => {
+  //           console.log(detalle); // Accede a cada elemento de lineaDetalle
+  //           console.log(detalle.id_producto); // Accede al ID de producto en cada elemento de lineaDetalle
+  //       });
+  //   }
+  //   if (ordencompra && ordencompra.producto) {
+  //     ordencompra.lineaDetalle.forEach((producto) => {
+  //         console.log(producto); // Accede a cada elemento de lineaDetalle
+  //         console.log(producto.id_producto); // Accede al ID de producto en cada elemento de lineaDetalle
+  //     });
+  // }
     
 
     response.json(ordencompra);
@@ -58,6 +59,8 @@ module.exports.getById = async (request, response, next) => {
 //Crear una OrdenCompra
 module.exports.create = async (request, response, next) => {
   let infoOrden = request.body;
+ 
+
   const newOrdenCompra = await prisma.ordenCompra.create({
     data: {
       fecha: infoOrden.fecha,
@@ -65,43 +68,75 @@ module.exports.create = async (request, response, next) => {
       lineaDetalle:{
         createMany:{
           //[{videojuegoId, cantidad}]
-          data: infoOrden.lineaDetalle,    
+          data: infoOrden.lineaDetalle  
         }
           
         },
-        
-      sub_total: infoOrden.sub_total,
+       
+      // sub_total: infoOrden.sub_total,
       monto_total: infoOrden.monto_total,
       estado_actual: infoOrden.estado_actual,
       direccion: infoOrden.direccion,
       // id_usuario: ordenCompra.id_usuario,
-      metodoPago: infoOrden.metodoPago,
-     
+      metodoPago: infoOrden.id_metodoPago,
     },
-  });
+  }); 
+  // console.log("info"+infoOrden)
   response.json(newOrdenCompra);
 };
 //Actualizar una OrdenCompra
 module.exports.update = async (request, response, next) => {
   let ordenCompra = request.body;
-  let idOrdenCompra = parseInt(request.params.id);
-  //Obtener usuario viejo
-  // const usuarioViejo = await prisma.usuario.findUnique({
-  //   where: { id: idUsuario }
-  // });
+  let id = parseInt(request.params.id);
+  //Obtener producto viejo
+    // const ordenViejo = await prisma.ordenCompra.findUnique({
+    //   where: { id_ordenCompra: id },
+    //   include:{
+    //     producto:{
+    //       select:{
+    //         id_producto: true
+    //       }
+    //     },
+    //     usuario:{
+    //       select:{
+    //         id_usuario:true
+    //       }
+    //     },
+    //     lineaDetalle:{
+    //       select:{
+    //         id_lineaDetalle:true
+    //       }
+        
+    //     }
+    //   }
+    // });
 
-  const newOrdenCompra = await prisma.ordenCompra.update({
+ 
+
+
+  const newOrdenC = await prisma.ordenCompra.update({
     where: {
-      id: idOrdenCompra,
+      id_ordenCompra: id,
     },
     data: {
-        fecha: ordenCompra.fecha,
-        monto_total: ordenCompra.monto_total,
-        estado_actual: ordenCompra.estado_actual,
         direccion: ordenCompra.direccion,
-        id_usuario: ordenCompra.id_usuario,
-        id_metodoPago: ordenCompra,id_metodoPago
+       id_metodoPago: ordenCompra.id_metodoPago,
+        // direccion: { connect: ordenCompra.id_direccion },
+        // metodoPago: { connect: ordenCompra.id_metodoPago },
+
+        // usuario: {connect: mensajeria.id_usuario  },
+        // producto: {connect:  mensajeria.id_producto  }
+        lineaDetalle: {
+          updateMany: {
+            where: {
+              id_ordenCompra: id,
+            },
+            data: {
+              estado_actual: "Pagado",
+            },
+          }
+        }
     },
   });
-  response.json(newOrdenCompra);
+  response.json(newOrdenC);
 };

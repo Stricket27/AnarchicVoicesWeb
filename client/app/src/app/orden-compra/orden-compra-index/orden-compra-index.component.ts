@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 import { CartService } from 'src/app/share/cart.service';
 import { GenericService } from 'src/app/share/generic.service';
@@ -26,7 +26,7 @@ export class OrdenCompraIndexComponent {
     private cartService: CartService,
     private noti: NotificacionService,
     private gService: GenericService,
-    private router: Router,private authService: AuthenticationService
+    private router: Router,private authService: AuthenticationService, private route:ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -75,29 +75,36 @@ export class OrdenCompraIndexComponent {
         x=>({
           ['id_producto']:x.idItem,
           ['cantidad']: x.cantidad,
-         
+          'sub_total': this.cartService.getTotal().toString(),
+          'estado_actual': 'Pendiente',
         })
       )
       //Datos para el API
       let infoOrden={
         'fecha': new Date(this.fecha),
         'lineaDetalle':detalles,
-        'sub_total': this.cartService.getTotal(),
+      
         'monto_total': this.cartService.getTotalIVA(),
         'estado_actual': 'Pendiente',
-        'direccion':'',
+        'direccion':null,
         'usuario':this.currentUser.user.id_usuario,
-        'metodoPago':0,
+        'metodoPago':null,
         
       }
       this.gService.create('ordenCompra',infoOrden)
       .subscribe((respuesta:any)=>{
         this.noti.mensaje('Orden',
-        'Orden registrada #'+respuesta.id,
+        'Orden registrada #'+respuesta.id_ordenCompra,
         TipoMessage.success)
+
         this.cartService.deleteCart();
         this.total=this.cartService.getTotal();
         this.totalIVA=this.cartService.getTotalIVA()
+        this.router.navigate(['/orden-compra-pago',respuesta.id_ordenCompra],
+        {
+        relativeTo:this.route
+        })
+        
         console.log(respuesta)
       })
    }else{

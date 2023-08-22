@@ -13,6 +13,6 @@ router.post('/', ordenCompraController.create);
 
 router.get('/:id', /*auth.grantRole(["Administrador", "Vendedor"]),*/ ordenCompraController.getById);
 
-router.put('/', ordenCompraController.update);
+router.put('/:id', ordenCompraController.update);
 
 module.exports=router

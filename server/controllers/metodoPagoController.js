@@ -8,6 +8,7 @@ module.exports.get = async (request, response, next) => {
     orderBy: {
       numeroCuenta: "asc",
     },
+    include:{tipoPago:true}
   });
   response.json(metodoPago);
 };
@@ -25,6 +26,7 @@ module.exports.getById = async (request, response, next) => {
       tipoPago: {
         select: {
           id_tipoPago: true,
+          descripcion:true,
         },
       },
     },

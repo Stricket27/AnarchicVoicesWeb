@@ -105,13 +105,13 @@ model OrdenCompra {
   fecha          DateTime @default(now())
   monto_total    Decimal  @db.Decimal(10, 2)
   estado_actual  String
-  direccion      String
+  direccion      String?
 
   id_usuario Int
   usuario    Usuario @relation(fields: [id_usuario], references: [id_usuario])
 
-  id_metodoPago Int
-  metodoPago    MetodoPago @relation(fields: [id_metodoPago], references: [id_metodoPago])
+  id_metodoPago Int?
+  metodoPago   MetodoPago? @relation(fields: [id_metodoPago], references: [id_metodoPago])
 
   lineaDetalle LineaDetalle[]
 }
