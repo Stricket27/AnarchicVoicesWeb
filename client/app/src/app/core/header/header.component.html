@@ -258,6 +258,24 @@
         <mat-icon>manage_accounts</mat-icon>
         <span class="mat-caption" *ngIf="isAutenticated && administrador">Top 5 mejores productos</span>
       </a>
+
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && !cliente && !vendedor"
+        [routerLink]="['/calificacionUsuarioTop3/rPDF']"
+      >
+        <mat-icon>manage_accounts</mat-icon>
+        <span class="mat-caption" *ngIf="isAutenticated && administrador">Top 3 peores calificados en vendedores</span>
+      </a>
+
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && !cliente && !vendedor"
+        [routerLink]="['/calificacionUsuarioTop5/rPDF']"
+      >
+        <mat-icon>manage_accounts</mat-icon>
+        <span class="mat-caption" *ngIf="isAutenticated && administrador">Top 5 mejores calificacdor en vendedores</span>
+      </a>
       
 
       <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
