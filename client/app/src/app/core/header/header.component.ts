@@ -12,6 +12,7 @@ export class HeaderComponent {
   isAutenticated: boolean;
   currentUser: any;
   qtyItems:Number = 0;
+  administrador: boolean = false;
   vendedor:boolean=false;
   vendedorCliente:boolean=false;
   cliente:boolean=false;
@@ -31,8 +32,9 @@ export class HeaderComponent {
       console.log(this.currentUser);
     
       if (this.currentUser && this.currentUser.user.detalle_usuarioTipo) {
-       
+       //SI TIENE 2 TIPOS DE USUARIOS
         if (this.currentUser.user.detalle_usuarioTipo.length === 2) {
+          //CLIENTE Y VENDEDOR
           if (
             this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2 &&
             this.currentUser.user.detalle_usuarioTipo[1].id_tipoUsuario === 3
@@ -45,12 +47,24 @@ export class HeaderComponent {
             this.vendedorCliente = false;
             this.vendedor = false;
           }
-        } else if (this.currentUser.user.detalle_usuarioTipo.length === 1) {
+        } 
+          // SI TIENE 1 TIPO DE USUARIO
+        else if (this.currentUser.user.detalle_usuarioTipo.length === 1) {
+          // VENDEDOR
           if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2) {
             this.vendedor = true;
             this.cliente=false;
             
-          } else {
+          } 
+          //ADMINISTRADOR
+          else if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 1) {
+            this.administrador = true;
+            this.cliente = false;
+            this.vendedor = false;
+            this.vendedorCliente = false
+          }
+          //CLIENTE
+          else {
             this.vendedor = false;
             this.cliente=true;
             console.log("cliente:"+this.cliente)
