@@ -39,11 +39,13 @@ constructor(
 
   ngOnInit(): void{
     this.activeRouter.params.subscribe((params:Params) =>{
-      this.idUsuario = params['id_usuario'];
+      this.idUsuario = params['id'];
       if(this.idUsuario != undefined){
         this.isCreate = false;
 
-        this.gService.get('usuario', this.idUsuario).pipe(takeUntil(this.destroy$))
+        this.gService
+        .get('user/', this.idUsuario)
+        .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) =>{
           this.userInfo = data;
           console.log(this.userInfo);
@@ -65,12 +67,12 @@ constructor(
   formularioReactive(){
     this.userForm = this.fb.group({
       id_usuario: [null,null],
-      nombre: [''],
-      apellidos: [''],
-      numero_telefono: [''],
-      correo_electronico: [''],
-      contrasenna: [''],
-      estado_actual: ['']
+      nombre: [null, Validators.required],
+      apellidos: [null, Validators.required],
+      numero_telefono: [null, Validators.required],
+      correo_electronico: [null, Validators.required],
+      contrasenna: [null, Validators.required],
+      estado_actual: [null, Validators.required]
     })
   }
 
@@ -94,11 +96,12 @@ constructor(
   actualizarUsuario(){
     console.log(this.userForm.value);
     this.gService
-    .update("usuario", this.userForm.value)
+    .update("user", this.userForm.value)
     .pipe(takeUntil(this.destroy$))
     .subscribe((data:any) => {
-      this.router.navigate(["/user.all"], {
-        queryParams: { update: true},
+      this.respUser = data
+      this.router.navigate(["/user/all"], {
+        queryParams: { update: 'true' },
       });
     });
   }
@@ -115,20 +118,5 @@ constructor(
     // Desinscribirse
     this.destroy$.unsubscribe();
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
