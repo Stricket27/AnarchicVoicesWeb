@@ -6,7 +6,9 @@ import { OrdenCompraClienteDetailComponent } from './orden-compra-cliente-detail
 import { OrdenCompraVendedorAllComponent } from './orden-compra-vendedor-all/orden-compra-vendedor-all.component';
 import { OrdenCompraVendedorDetailComponent } from './orden-compra-vendedor-detail/orden-compra-vendedor-detail.component';
 import { OrdenCompraIndexComponent} from './orden-compra-index/orden-compra-index.component'
-import { OrdenCompraPagoComponent} from './orden-compra-pago/orden-compra-pago.component'
+import { OrdenCompraPagoComponent} from './orden-compra-pago/orden-compra-pago.component';
+import { OrdenCompraGraficaComponent } from './orden-compra-grafica/orden-compra-grafica.component';
+import { OrdenCompraPdfComponent } from './orden-compra-pdf/orden-compra-pdf.component';
 import { AuthGuard } from '../share/guards/auth.guard';
 
 const routes: Routes = [
