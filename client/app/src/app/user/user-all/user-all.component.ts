@@ -42,16 +42,6 @@ export class UserAllComponent {
       });
   }
 
-  getTipoUsuario(id: number): string {
-    if (this.tipoUsuarioCargado) {
-      const tipoUsuario = this.usuarios.find(tu => tu.id_tipoUsuario === id);
-      return tipoUsuario ? tipoUsuario : '';
-    }
-    else {
-      return '';
-    }
-  }
-
   detalle(id: number) {
     this.router.navigate(['/user', id],
       {
@@ -59,8 +49,14 @@ export class UserAllComponent {
       })
   }
 
-  actualizarUsuario(id: number) {
-    this.router.navigate(['/user/update', id], {
+  crearUsuario() {
+    this.router.navigate(['/user/create'], {
+      relativeTo: this.route,
+    });
+  }
+
+  actualizarUsuario(id_usuario: number) {
+    this.router.navigate(['/user/update', id_usuario], {
       relativeTo: this.route,
     });
   }
