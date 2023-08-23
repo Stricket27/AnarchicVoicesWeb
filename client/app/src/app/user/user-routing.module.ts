@@ -18,7 +18,8 @@ const routes: Routes = [
   },
 
   {path: 'user/all', component: UserAllComponent},
-  {path: 'user/update/:id', component: UserFormComponent}
+  {path: 'user/update/:id', component: UserFormComponent},
+  {path: 'user/create', component: UserFormComponent}
 ];
 
 @NgModule({
