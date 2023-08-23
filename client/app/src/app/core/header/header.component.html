@@ -238,6 +238,24 @@
         <mat-icon>manage_accounts</mat-icon>
         <span class="mat-caption" *ngIf="isAutenticated && administrador">Usuarios</span>
       </a>
+
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && !cliente && !vendedor"
+        [routerLink]="['/ordenCompra/rGrafico']"
+      >
+        <mat-icon>manage_accounts</mat-icon>
+        <span class="mat-caption" *ngIf="isAutenticated && administrador">Dashboard venta producto por mes - GRAFICO</span>
+      </a>
+
+      <a
+        mat-menu-item
+        *ngIf="isAutenticated && !cliente && !vendedor"
+        [routerLink]="[''/ordenCompra/rPDF'']"
+      >
+        <mat-icon>manage_accounts</mat-icon>
+        <span class="mat-caption" *ngIf="isAutenticated && administrador">Los mejores productos del top 5</span>
+      </a>
       
 
       <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
