@@ -14,13 +14,6 @@ Inner Join producto as p on ld.id_producto = p.id_producto;
  
 };
 
-
-
-
-//Obtener por Id
-
-
-
 module.exports.getById = async (request, response, next) => {
     let id = parseInt(request.params.id);
     const ordencompra = await prisma.ordenCompra.findUnique({
@@ -39,20 +32,6 @@ module.exports.getById = async (request, response, next) => {
     });
 
     console.log(ordencompra);
-
-  //   if (ordencompra && ordencompra.lineaDetalle) {
-  //       ordencompra.lineaDetalle.forEach((detalle) => {
-  //           console.log(detalle); // Accede a cada elemento de lineaDetalle
-  //           console.log(detalle.id_producto); // Accede al ID de producto en cada elemento de lineaDetalle
-  //       });
-  //   }
-  //   if (ordencompra && ordencompra.producto) {
-  //     ordencompra.lineaDetalle.forEach((producto) => {
-  //         console.log(producto); // Accede a cada elemento de lineaDetalle
-  //         console.log(producto.id_producto); // Accede al ID de producto en cada elemento de lineaDetalle
-  //     });
-  // }
-    
 
     response.json(ordencompra);
 };
@@ -88,31 +67,6 @@ module.exports.create = async (request, response, next) => {
 module.exports.update = async (request, response, next) => {
   let ordenCompra = request.body;
   let id = parseInt(request.params.id);
-  //Obtener producto viejo
-    // const ordenViejo = await prisma.ordenCompra.findUnique({
-    //   where: { id_ordenCompra: id },
-    //   include:{
-    //     producto:{
-    //       select:{
-    //         id_producto: true
-    //       }
-    //     },
-    //     usuario:{
-    //       select:{
-    //         id_usuario:true
-    //       }
-    //     },
-    //     lineaDetalle:{
-    //       select:{
-    //         id_lineaDetalle:true
-    //       }
-        
-    //     }
-    //   }
-    // });
-
- 
-
 
   const newOrdenC = await prisma.ordenCompra.update({
     where: {
@@ -139,4 +93,39 @@ module.exports.update = async (request, response, next) => {
     },
   });
   response.json(newOrdenC);
+};
+
+
+//DASHBOARD
+module.exports.getVentaProductoMes = async (request, response, next) => {
+  let mes = parseInt(request.params.mes);
+  const result = await prisma.$queryRaw( 
+    Prisma.sql`SELECT 
+    p.nombre, SUM(ld.cantidad) AS suma
+FROM
+    ordencompra oc
+        INNER JOIN
+    lineadetalle ld ON oc.id_ordenCompra = ld.id_ordenCompra
+        INNER JOIN
+    producto p ON ld.id_producto = p.id_producto
+WHERE
+    MONTH(oc.fecha) = ${mes}
+GROUP BY p.nombre`
+  );
+  
+  response.json(result);
+}; 
+
+module.exports.getVentaProductoTop = async (request, response, next) => {
+  const result = await prisma.$queryRaw( 
+    Prisma.sql`SELECT p.nombre, SUM(ld.cantidad) AS total
+    FROM ordencompra oc
+    INNER JOIN lineadetalle ld ON oc.id_ordenCompra = ld.id_ordenCompra
+    INNER JOIN producto p ON ld.id_producto = p.id_producto
+    WHERE MONTH(oc.fecha) = 8
+    GROUP BY p.nombre
+    ORDER BY total DESC
+    LIMIT 5;`
+  )
+  response.json(result)
 };
