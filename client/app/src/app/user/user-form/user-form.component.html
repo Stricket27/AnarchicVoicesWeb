@@ -3,34 +3,37 @@
   (ngSubmit)="isCreate ? crearUsuario() : actualizarUsuario()"
   novalidate
 >
+<h1 class="mat-h1"><b>Cambiar el estado actual de persona</b></h1>
   <input type="hidden" formControlName="id_usuario" />
   <mat-card class="shipping-card">
     <mat-card-content>
       <div class="row">
 
-
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              formControlName="nombre"
-              maxlength="20"
-            />
-          </mat-form-field>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                formControlName="nombre"
+                readonly
+              />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                formControlName="apellidos"
+                readonly
+              />
+            </mat-form-field>
+          </div>
         </div>
+       
       </div>
 
       <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              formControlName="apellidos"
-            />
-          </mat-form-field>
-        </div>
-
-        <div class="col">
+        <div class="col" hidden>
           <mat-form-field class="full-width">
             <input
               matInput
@@ -40,7 +43,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" hidden>
         <div class="col">
           <mat-form-field class="full-width">
             <input
@@ -76,3 +79,4 @@
     </mat-card-actions>
   </mat-card>
 </form>
+
