@@ -232,7 +232,7 @@
 
 <a
         mat-menu-item
-        *ngIf="isAutenticated && administrador"
+        *ngIf="isAutenticated && !cliente && !vendedor"
         [routerLink]="['/user/all']"
       >
         <mat-icon>manage_accounts</mat-icon>
