@@ -230,6 +230,16 @@
         <span class="mat-caption" *ngIf="isAutenticated"> Mis tarjetas</span>
       </a>
 
+<a
+        mat-menu-item
+        *ngIf="isAutenticated && administrador"
+        [routerLink]="['/user/all']"
+      >
+        <mat-icon>manage_accounts</mat-icon>
+        <span class="mat-caption" *ngIf="isAutenticated && administrador">Usuarios</span>
+      </a>
+      
+
       <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Cerrar sesión</span>
