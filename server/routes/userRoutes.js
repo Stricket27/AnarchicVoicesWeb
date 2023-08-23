@@ -11,7 +11,7 @@ router.get('/', userController.get);
 
 router.get('/:id',userController.getById);
 
-router.put('/', userController.update);
+router.put('/:id', userController.update);
 
 router.post('/login', userController.login);
 
