@@ -9,6 +9,8 @@ import { OrdenCompraVendedorAllComponent } from './orden-compra-vendedor-all/ord
 import { OrdenCompraVendedorDetailComponent } from './orden-compra-vendedor-detail/orden-compra-vendedor-detail.component';
 import { OrdenCompraIndexComponent } from './orden-compra-index/orden-compra-index.component';
 import { OrdenCompraPagoComponent } from './orden-compra-pago/orden-compra-pago.component';
+import { OrdenCompraGraficaComponent } from './orden-compra-grafica/orden-compra-grafica.component';
+import { OrdenCompraPdfComponent } from './orden-compra-pdf/orden-compra-pdf.component';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card'; 
@@ -36,6 +38,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     OrdenCompraVendedorDetailComponent,
     OrdenCompraIndexComponent,
     OrdenCompraPagoComponent,
+    OrdenCompraGraficaComponent,
+    OrdenCompraPdfComponent,
   ],
   imports: [
     CommonModule,
