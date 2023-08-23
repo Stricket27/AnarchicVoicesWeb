@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 module.exports.get = async (request, response, next) => {
   const calificacionUsuario = await prisma.calificacionUsuario.findMany({
@@ -9,21 +9,6 @@ module.exports.get = async (request, response, next) => {
   response.json(calificacionUsuario);
 };
 
-//Obtener listado
-// module.exports.get = async (request, response, next) => {
-//   const tipousuario = await prisma.tipousuario.findMany({
-//     orderBy: {
-//       descripcion: 'asc',
-//     },
-//    /*  select: {
-//       id: true,
-//       nombre: true,
-//     }, */
-//   });
-//   response.json(tipousuario);
-// };
-//Obtener por Id
-//locahost:3000/tipoUsuario/2
 module.exports.getById = async (request, response, next) => {
     let id=parseInt(request.params.id);
     const calificacionUsuario=await prisma.calificacionUsuario.findUnique({
@@ -48,10 +33,6 @@ module.exports.create = async (request, response, next) => {
 module.exports.update = async (request, response, next) => {
   let calificacionUsuario = request.body;
   let idCalificacionUsuario = parseInt(request.params.id);
-  //Obtener usuario viejo
-//    const tipoUsuarioViejo = await prisma.tipoUsuario.findUnique({
-//      where: { id: idtipoUsuario }
-//    });
 
   const newCalificacionUsuario = await prisma.calificacionUsuario.update({
     where: {
@@ -66,3 +47,31 @@ module.exports.update = async (request, response, next) => {
   });
   response.json(newCalificacionUsuario);
 };
+
+//DASHBOARD
+module.exports.getCalificacionUsuarioTop3 = async (request, response, next) => {
+  const result = await prisma.$queryRaw(
+    Prisma.sql`SELECT nombre, apellidos, AVG(c.calificacion) AS promedio_calificaciones
+    FROM Usuario u
+    INNER JOIN calificacionusuario c ON u.id_usuario = c.id_usuario
+    GROUP BY u.id_usuario, u.nombre, u.apellidos
+    ORDER BY promedio_calificaciones
+    LIMIT 3`
+  )
+  response.json(result);
+};
+
+
+module.exports.getCalificacionUsuarioTop5 = async (request, response, next) => {
+  const result = await prisma.$queryRaw(
+    Prisma.sql`SELECT nombre, apellidos, AVG(c.calificacion) AS promedio_calificaciones
+    FROM Usuario u
+    LEFT JOIN calificacionusuario c ON u.id_usuario = c.id_usuario
+    GROUP BY u.id_usuario, u.nombre, u.apellidos
+    ORDER BY promedio_calificaciones DESC
+    LIMIT 5`
+  )
+  response.json (result)
+}
+
+
