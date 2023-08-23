@@ -1,0 +1,27 @@
+<mat-card class="shipping-card" style="margin-left: 5pc;">
+  <mat-card-content>
+    <div id="htmlData" class="contenedor">
+      <h2 class="titulo">Top 5 de los productos más vendidos del mes</h2>
+      <table class="tabla">
+        <thead>
+          <tr class="table-primary">
+            <th>Producto</th>
+            <th>Total de ventas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of datos">
+            <th>{{ item.nombre }}</th>
+            <td>&dollar;{{ item.total }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4 text-right">
+      <button mat-flat-button color="accent" (click)="openPDF()">
+        Descargar PDF
+        <mat-icon>download</mat-icon>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
