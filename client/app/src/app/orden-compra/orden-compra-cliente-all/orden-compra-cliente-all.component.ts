@@ -46,20 +46,32 @@ export class OrdenCompraClienteAllComponent {
   }
 
   listaPedidos(id_usuario: number) {
-  this.gService.list('ordencompra/')
-  .pipe(
-  takeUntil(this.destroy$),
-  map((data: any[]) => data.filter(pedido => pedido.id_usuario === id_usuario))
-    )
-  .subscribe((filteredData: any[]) => {
-  console.log(filteredData);
-  this.datos = filteredData;
-  this.dataSource = new MatTableDataSource(this.datos);
-  this.dataSource.sort = this.sort;
-  this.dataSource.paginator = this.paginator;
-  });
+    this.getProductosDelUsuario(id_usuario)
+    .subscribe((producto: any[]) => {
+      this.gService.list('ordenCompra/')
+        .pipe(
+          map((data: any[]) => {
+            return producto.length > 0
+              ? data.filter(pedido => producto.some(pedidos => pedidos.id_producto === pedido.id_producto))
+              : data.filter(pedido => pedido.id_usuario === id_usuario);
+          })
+        )
+        .subscribe((filteredData: any[]) => {
+          console.log(filteredData);
+          this.datos = filteredData;
+          this.dataSource = new MatTableDataSource(this.datos);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        });
+    });
   }
-
+  getProductosDelUsuario(id_usuario: number) {
+    return this.gService.list('producto/')
+      .pipe(
+        takeUntil(this.destroy$),
+        map((data: any[]) => data.filter(producto => producto.id_usuario === id_usuario))
+      );
+  }
  
   formatDate(date: string): string {
   return this.datePipe.transform(date, 'dd/MM/yyyy');
@@ -84,6 +96,13 @@ export class OrdenCompraClienteAllComponent {
   return '';
   }
   }
+  actualizarOrdenCompra(id_ordenCompra: number) {
+    console.log(id_ordenCompra)
+    this.router.navigate(['/orden-compra/update', id_ordenCompra], {
+    relativeTo: this.route,
+   
+    });
+    }
 
   detalle(id:number){
   this.router.navigate(['/orden-compra-cliente',id],

@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrdenCompraFormComponent } from './orden-compra-form/orden-compra-form.component';
 
 
 
@@ -40,6 +41,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     OrdenCompraPagoComponent,
     OrdenCompraGraficaComponent,
     OrdenCompraPdfComponent,
+    OrdenCompraFormComponent,
   ],
   imports: [
     CommonModule,

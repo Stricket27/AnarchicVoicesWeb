@@ -9,6 +9,7 @@ import { OrdenCompraIndexComponent} from './orden-compra-index/orden-compra-inde
 import { OrdenCompraPagoComponent} from './orden-compra-pago/orden-compra-pago.component';
 import { OrdenCompraGraficaComponent } from './orden-compra-grafica/orden-compra-grafica.component';
 import { OrdenCompraPdfComponent } from './orden-compra-pdf/orden-compra-pdf.component';
+import { OrdenCompraFormComponent } from './orden-compra-form/orden-compra-form.component';
 import { AuthGuard } from '../share/guards/auth.guard';
 
 const routes: Routes = [
@@ -20,8 +21,8 @@ const routes: Routes = [
 {path: 'orden-compra-vendedor/:id', component: OrdenCompraVendedorDetailComponent},
 
 {path: 'ordenCompra/rGrafico', component: OrdenCompraGraficaComponent},
-{path: 'ordenCompra/rPDF', component: OrdenCompraPdfComponent}
-
+{path: 'ordenCompra/rPDF', component: OrdenCompraPdfComponent},
+{path: 'orden-compra/update/:id', component: OrdenCompraFormComponent},
 ];
 
 @NgModule({
