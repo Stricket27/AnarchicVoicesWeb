@@ -17,6 +17,9 @@ const routes: Routes = [
 {path: 'orden-compra-vendedor/all', component: OrdenCompraVendedorAllComponent},
 {path: 'orden-compra-vendedor/:id', component: OrdenCompraVendedorDetailComponent},
 
+{path: 'ordenCompra/rGrafico', component: OrdenCompraGraficaComponent},
+{path: 'ordenCompra/rPDF', component: OrdenCompraPdfComponent}
+
 ];
 
 @NgModule({
