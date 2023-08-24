@@ -399,91 +399,91 @@ async function main() {
     //fotografia
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/DY2njSn/All-That-Remains.png',
+            fotografia: 'file-1692879206109-338167877.png',
             estado_actual: 'Activo',
             id_producto: 1
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/xYZ9vpC/All-That-Remains-Lista.jpg',
+            fotografia: 'file-1692879206116-594381279.jpg',
             estado_actual: 'Activo',
             id_producto: 1
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/qs7Xc6P/Motionless-in-White-Completo.jpg',
+            fotografia: 'file-1692879280145-503576898.jpg',
             estado_actual: 'Activo',
             id_producto: 2
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/820NLd6/Motionless-in-White-Lista.jpg',
+            fotografia: 'file-1692879280149-125364725.jpg',
             estado_actual: 'Activo',
             id_producto: 2
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/8mSQZjL/Motionless-in-White-Solo-Disco.jpg',
+            fotografia: 'file-1692879280156-629815341.jpg',
             estado_actual: 'Activo',
             id_producto: 2
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/6HPp7mN/Motionless-in-White-Vinillo-Representacion.jpg',
+            fotografia: 'file-1692879280163-396919357.jpg',
             estado_actual: 'Activo',
             id_producto: 2
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/84RdPpd/Bad-Omens.jpg',
+            fotografia: 'file-1692879399489-685005000.jpg',
             estado_actual: 'Activo',
             id_producto: 3
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/nw3bv5D/Escape-The-Fate.png',
+            fotografia: 'file-1692879443854-80211385.png',
             estado_actual: 'Activo',
             id_producto: 4
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/KNsdmb2/Arch-Enemy-Frontal.png',
+            fotografia: 'file-1692879762778-102243563.jpg',
             estado_actual: 'Activo',
             id_producto: 5
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/rvJ94Rn/Arch-Enemy-Varios-Discos.jpg',
+            fotografia: 'file-1692879762783-305030939.jpg',
             estado_actual: 'Activo',
             id_producto: 5
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/0tL36bb/Arch-Enemy-Juego.jpg',
+            fotografia: 'file-1692879762783-305030939.jpg',
             estado_actual: 'Activo',
             id_producto: 5
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/wrMkxHM/Spirit-Box.png',
+            fotografia: 'file-1692879600793-609665174.png',
             estado_actual: 'Activo',
             id_producto: 6
         }
     });
     await prisma.fotografia.create({
         data: {
-            fotografia: 'https://i.ibb.co/NVVs5RV/Motionless-in-White-10-Anniversary.png',
+            fotografia: 'file-1692879280134-162029017.png',
             estado_actual: 'Activo',
             id_producto: 7
         }
