@@ -11,7 +11,7 @@ router.get('/', ordenCompraController.get);
 
 router.post('/', ordenCompraController.create);
 
-router.put('/', ordenCompraController.update);
+router.put('/:id', ordenCompraController.update);
 
 router.get("/vProductoTop", ordenCompraController.getVentaProductoTop);
 

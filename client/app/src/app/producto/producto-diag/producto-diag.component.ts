@@ -17,6 +17,7 @@ export class ProductoDiagComponent implements OnInit {
   datos: any;
   isAutenticated: boolean;
   currentUser: any;
+  mensaje:boolean;
   datosDialog: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -39,6 +40,51 @@ export class ProductoDiagComponent implements OnInit {
     if (this.datosDialog.id_producto) {
       this.obtenerProducto(this.datosDialog.id_producto);
     }
+
+    if (this.currentUser && this.currentUser.user.detalle_usuarioTipo) {
+      //SI TIENE 2 TIPOS DE USUARIOS
+       if (this.currentUser.user.detalle_usuarioTipo.length === 2) {
+         //CLIENTE Y VENDEDOR
+         if (
+           this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2 &&
+           this.currentUser.user.detalle_usuarioTipo[1].id_tipoUsuario === 3
+         ) {
+          
+           this.mensaje = true;
+         } else {
+          
+           this.mensaje= false;
+         }
+       } 
+         // SI TIENE 1 TIPO DE USUARIO
+       else if (this.currentUser.user.detalle_usuarioTipo.length === 1) {
+         // VENDEDOR
+         if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2) {
+           this.mensaje = false;
+          
+           
+         } 
+         //ADMINISTRADOR
+         else if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 1) {
+           
+           this.mensaje = false;
+          
+         }
+         //CLIENTE
+         else {
+           this.mensaje = true;
+          
+         }
+       } else {
+         // No cumple ningún caso, reiniciar los valores
+         this.mensaje = false;
+        
+       }
+     } else {
+       // Usuario no autenticado, reiniciar los valores
+       this.mensaje = false;
+      
+     }
   }
 
   obtenerProducto(id: any) {

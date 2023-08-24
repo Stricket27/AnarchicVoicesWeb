@@ -17,10 +17,11 @@ import { AuthenticationService } from 'src/app/share/authentication.service';
 export class OrdenCompraClienteAllComponent {
   usuarios: any[];
   usuariosCargados = false;
+  vendedor = false;
   datos:any;
   currentUser: any;
   destroy$:Subject<boolean>=new Subject<boolean>();
-
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -42,6 +43,51 @@ export class OrdenCompraClienteAllComponent {
     if (this.currentUser) {
       this.listaPedidos(this.currentUser.user.id_usuario);
     }
+
+    if (this.currentUser && this.currentUser.user.detalle_usuarioTipo) {
+      //SI TIENE 2 TIPOS DE USUARIOS
+       if (this.currentUser.user.detalle_usuarioTipo.length === 2) {
+         //CLIENTE Y VENDEDOR
+         if (
+           this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2 &&
+           this.currentUser.user.detalle_usuarioTipo[1].id_tipoUsuario === 3
+         ) {
+          
+           this.vendedor = true;
+         } else {
+          
+           this.vendedor = false;
+         }
+       } 
+         // SI TIENE 1 TIPO DE USUARIO
+       else if (this.currentUser.user.detalle_usuarioTipo.length === 1) {
+         // VENDEDOR
+         if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 2) {
+           this.vendedor = true;
+          
+           
+         } 
+         //ADMINISTRADOR
+         else if (this.currentUser.user.detalle_usuarioTipo[0].id_tipoUsuario === 1) {
+           
+           this.vendedor = false;
+          
+         }
+         //CLIENTE
+         else {
+           this.vendedor = false;
+          
+         }
+       } else {
+         // No cumple ningún caso, reiniciar los valores
+         this.vendedor = false;
+        
+       }
+     } else {
+       // Usuario no autenticado, reiniciar los valores
+       this.vendedor = false;
+      
+     }
   });
   }
 

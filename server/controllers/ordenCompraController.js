@@ -1,4 +1,4 @@
-const { PrismaClient, Prisma } = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 //Obtener listado
 module.exports.get = async (request, response, next) => {
@@ -13,6 +13,13 @@ Inner Join producto as p on ld.id_producto = p.id_producto;
   response.json(ordencompra);
  
 };
+
+
+
+
+//Obtener por Id
+
+
 
 module.exports.getById = async (request, response, next) => {
     let id = parseInt(request.params.id);
@@ -32,6 +39,20 @@ module.exports.getById = async (request, response, next) => {
     });
 
     console.log(ordencompra);
+
+  //   if (ordencompra && ordencompra.lineaDetalle) {
+  //       ordencompra.lineaDetalle.forEach((detalle) => {
+  //           console.log(detalle); // Accede a cada elemento de lineaDetalle
+  //           console.log(detalle.id_producto); // Accede al ID de producto en cada elemento de lineaDetalle
+  //       });
+  //   }
+  //   if (ordencompra && ordencompra.producto) {
+  //     ordencompra.lineaDetalle.forEach((producto) => {
+  //         console.log(producto); // Accede a cada elemento de lineaDetalle
+  //         console.log(producto.id_producto); // Accede al ID de producto en cada elemento de lineaDetalle
+  //     });
+  // }
+    
 
     response.json(ordencompra);
 };
@@ -67,6 +88,31 @@ module.exports.create = async (request, response, next) => {
 module.exports.update = async (request, response, next) => {
   let ordenCompra = request.body;
   let id = parseInt(request.params.id);
+  //Obtener producto viejo
+    // const ordenViejo = await prisma.ordenCompra.findUnique({
+    //   where: { id_ordenCompra: id },
+    //   include:{
+    //     producto:{
+    //       select:{
+    //         id_producto: true
+    //       }
+    //     },
+    //     usuario:{
+    //       select:{
+    //         id_usuario:true
+    //       }
+    //     },
+    //     lineaDetalle:{
+    //       select:{
+    //         id_lineaDetalle:true
+    //       }
+        
+    //     }
+    //   }
+    // });
+
+ 
+
 
   const newOrdenC = await prisma.ordenCompra.update({
     where: {
@@ -94,7 +140,6 @@ module.exports.update = async (request, response, next) => {
   });
   response.json(newOrdenC);
 };
-
 
 //DASHBOARD
 module.exports.getVentaProductoMes = async (request, response, next) => {
