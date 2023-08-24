@@ -15,7 +15,7 @@ import { AuthGuard } from '../share/guards/auth.guard';
 const routes: Routes = [
 {path: 'ordenCompra',canActivate:[AuthGuard], data:{roles:[3],}, component: OrdenCompraIndexComponent},
 {path: 'orden-compra-cliente/all', component: OrdenCompraClienteAllComponent},
-{path: 'orden-compra-cliente/:id',canActivate:[AuthGuard], data:{roles:[3],}, component: OrdenCompraClienteDetailComponent},
+{path: 'orden-compra-cliente/:id', component: OrdenCompraClienteDetailComponent},
 {path: 'orden-compra-pago/:id',canActivate:[AuthGuard], data:{roles:[3],}, component: OrdenCompraPagoComponent},
 {path: 'orden-compra-vendedor/all', component: OrdenCompraVendedorAllComponent},
 {path: 'orden-compra-vendedor/:id', component: OrdenCompraVendedorDetailComponent},

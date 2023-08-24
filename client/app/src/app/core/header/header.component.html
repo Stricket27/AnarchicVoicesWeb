@@ -149,13 +149,13 @@
       <!-- ESTE REMPLAZA EL BOTON DE "LISTADO/PEDIDOS" QUE ESTA EN COMENTARIO -->
       <a
         mat-menu-item
-        *ngIf="isAutenticated&& cliente||vendedorCliente"
+        *ngIf="isAutenticated&& cliente||vendedorCliente||vendedor"
         [routerLink]="['/orden-compra-cliente/all']"
       >
-        <span class="mat-caption" *ngIf="isAutenticated&& cliente||vendedorCliente">
+        <span class="mat-caption" *ngIf="isAutenticated&& cliente||vendedorCliente||vendedor">
           Pedidos</span
         >
-        <mat-icon *ngIf="isAutenticated&& cliente||vendedorCliente">local_shipping</mat-icon>
+        <mat-icon *ngIf="isAutenticated&& cliente||vendedorCliente||vendedor">local_shipping</mat-icon>
       </a>
       <!--  -->
 
@@ -172,7 +172,7 @@
 
       <a
         mat-menu-item
-        *ngIf="isAutenticated && !titulo &&cliente&&vendedor"
+        *ngIf="isAutenticated && !titulo &&vendedor"
         [routerLink]="['/mensajeria/all']"
       >
         <span class="mat-caption"> Mantenimiento de mensajería</span>
@@ -209,9 +209,9 @@
         >
         <mat-icon>mail</mat-icon>
       </a>
-      <a mat-menu-item *ngIf="isAutenticated&&cliente||vendedorCliente" [routerLink]="['/direccion/']">
+      <a mat-menu-item *ngIf="isAutenticated&&cliente||vendedorCliente||vendedor" [routerLink]="['/direccion/']">
         <mat-icon>location_on</mat-icon>
-        <span class="mat-caption" *ngIf="isAutenticated&& cliente||vendedorCliente"> Mis ubicaciones</span>
+        <span class="mat-caption" *ngIf="isAutenticated&& cliente||vendedorCliente||vendedor"> Mis ubicaciones</span>
       </a>
 
       <a mat-menu-item *ngIf="isAutenticated&&cliente||vendedorCliente" [routerLink]="['/ordenCompra']">
@@ -230,7 +230,7 @@
         <span class="mat-caption" *ngIf="isAutenticated"> Mis tarjetas</span>
       </a>
 
-<a
+      <a
         mat-menu-item
         *ngIf="isAutenticated && !cliente && !vendedor"
         [routerLink]="['/user/all']"

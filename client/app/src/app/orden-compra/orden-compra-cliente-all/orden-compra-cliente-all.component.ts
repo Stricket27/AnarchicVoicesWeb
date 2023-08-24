@@ -19,6 +19,7 @@ export class OrdenCompraClienteAllComponent {
   usuariosCargados = false;
   vendedor = false;
   datos:any;
+  filtrarDato: any;
   currentUser: any;
   destroy$:Subject<boolean>=new Subject<boolean>();
   
@@ -108,6 +109,7 @@ export class OrdenCompraClienteAllComponent {
           this.dataSource = new MatTableDataSource(this.datos);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
+          this.filtrarDato=this.datos
         });
     });
   }
@@ -155,6 +157,22 @@ export class OrdenCompraClienteAllComponent {
   {
   relativeTo:this.route
   })
+  }
+  filtrarDatoPorEstado(ordenarPor: number){
+    if(!ordenarPor || ordenarPor == 0 ){
+      this.filtrarDato = this.datos.slice();
+    }
+
+    if(ordenarPor == 1){
+      this.filtrarDato.sort((a, b,c) => b.estado_actual - a.estado_actual);
+    }
+
+    if(ordenarPor == 2){
+      this.filtrarDato.sort((a, b,c) => a.estado_actual - b.estado_actual);
+    }
+    if(ordenarPor == 3){
+      this.filtrarDato.sort((a, b,c) => a.estado_actual - b.estado_actual);
+    }
   }
 
   ngOnDestroy(){

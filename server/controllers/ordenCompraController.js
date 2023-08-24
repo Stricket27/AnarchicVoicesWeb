@@ -121,6 +121,7 @@ module.exports.update = async (request, response, next) => {
     data: {
         direccion: ordenCompra.direccion,
        id_metodoPago: ordenCompra.id_metodoPago,
+       estado_actual:ordenCompra.estado_actual,
         // direccion: { connect: ordenCompra.id_direccion },
         // metodoPago: { connect: ordenCompra.id_metodoPago },
 

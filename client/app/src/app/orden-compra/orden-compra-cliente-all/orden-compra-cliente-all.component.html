@@ -3,10 +3,17 @@
   <h1 class="mat-h1"><b>Listado de pedidos</b></h1>
 
   <mat-card-content>
-
-    <div class="mat-elevation-z8" *ngIf="dataSource">
-
-      <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
+    
+    <div class="mat-elevation-z8" *ngIf="dataSource" >
+      <mat-form-field>
+        <mat-label>Ordenar por:</mat-label>
+        <mat-select (selectionChange)="filtrarDatoPorEstado($event.value)">
+          <mat-option value="1">Pendiente</mat-option>
+          <mat-option value="2">En proceso</mat-option>
+          <mat-option value="3">Entregado</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements" >
 
         <ng-container matColumnDef="id_ordenCompra">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Orden de compra</th>

@@ -11,6 +11,7 @@ import { OrdenCompraIndexComponent } from './orden-compra-index/orden-compra-ind
 import { OrdenCompraPagoComponent } from './orden-compra-pago/orden-compra-pago.component';
 import { OrdenCompraGraficaComponent } from './orden-compra-grafica/orden-compra-grafica.component';
 import { OrdenCompraPdfComponent } from './orden-compra-pdf/orden-compra-pdf.component';
+import { OrdenCompraFormComponent } from './orden-compra-form/orden-compra-form.component';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card'; 
@@ -26,7 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OrdenCompraFormComponent } from './orden-compra-form/orden-compra-form.component';
+
 
 
 

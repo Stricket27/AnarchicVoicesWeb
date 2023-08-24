@@ -1,1 +1,317 @@
-<p>orden-compra-form works!</p>
+<!-- <mat-card class="dashboard-card" *ngIf="datos" >
+  
+    <mat-card-title class="text-center">
+    <p ><b>Orden de compra # </b> {{datos.id_ordenCompra }}</p>
+    </mat-card-title>
+  
+<mat-card-content class="dashboard-card-content">
+
+  <p><b>Cliente: </b>{{ getNombreUsuario(datos.id_usuario) }}</p>
+
+  <div *ngFor="let lineaDetalle of datos.lineaDetalle">
+    
+    <p><b>Nombre: </b>{{ lineaDetalle.producto.nombre }} - {{ lineaDetalle.producto.descripcion }}</p>
+   
+    <p><b>Precio unitario: </b>{{ lineaDetalle.producto.precio  | currency:"₡"}}</p>
+
+    <p><b>Cantidad: </b>{{ lineaDetalle.cantidad }}</p>
+  
+  </div>
+
+  <p><b>Método de pago: </b>{{ datos.id_metodoPago}}</p>
+
+  <p><b>Dirección: </b>{{datos.direccion}}</p>
+
+  <p><b>Fecha: </b>{{ formatDate(datos.fecha) }}</p>
+
+  <p><b>Monto total más impuesto IVA: </b>{{datos.monto_total | currency:"₡"}}</p>
+ 
+</mat-card-content>
+
+</mat-card>
+ -->
+
+
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title> Order confirmation </title>
+ <meta name="robots" content="noindex,nofollow" />
+ <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
+ <!-- Header -->
+ <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+   <tr>
+     <td height="20"></td>
+   </tr>
+   <tr>
+     <td>
+       <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 10px 10px 0 0;">
+         <tr class="hiddenMobile">
+           <td height="40"></td>
+         </tr>
+         <tr class="visibleMobile">
+           <td height="30"></td>
+         </tr>
+ 
+         <tr>
+           <td>
+             <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding" *ngIf="datos">
+               <tbody>
+                 <tr>
+                   <td>
+                     <table width="220" border="0" cellpadding="0" cellspacing="0" align="left" class="col">
+                       <tbody>
+                         <tr>
+                           <td align="left"> <img src="./assets/images/Logo_Sin_Fondo.png" width="32" height="32" alt="logo" border="0" /></td>
+                         </tr>
+                         <tr class="hiddenMobile">
+                           <td height="40"></td>
+                         </tr>
+                         <tr class="visibleMobile">
+                           <td height="20"></td>
+                         </tr>
+                         <tr>
+                           <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
+                             Hola {{ datos.usuario.nombre }} {{ datos.usuario.apellidos }}
+                             <br> Gracias por elegirnos, aquí te mostramos tu orden de compra
+                           </td>
+                         </tr>
+                       </tbody>
+                     </table>
+                     <table width="220" border="0" cellpadding="0" cellspacing="0" align="right" class="col">
+                       <tbody>
+                         <tr class="visibleMobile">
+                           <td height="20"></td>
+                         </tr>
+                         <tr>
+                           <td height="5"></td>
+                         </tr>
+                         <tr>
+                           <td style="font-size: 21px; color: #495057; letter-spacing: -1px; font-family: 'Open Sans', sans-serif; line-height: 1; vertical-align: top; text-align: right;">
+                             Anarchic Voices
+                           </td>
+                         </tr>
+                         <tr>
+                         <tr class="hiddenMobile">
+                           <td height="50"></td>
+                         </tr>
+                         <tr class="visibleMobile">
+                           <td height="20"></td>
+                         </tr>
+                         <tr>
+                           <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right;">
+                             <small>Número de orden de compra: </small>#{{datos.id_ordenCompra }}<br />
+                             <small>{{ formatDate(datos.fecha) }}</small>
+                           </td>
+                         </tr>
+                       </tbody>
+                     </table>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           </td>
+         </tr>
+       </table>
+     </td>
+   </tr>
+ </table>
+ <!-- /Header -->
+ <!-- Order Details -->
+ <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+   <tbody>
+     <tr>
+       <td>
+         <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+           <tbody>
+             <tr>
+             <tr class="hiddenMobile">
+               <td height="60"></td>
+             </tr>
+             <tr class="visibleMobile">
+               <td height="40"></td>
+             </tr>
+             <tr>
+               <td>
+                 <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                   <tbody>
+                     <tr>
+                       <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                         Producto
+                       </th>
+                       <!-- <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="left">
+                         <small>Metodo de pago</small>
+                       </th> -->
+                       <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; " align="center">
+                         Cantidad
+                       </th>
+                       <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top;" align="center">
+                         Precio unitario
+                       </th>
+                     </tr>
+                     <tr>
+                       <td height="1" style="background: #bebebe;" colspan="4"></td>
+                     </tr>
+                     <tr>
+                       <td height="10" colspan="4"></td>
+                     </tr>
+                     <tr *ngFor="let lineaDetalle of datos.lineaDetalle">
+                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top;" class="article">
+                        {{ lineaDetalle.producto.nombre }} - {{ lineaDetalle.producto.descripcion }}
+                       </td>
+                       <!-- <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"><small>{{ datos.id_metodoPago}}</small></td> -->
+                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top;" align="center">{{ lineaDetalle.cantidad }}</td>
+                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; " align="center">{{ lineaDetalle.producto.precio  | currency:"₡"}}</td>
+                     </tr>
+                     <tr>
+                       <td height="1" colspan="4" style="border-bottom:1px solid #e4e4e4"></td>
+                     </tr>
+                   </tbody>
+                 </table>
+               </td>
+             </tr>
+             <tr>
+               <td height="20"></td>
+             </tr>
+           </tbody>
+         </table>
+       </td>
+     </tr>
+   </tbody>
+ </table>
+ <!-- /Order Details -->
+ <!-- Total -->
+ <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+   <tbody>
+     <tr>
+       <td>
+         <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+           <tbody>
+             <tr>
+               <td>
+ 
+                 <!-- Table Total -->
+                 <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                   <tbody>
+                     <tr>
+                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                         Subtotal
+                       </td>
+                       <td *ngFor="let lineaDetalle of datos.lineaDetalle" style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;" width="80">
+                        <strong>{{lineaDetalle.sub_total | currency:"₡"}}</strong>
+                       </td>
+                     </tr>
+                     <tr>
+                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                         Valor del IVA 13%
+                       </td>
+                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                         <!-- $15.00 -->
+                       </td>
+                     </tr>
+                     <tr>
+                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                         <strong>Monto total con IVA</strong>
+                       </td>
+                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                         <strong>{{datos.monto_total | currency:"₡"}}</strong>
+                       </td>
+                     </tr>
+                   </tbody>
+                 </table>
+                 <!-- /Table Total -->
+               </td>
+             </tr>
+           </tbody>
+         </table>
+       </td>
+     </tr>
+   </tbody>
+ </table>
+ <!-- /Total -->
+
+ <!-- /Information -->
+ <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+   <tr>
+     <td>
+       <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 0 0 10px 10px;">
+         <tr>
+           <td>
+             <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+               <tbody>
+                <tr>
+                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                      <strong>Direccion</strong>
+                    </td>
+                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                      <strong>{{datos.direccion}}</strong>
+                    </td>
+
+                   
+                  </tr>
+                  <tr>
+                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:center; ">
+                        <strong>Método de pago</strong>
+                      </td>
+                      <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:center; ">
+                        <strong>{{(datos.id_metodoPago)}}</strong>
+                      </td>
+                  </tr>
+                 <tr>
+
+                   <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
+                     Que tengas un buen dia
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           </td>
+         </tr>
+         <tr class="spacer">
+           <td height="50"></td>
+         </tr>
+       </table>
+     </td>
+   </tr>
+   <tr>
+     <td height="20"></td>
+   </tr>
+ </table>
+
+ <!-- <mat-card class="box">
+    <mat-card-actions align="end">
+        <button mat-flat-button class="btnComprar" (click)="actualizarCompra()" >
+            Registrar pago
+            <mat-icon class="material-symbols-outlined">
+                universal_currency_alt
+            </mat-icon>
+            </button>
+      </mat-card-actions>
+  </mat-card> -->
+
+  <!-- <form [formGroup]="OrdenCForm" (ngSubmit)="actualizarCompra()"  novalidate > -->
+   
+    <mat-card class="shipping-card">
+      <mat-card-content>
+        <mat-label>Estado actual</mat-label>
+        <div class="col">
+        
+         
+            <mat-radio-group [(ngModel)]="selectedEstado">
+                <mat-radio-button value="Pendiente">Pendiente</mat-radio-button>
+                <mat-radio-button value="En proceso">En proceso</mat-radio-button>
+                <mat-radio-button value="Entregado">Entregado</mat-radio-button>
+              </mat-radio-group>
+         
+
+
+         
+        </div>
+       
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="actualizarPedido()">
+         Guardar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  <!-- </form> -->
+
