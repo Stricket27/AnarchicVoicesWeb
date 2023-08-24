@@ -24,6 +24,8 @@ module.exports.getById = async (request, response, next) => {
       usuario: {
         select: {
           id_usuario: true,
+          nombre: true,
+          apellidos: true
         },
       },
       fotografia: {
