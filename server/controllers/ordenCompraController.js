@@ -14,13 +14,6 @@ Inner Join producto as p on ld.id_producto = p.id_producto;
  
 };
 
-
-
-
-//Obtener por Id
-
-
-
 module.exports.getById = async (request, response, next) => {
     let id = parseInt(request.params.id);
     const ordencompra = await prisma.ordenCompra.findUnique({
