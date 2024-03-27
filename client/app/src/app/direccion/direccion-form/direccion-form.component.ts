@@ -71,7 +71,7 @@ export class DireccionFormComponent {
       }
       console.log(this.currentUser.user.nombre)
     });
-    //Formulario de producto
+    //Formulario de dirección
     this.activeRouter.params.subscribe((params: Params) => {
       this.idDireccion = params['id'];
       console.log('id', this.idDireccion);
